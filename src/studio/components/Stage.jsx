@@ -33,6 +33,7 @@ export default function Stage({
   selectedId, onSelect, onPatchLayer, videoRef, guides, zoomToFit = true,
 }) {
   const wrapRef = useRef(null);
+  const backdropRef = useRef(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const dragRef = useRef(null);
   const [dragging, setDragging] = useState(false);
@@ -48,6 +49,29 @@ export default function Stage({
     ro.observe(el);
     return () => ro.disconnect();
   }, [canvas.width, canvas.height]);
+
+  // Mirror the main video into the blurred backdrop used by "fit" mode.
+  useEffect(() => {
+    const main = videoRef.current;
+    const back = backdropRef.current;
+    if (!main || !back) return undefined;
+    const sync = () => {
+      if (Math.abs(back.currentTime - main.currentTime) > 0.2) back.currentTime = main.currentTime;
+    };
+    const onPlay = () => { sync(); back.play().catch(() => {}); };
+    const onPause = () => back.pause();
+    main.addEventListener('play', onPlay);
+    main.addEventListener('pause', onPause);
+    main.addEventListener('seeked', sync);
+    main.addEventListener('timeupdate', sync);
+    sync();
+    return () => {
+      main.removeEventListener('play', onPlay);
+      main.removeEventListener('pause', onPause);
+      main.removeEventListener('seeked', sync);
+      main.removeEventListener('timeupdate', sync);
+    };
+  });
 
   const ctx = useMemo(
     () => ({ canvas, metrics, familyName, imageHref: (src) => (src ? `/${src}` : null) }),
@@ -160,7 +184,8 @@ export default function Stage({
             muted
             playsInline
             preload="auto"
-            ref={(el) => { if (el && videoRef.current) el.currentTime = videoRef.current.currentTime; }}
+            ref={backdropRef}
+            style={{ filter: `blur(${Math.max(6, size.w / 24)}px) brightness(0.85)` }}
             data-backdrop="1"
           />
         )}
