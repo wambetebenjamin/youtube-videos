@@ -1,0 +1,18 @@
+{
+  "name": "Stoic",
+  "description": "Public-domain Stoic lines. Pair with the serif quote preset.",
+  "quotes": [
+    { "text": "You have power over your mind, not outside events. Realise this, and you will find strength.", "author": "Marcus Aurelius" },
+    { "text": "We suffer more often in imagination than in reality.", "author": "Seneca" },
+    { "text": "No man is free who is not master of himself.", "author": "Epictetus" },
+    { "text": "Waste no more time arguing what a good man should be. Be one.", "author": "Marcus Aurelius" },
+    { "text": "He who fears death will never do anything worthy of a living man.", "author": "Seneca" },
+    { "text": "Man is disturbed not by things, but by the views he takes of them.", "author": "Epictetus" },
+    { "text": "The impediment to action advances action. What stands in the way becomes the way.", "author": "Marcus Aurelius" },
+    { "text": "Luck is what happens when preparation meets opportunity.", "author": "Seneca" },
+    { "text": "If it is not right, do not do it; if it is not true, do not say it.", "author": "Marcus Aurelius" },
+    { "text": "It is not the man who has too little, but the man who craves more, that is poor.", "author": "Seneca" },
+    { "text": "First learn the meaning of what you say, and then speak.", "author": "Epictetus" },
+    { "text": "Confine yourself to the present.", "author": "Marcus Aurelius" }
+  ]
+}

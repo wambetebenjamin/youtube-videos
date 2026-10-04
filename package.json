@@ -1,0 +1,42 @@
+{
+  "name": "reelsmith",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A repository-as-video-studio: upload clips + music, layer quotes/overlays with real fonts, preview live in the browser, render and download with one command.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "node scripts/dev.mjs",
+    "api": "node src/server/index.js",
+    "studio": "vite",
+    "build": "vite build",
+    "serve": "node src/server/index.js --serve-studio",
+    "render": "node scripts/render.mjs",
+    "download": "node scripts/download.mjs",
+    "exports": "node scripts/exports.mjs",
+    "batch": "node scripts/batch.mjs",
+    "fonts": "node scripts/fonts.mjs",
+    "quotes": "node scripts/quotes.mjs",
+    "canva:import": "node scripts/canva-import.mjs",
+    "demo": "node scripts/make-demo-assets.mjs",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
+    "@resvg/resvg-js": "^2.6.2",
+    "express": "^4.21.2",
+    "fontkit": "^2.0.4",
+    "multer": "^1.4.5-lts.1",
+    "pdfjs-dist": "^4.0.379"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Hooks",
+  "description": "Opening lines for the first 1.5 seconds. Pair with the hook preset, big and uppercase.",
+  "quotes": [
+    { "text": "Nobody is coming to save you", "author": "" },
+    { "text": "You are not behind", "author": "" },
+    { "text": "Stop waiting for Monday", "author": "" },
+    { "text": "This is your sign", "author": "" },
+    { "text": "Read this twice", "author": "" },
+    { "text": "One year from now", "author": "" },
+    { "text": "The quiet grind wins", "author": "" },
+    { "text": "Nothing changes if nothing changes", "author": "" },
+    { "text": "Do it tired", "author": "" },
+    { "text": "Save this for the hard days", "author": "" },
+    { "text": "Three things nobody tells you", "author": "" },
+    { "text": "Your future self is watching", "author": "" }
+  ]
+}

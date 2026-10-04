@@ -1,0 +1,32 @@
+node_modules/
+dist/
+.cache/
+.DS_Store
+*.log
+
+# ---------------------------------------------------------------------
+# Media.
+#
+# Source footage, music and renders are heavy and change constantly, so
+# they stay out of Git by default. The *projects* that describe the edits
+# (projects/*.json) are plain text and ARE tracked — that is the part
+# worth reviewing in a pull request.
+#
+# To version a particular file anyway:        git add -f media/source/hero.mp4
+# To version all of it properly, use Git LFS: git lfs track "media/**/*.mp4"
+# ---------------------------------------------------------------------
+media/source/*
+media/music/*
+media/images/*
+media/exports/*
+
+# …except the samples that ship with the repo, so a fresh clone can preview
+# something straight away.
+!media/source/sample-*.mp4
+!media/music/sample-*.mp3
+!media/**/.gitkeep
+
+# Canva exports you drop in to be analysed
+imports/*
+!imports/.gitkeep
+!imports/README.md

@@ -1,0 +1,18 @@
+{
+  "name": "Inspiration",
+  "description": "Classic motivational lines that read well over b-roll.",
+  "quotes": [
+    { "text": "The only way to do great work is to love what you do.", "author": "Steve Jobs" },
+    { "text": "Whether you think you can or you think you can't, you're right.", "author": "Henry Ford" },
+    { "text": "It always seems impossible until it's done.", "author": "Nelson Mandela" },
+    { "text": "The future belongs to those who believe in the beauty of their dreams.", "author": "Eleanor Roosevelt" },
+    { "text": "Everything you've ever wanted is on the other side of fear.", "author": "George Addair" },
+    { "text": "A year from now you may wish you had started today.", "author": "Karen Lamb" },
+    { "text": "Fall seven times, stand up eight.", "author": "Japanese proverb" },
+    { "text": "The best time to plant a tree was twenty years ago. The second best time is now.", "author": "Chinese proverb" },
+    { "text": "You are never too old to set another goal or to dream a new dream.", "author": "C.S. Lewis" },
+    { "text": "What you get by achieving your goals is not as important as what you become.", "author": "Henry David Thoreau" },
+    { "text": "Start where you are. Use what you have. Do what you can.", "author": "Arthur Ashe" },
+    { "text": "Our greatest glory is not in never falling, but in rising every time we fall.", "author": "Confucius" }
+  ]
+}

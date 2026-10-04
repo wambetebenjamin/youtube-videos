@@ -1,0 +1,323 @@
+{
+  "generatedAt": "2026-10-04T19:15:01.618Z",
+  "families": [
+    {
+      "id": "anton",
+      "name": "Anton",
+      "category": "display",
+      "roles": [
+        "hook",
+        "impact"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "anton-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/anton/anton-400.ttf",
+          "postscriptName": "Anton-Regular"
+        }
+      ]
+    },
+    {
+      "id": "archivo-black",
+      "name": "Archivo Black",
+      "category": "display",
+      "roles": [
+        "impact"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "archivo-black-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/archivo-black/archivo-black-400.ttf",
+          "postscriptName": "ArchivoBlack-Regular"
+        }
+      ]
+    },
+    {
+      "id": "bebas-neue",
+      "name": "Bebas Neue",
+      "category": "display",
+      "roles": [
+        "hook",
+        "headline"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "bebas-neue-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/bebas-neue/bebas-neue-400.ttf",
+          "postscriptName": "BebasNeue-Regular"
+        }
+      ]
+    },
+    {
+      "id": "caveat",
+      "name": "Caveat",
+      "category": "script",
+      "roles": [
+        "accent",
+        "signature"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "caveat-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/caveat/caveat-400.ttf",
+          "postscriptName": "Caveat-Regular"
+        },
+        {
+          "key": "caveat-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/caveat/caveat-700.ttf",
+          "postscriptName": "Caveat-Bold"
+        }
+      ]
+    },
+    {
+      "id": "dm-serif-display",
+      "name": "DM Serif Display",
+      "category": "serif",
+      "roles": [
+        "quote",
+        "headline"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "dm-serif-display-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/dm-serif-display/dm-serif-display-400.ttf",
+          "postscriptName": "DMSerifDisplay-Regular"
+        }
+      ]
+    },
+    {
+      "id": "inter",
+      "name": "Inter",
+      "category": "sans",
+      "roles": [
+        "body",
+        "caption",
+        "ui"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "inter-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/inter/inter-400.ttf",
+          "postscriptName": "Inter-Regular"
+        },
+        {
+          "key": "inter-600",
+          "weight": 600,
+          "style": "normal",
+          "file": "assets/fonts/inter/inter-600.ttf",
+          "postscriptName": "Inter-SemiBold"
+        },
+        {
+          "key": "inter-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/inter/inter-700.ttf",
+          "postscriptName": "Inter-Bold"
+        }
+      ]
+    },
+    {
+      "id": "lato",
+      "name": "Lato",
+      "category": "sans",
+      "roles": [
+        "body"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "lato-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/lato/lato-400.ttf",
+          "postscriptName": "Lato-Regular"
+        },
+        {
+          "key": "lato-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/lato/lato-700.ttf",
+          "postscriptName": "Lato-Bold"
+        }
+      ]
+    },
+    {
+      "id": "lora",
+      "name": "Lora",
+      "category": "serif",
+      "roles": [
+        "quote",
+        "body"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "lora-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/lora/lora-400.ttf",
+          "postscriptName": "Lora-Regular"
+        },
+        {
+          "key": "lora-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/lora/lora-700.ttf",
+          "postscriptName": "Lora-Bold"
+        }
+      ]
+    },
+    {
+      "id": "montserrat",
+      "name": "Montserrat",
+      "category": "sans",
+      "roles": [
+        "headline",
+        "caption",
+        "body"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "montserrat-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/montserrat/montserrat-400.ttf",
+          "postscriptName": "Montserrat-Regular"
+        },
+        {
+          "key": "montserrat-600",
+          "weight": 600,
+          "style": "normal",
+          "file": "assets/fonts/montserrat/montserrat-600.ttf",
+          "postscriptName": "Montserrat-SemiBold"
+        },
+        {
+          "key": "montserrat-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/montserrat/montserrat-700.ttf",
+          "postscriptName": "Montserrat-Bold"
+        },
+        {
+          "key": "montserrat-800",
+          "weight": 800,
+          "style": "normal",
+          "file": "assets/fonts/montserrat/montserrat-800.ttf",
+          "postscriptName": "Montserrat-ExtraBold"
+        }
+      ]
+    },
+    {
+      "id": "oswald",
+      "name": "Oswald",
+      "category": "sans",
+      "roles": [
+        "headline"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "oswald-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/oswald/oswald-400.ttf",
+          "postscriptName": "Oswald-Regular"
+        },
+        {
+          "key": "oswald-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/oswald/oswald-700.ttf",
+          "postscriptName": "Oswald-Bold"
+        }
+      ]
+    },
+    {
+      "id": "playfair-display",
+      "name": "Playfair Display",
+      "category": "serif",
+      "roles": [
+        "quote",
+        "headline"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "playfair-display-400i",
+          "weight": 400,
+          "style": "italic",
+          "file": "assets/fonts/playfair-display/playfair-display-400i.ttf",
+          "postscriptName": "PlayfairDisplay-Italic"
+        },
+        {
+          "key": "playfair-display-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/playfair-display/playfair-display-400.ttf",
+          "postscriptName": "PlayfairDisplay-Regular"
+        },
+        {
+          "key": "playfair-display-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/playfair-display/playfair-display-700.ttf",
+          "postscriptName": "PlayfairDisplay-Bold"
+        }
+      ]
+    },
+    {
+      "id": "poppins",
+      "name": "Poppins",
+      "category": "sans",
+      "roles": [
+        "headline",
+        "caption"
+      ],
+      "license": "OFL-1.1",
+      "faces": [
+        {
+          "key": "poppins-400",
+          "weight": 400,
+          "style": "normal",
+          "file": "assets/fonts/poppins/poppins-400.ttf",
+          "postscriptName": "Poppins-Regular"
+        },
+        {
+          "key": "poppins-600",
+          "weight": 600,
+          "style": "normal",
+          "file": "assets/fonts/poppins/poppins-600.ttf",
+          "postscriptName": "Poppins-SemiBold"
+        },
+        {
+          "key": "poppins-700",
+          "weight": 700,
+          "style": "normal",
+          "file": "assets/fonts/poppins/poppins-700.ttf",
+          "postscriptName": "Poppins-Bold"
+        }
+      ]
+    }
+  ]
+}

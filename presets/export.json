@@ -1,0 +1,42 @@
+{
+  "_comment": "Export presets. Edit freely — the studio dropdown and `npm run render -- --preset <id>` both read this file. Anything you leave out falls back to the built-in defaults in src/server/lib/presets.js.",
+  "presets": {
+    "draft": {
+      "id": "draft",
+      "label": "Draft (fast, half size)",
+      "crf": 30,
+      "speed": "veryfast",
+      "scale": 0.5,
+      "fps": 24,
+      "audioBitrate": "128k",
+      "note": "Proof render for checking timing before the real one."
+    },
+    "social-hq": {
+      "id": "social-hq",
+      "label": "Social HQ (recommended)",
+      "crf": 20,
+      "speed": "medium",
+      "scale": 1,
+      "audioBitrate": "192k",
+      "note": "Instagram Reels / TikTok / YouTube Shorts."
+    },
+    "social-max": {
+      "id": "social-max",
+      "label": "Social max quality",
+      "crf": 17,
+      "speed": "slow",
+      "scale": 1,
+      "audioBitrate": "256k",
+      "note": "Bigger file. Worth it for fast motion or heavy grain."
+    },
+    "youtube-hq": {
+      "id": "youtube-hq",
+      "label": "YouTube HQ",
+      "crf": 18,
+      "speed": "slow",
+      "scale": 1,
+      "audioBitrate": "256k",
+      "note": "Matches YouTube's recommended upload settings."
+    }
+  }
+}
