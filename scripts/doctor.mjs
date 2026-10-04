@@ -58,6 +58,33 @@ add(true, 'Music', `${count(MUSIC_DIR, /\.(mp3|wav|m4a|aac|ogg|flac)$/i)} in med
 add(true, 'Projects', `${count(PROJECTS_DIR, /\.json$/)} in projects`);
 add(true, 'Exports', `${count(EXPORTS_DIR, /\.(mp4|mov|webm)$/i)} in media/exports`);
 
+/* media health: dangling links and clips that want a proxy */
+try {
+  const { listMedia } = await import('../src/server/lib/library.js');
+  const { videos } = await listMedia();
+  const dangling = fs.existsSync(SOURCE_DIR)
+    ? fs.readdirSync(SOURCE_DIR).filter((f) => {
+      const abs = path.join(SOURCE_DIR, f);
+      return fs.lstatSync(abs).isSymbolicLink() && !fs.existsSync(abs);
+    })
+    : [];
+  if (dangling.length) {
+    add(false, 'Links', `${dangling.length} dangling: ${dangling.join(', ')}`, 'reconnect the drive, or delete the links in media/source');
+  } else {
+    const linked = videos.filter((v) => v.linked).length;
+    if (linked) add(true, 'Links', `${linked} linked clip(s), all reachable`);
+  }
+  const heavy = videos.filter((v) => v.bytes > 40 * 1024 * 1024 && !v.proxy);
+  const proxied = videos.filter((v) => v.proxy).length;
+  if (heavy.length) {
+    add(true, 'Proxies', `${proxied} built · ${heavy.length} big clip(s) would scrub better with one → npm run proxy`);
+  } else if (videos.length) {
+    add(true, 'Proxies', proxied ? `${proxied} built` : 'none needed');
+  }
+} catch (err) {
+  add(false, 'Media', err.message, 'npm run setup');
+}
+
 console.log('');
 for (const r of rows) {
   const mark = r.ok ? c.green('✓') : c.red('✗');

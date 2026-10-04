@@ -20,6 +20,9 @@ media/music/*
 media/images/*
 media/exports/*
 
+# Proxies are derived data — rebuild them any time with `npm run proxy`.
+media/proxies/
+
 # …except the samples that ship with the repo, so a fresh clone can preview
 # something straight away.
 !media/source/sample-*.mp4

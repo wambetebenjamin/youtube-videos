@@ -30,7 +30,7 @@ function layerRects(layer, canvas, metrics) {
 
 export default function Stage({
   project, canvas, duration, time, metrics, familyName,
-  selectedId, onSelect, onPatchLayer, videoRef, guides, zoomToFit = true,
+  selectedId, onSelect, onPatchLayer, videoRef, guides, media, zoomToFit = true,
 }) {
   const wrapRef = useRef(null);
   const backdropRef = useRef(null);
@@ -83,7 +83,12 @@ export default function Stage({
     [project, time, ctx, duration],
   );
 
-  const src = project.source?.clip ? `/${project.source.clip}` : null;
+  // Play the proxy when one exists: a 4K original makes scrubbing unusable.
+  // The renderer always reads project.source.clip, never this.
+  const clip = project.source?.clip || null;
+  const entry = clip ? (media?.videos || []).find((v) => v.path === clip) : null;
+  const usingProxy = !!entry?.proxy;
+  const src = clip ? (entry?.previewUrl || `/${clip}`) : null;
   const fit = project.source?.fit || 'cover';
   const zoom = project.source?.zoom || 1;
   // The renderer shifts the crop window; on screen that moves the image the
@@ -170,6 +175,11 @@ export default function Stage({
 
   return (
     <div className="stage-wrap" ref={wrapRef}>
+      {usingProxy && (
+        <div className="stage-badge" title={`Previewing a 540p proxy of ${clip}. Renders use the full-resolution original.`}>
+          proxy preview
+        </div>
+      )}
       <div
         className="stage"
         style={{ width: size.w || 10, height: size.h || 10, background: canvas.background }}

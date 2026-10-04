@@ -40,7 +40,35 @@ function MediaTab({ boot, project, onRefresh, onPatchProject, onAddMusicTrack, o
   const [kind, setKind] = useState('video');
   const [progress, setProgress] = useState(null);
   const [dragOver, setDragOver] = useState(false);
+  const [proxying, setProxying] = useState(null);
+  const [proxyPct, setProxyPct] = useState(0);
   const inputRef = useRef(null);
+
+  /** Build a preview proxy, following the job's progress over SSE. */
+  const makeProxy = async (v) => {
+    setProxying(v.path);
+    setProxyPct(0);
+    try {
+      const res = await api.buildProxy(v.path);
+      if (res.cached || !res.jobId) {
+        await onRefresh();
+        notify('Proxy ready');
+        return;
+      }
+      await new Promise((resolve, reject) => {
+        api.watchJob(res.jobId, {
+          onProgress: (j) => setProxyPct(Math.round(j.percent || 0)),
+          onDone: (j) => (j.status === 'done' ? resolve(j) : reject(new Error(j.error || 'proxy failed'))),
+        });
+      });
+      await onRefresh();
+      notify(`Proxy built for ${v.name} — previews are now instant`);
+    } catch (err) {
+      notify(`Proxy failed: ${err.message}`, 'error');
+    } finally {
+      setProxying(null);
+    }
+  };
 
   const accept = {
     video: 'video/*,.mp4,.mov,.webm,.mkv',
@@ -98,15 +126,41 @@ function MediaTab({ boot, project, onRefresh, onPatchProject, onAddMusicTrack, o
 
       <h4>Clips <em>media/source</em></h4>
       <div className="list">
-        {(media.videos || []).map((v) => (
-          <div key={v.path} className={`item${project?.source?.clip === v.path ? ' active' : ''}`}>
-            <button className="item-main" onClick={() => onPatchProject({ source: { ...project.source, clip: v.path } })}>
-              <span className="nm">{v.name}</span>
-              <span className="meta">{v.info?.width}×{v.info?.height} · {v.info?.duration ? `${v.info.duration.toFixed(1)}s` : '?'} · {fmtBytes(v.bytes)}</span>
-            </button>
-          </div>
-        ))}
+        {(media.videos || []).map((v) => {
+          const heavy = v.bytes > 40 * 1024 * 1024;
+          return (
+            <div key={v.path} className={`item${project?.source?.clip === v.path ? ' active' : ''}`}>
+              <button className="item-main" onClick={() => onPatchProject({ source: { ...project.source, clip: v.path } })}>
+                <span className="nm">{v.name}</span>
+                <span className="meta">{v.info?.width}×{v.info?.height} · {v.info?.duration ? `${v.info.duration.toFixed(1)}s` : '?'} · {fmtBytes(v.bytes)}</span>
+                {(v.proxy || v.linked || (heavy && !v.proxy)) && (
+                  <span className="media-badges">
+                    {v.linked && <span className="media-badge link" title="Symlinked — the file lives outside the repo">link</span>}
+                    {v.proxy && <span className="media-badge proxy" title="Previewing a small proxy; renders use the original">proxy</span>}
+                    {heavy && !v.proxy && <span className="media-badge heavy" title="Large file — a proxy will make scrubbing smooth">heavy</span>}
+                  </span>
+                )}
+              </button>
+              {heavy && !v.proxy && (
+                <button
+                  className="icon-btn"
+                  title="Build a 540p preview proxy"
+                  disabled={proxying === v.path}
+                  onClick={() => makeProxy(v)}
+                >
+                  {proxying === v.path ? `${proxyPct}%` : '⚡'}
+                </button>
+              )}
+            </div>
+          );
+        })}
         {!(media.videos || []).length && <p className="muted small">No clips yet.</p>}
+        {(media.videos || []).some((v) => v.bytes > 40 * 1024 * 1024 && !v.proxy) && (
+          <p className="muted small">
+            Large clips scrub badly in a browser. ⚡ builds a 540p stand-in for preview —
+            renders always use the original.
+          </p>
+        )}
       </div>
 
       <h4>Music <em>media/music</em></h4>

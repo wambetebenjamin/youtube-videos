@@ -18,6 +18,7 @@ import {
   listQuotePacks, listCanvaPresets,
 } from './lib/library.js';
 import { createJob, getJob, listJobs, publicJob, updateJob, logJob, finishJob, subscribe } from './lib/jobs.js';
+import { buildProxy, proxyWorthwhile, findProxy, pruneProxies } from './lib/proxy.js';
 import { renderProject } from './render/engine.js';
 import { importCanva } from './lib/canva.js';
 
@@ -236,7 +237,7 @@ app.post('/api/render/:id/cancel', (req, res) => {
   res.json({ ok: true });
 });
 
-app.get('/api/render/:id/stream', (req, res) => {
+app.get(['/api/render/:id/stream', '/api/jobs/:id/stream'], (req, res) => {
   const job = getJob(req.params.id);
   if (!job) return res.status(404).json({ error: 'no such job' });
   res.writeHead(200, {
@@ -256,6 +257,67 @@ app.get('/api/render/:id/stream', (req, res) => {
 app.get('/api/jobs', (req, res) => res.json(listJobs()));
 
 /* ------------------------------ exports / download ------------------------------ */
+/* -------------------------------- proxies -------------------------------- */
+
+/**
+ * Build a preview proxy for a clip. Returns a job id so the studio can show
+ * progress; proxies of long 4K files are not instant.
+ */
+app.post('/api/proxy', async (req, res) => {
+  try {
+    const { path: rel, force } = req.body || {};
+    if (!rel) return res.status(400).json({ error: 'path required' });
+    const abs = resolveRepoPath(rel);
+    if (!abs || !abs.startsWith(MEDIA_DIR)) return res.status(400).json({ error: 'path must be inside media/' });
+
+    const existing = findProxy(rel);
+    if (existing && !force) return res.json({ proxy: existing, cached: true });
+
+    const job = createJob({ kind: 'proxy', sourcePath: rel, projectName: path.basename(rel) });
+    res.json({ jobId: job.id });
+
+    updateJob(job, { status: 'rendering' });
+    buildProxy(rel, {
+      force: !!force,
+      onProgress: ({ fraction, seconds, speed }) => updateJob(job, {
+        percent: Math.round(fraction * 1000) / 10,
+        seconds,
+        speed,
+      }),
+    })
+      .then((result) => finishJob(job, { status: 'done', percent: 100, result }))
+      .catch((err) => finishJob(job, { status: 'error', error: err.message }));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/** Which clips would benefit from a proxy but don't have one yet. */
+app.get('/api/proxy/suggestions', async (req, res) => {
+  try {
+    const { videos } = await listMedia();
+    const out = [];
+    for (const v of videos) {
+      if (v.proxy) continue;
+      const abs = resolveRepoPath(v.path);
+      if (await proxyWorthwhile(abs, v.info)) out.push({ path: v.path, name: v.name, bytes: v.bytes });
+    }
+    res.json({ suggestions: out });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/proxy', async (req, res) => {
+  try {
+    const { videos } = await listMedia();
+    const removed = pruneProxies(videos.map((v) => v.path));
+    res.json({ removed });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/exports', async (req, res) => {
   try { res.json(await listExports()); } catch (err) { res.status(500).json({ error: err.message }); }
 });

@@ -180,7 +180,7 @@ textarea { resize: vertical; width: 100%; line-height: 1.45; }
 .note { border-left: 2px solid var(--warn); padding-left: 7px; margin: 6px 0 0; line-height: 1.4; }
 
 /* ------------------------------ stage ------------------------------ */
-.stage-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 18px; min-height: 0; }
+.stage-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 18px; min-height: 0; position: relative; }
 .stage {
   position: relative; overflow: hidden; border-radius: 6px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line);
@@ -360,3 +360,21 @@ textarea { resize: vertical; width: 100%; line-height: 1.45; }
 @media (max-width: 1200px) {
   .main { grid-template-columns: 240px 1fr 280px; }
 }
+
+/* Proxy preview badge — the stage is showing a stand-in, say so. */
+.stage-badge {
+  position: absolute; top: 10px; right: 12px; z-index: 6;
+  padding: 3px 8px; border-radius: 6px;
+  background: rgba(20, 28, 46, 0.86); border: 1px solid #35507f;
+  color: var(--accent); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  pointer-events: auto; cursor: help;
+}
+.media-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+.media-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 1px 5px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted);
+}
+.media-badge.proxy { border-color: #2f6b4a; color: #6ee7a8; background: #11291e; }
+.media-badge.link  { border-color: #35507f; color: var(--accent); background: #16213a; }
+.media-badge.heavy { border-color: #6b4a2f; color: #f0b57a; background: #291e11; }

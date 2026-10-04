@@ -45,13 +45,20 @@ export function bar(pct, width = 28) {
 }
 
 export function fmtBytes(n) {
-  if (!n) return '0 B';
-  const u = ['B', 'KB', 'MB', 'GB'];
-  const i = Math.min(u.length - 1, Math.floor(Math.log(n) / Math.log(1024)));
-  return `${(n / 1024 ** i).toFixed(i ? 1 : 0)} ${u[i]}`;
+  if (!Number.isFinite(n) || n === 0) return '0 B';
+  const sign = n < 0 ? '-' : '';
+  const abs = Math.abs(n);
+  const u = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.min(u.length - 1, Math.floor(Math.log(abs) / Math.log(1024)));
+  return `${sign}${(abs / 1024 ** i).toFixed(i ? 1 : 0)} ${u[i]}`;
 }
 
 export function die(msg) {
   console.error(`${c.red('error')} ${msg}`);
   process.exit(1);
+}
+
+/** Section heading shared by the CLI tools: `verb  subject`. */
+export function header(verb, subject = '') {
+  console.log(`${c.cyan(verb)} ${subject ? c.bold(subject) : ''}`);
 }

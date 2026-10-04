@@ -15,6 +15,7 @@ export const SOURCE_DIR = path.join(MEDIA_DIR, 'source');
 export const MUSIC_DIR = path.join(MEDIA_DIR, 'music');
 export const IMAGES_DIR = path.join(MEDIA_DIR, 'images');
 export const EXPORTS_DIR = path.join(MEDIA_DIR, 'exports');
+export const PROXIES_DIR = path.join(MEDIA_DIR, 'proxies');
 
 export const PROJECTS_DIR = path.join(ROOT, 'projects');
 export const TEMPLATES_DIR = path.join(ROOT, 'templates');
@@ -27,7 +28,7 @@ export const CACHE_DIR = path.join(ROOT, '.cache');
 
 export const ALL_DIRS = [
   ASSETS_DIR, FONTS_DIR, BRAND_DIR, GRAPHICS_DIR,
-  MEDIA_DIR, SOURCE_DIR, MUSIC_DIR, IMAGES_DIR, EXPORTS_DIR,
+  MEDIA_DIR, SOURCE_DIR, MUSIC_DIR, IMAGES_DIR, EXPORTS_DIR, PROXIES_DIR,
   PROJECTS_DIR, TEMPLATES_DIR, PRESETS_DIR, CANVA_DIR, CONTENT_DIR, QUOTES_DIR,
   IMPORTS_DIR, CACHE_DIR,
 ];

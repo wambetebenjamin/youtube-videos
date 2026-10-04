@@ -34,6 +34,11 @@ export const api = {
   deleteMedia: (p) => request(`/api/media?path=${encodeURIComponent(p)}`, { method: 'DELETE' }),
   canvaImport: (body) => request('/api/canva/import', { method: 'POST', body }),
 
+  /** Build a 540p preview proxy for a clip. Resolves to {jobId} or {proxy, cached}. */
+  buildProxy: (path, force = false) => request('/api/proxy', { method: 'POST', body: { path, force } }),
+  proxySuggestions: () => request('/api/proxy/suggestions'),
+  pruneProxies: () => request('/api/proxy', { method: 'DELETE' }),
+
   upload(files, kind, onProgress) {
     return new Promise((resolve, reject) => {
       const form = new FormData();
@@ -57,7 +62,7 @@ export const api = {
 
   /** Server-sent events for a render job. */
   watchJob(id, { onProgress, onLog, onDone }) {
-    const es = new EventSource(`/api/render/${id}/stream`);
+    const es = new EventSource(`/api/jobs/${id}/stream`);
     es.addEventListener('progress', (e) => onProgress?.(JSON.parse(e.data)));
     es.addEventListener('log', (e) => onLog?.(JSON.parse(e.data)));
     es.addEventListener('done', (e) => { onDone?.(JSON.parse(e.data)); es.close(); });

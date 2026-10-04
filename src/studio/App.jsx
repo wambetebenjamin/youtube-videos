@@ -401,6 +401,7 @@ export default function App() {
             metrics={boot.metrics} familyName={familyName}
             selectedId={selectedId} onSelect={setSelectedId}
             onPatchLayer={patchLayer} videoRef={videoRef} guides={guides}
+            media={boot.media}
           />
           <Timeline
             project={project} duration={duration} time={time} onSeek={seek}

@@ -5,6 +5,7 @@ import {
   CANVA_DIR, CACHE_DIR, ROOT, toRepoPath, ensureDirs,
 } from '../../core/paths.js';
 import { probe } from './ffmpeg.js';
+import { findProxy } from './proxy.js';
 import { normalizeProject, projectSummary } from '../../core/project.js';
 
 const VIDEO_EXT = new Set(['.mp4', '.mov', '.m4v', '.webm', '.mkv', '.avi']);
@@ -49,22 +50,37 @@ async function probeCached(abs) {
   return data;
 }
 
-async function listDir(dir, extensions, { withProbe = true } = {}) {
+async function listDir(dir, extensions, { withProbe = true, withProxy = false } = {}) {
   if (!fs.existsSync(dir)) return [];
   const out = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (!entry.isFile() || entry.name.startsWith('.')) continue;
+    // withFileTypes reports a symlink as a symlink, not a file — linked
+    // footage (npm run import -- --link) must still show up in the library.
+    const isLink = entry.isSymbolicLink();
+    if (!entry.isFile() && !isLink) continue;
+    if (entry.name.startsWith('.')) continue;
     const ext = path.extname(entry.name).toLowerCase();
     if (!extensions.has(ext)) continue;
     const abs = path.join(dir, entry.name);
-    const stat = fs.statSync(abs);
+    let stat;
+    try {
+      stat = fs.statSync(abs); // follows the link: real size, real mtime
+    } catch {
+      continue; // dangling symlink — the drive is unplugged
+    }
+    const rel = toRepoPath(abs);
+    const proxy = withProxy ? findProxy(rel) : null;
     out.push({
       name: entry.name,
-      path: toRepoPath(abs),
-      url: `/${toRepoPath(abs)}`,
+      path: rel,
+      url: `/${rel}`,
       bytes: stat.size,
       modified: stat.mtimeMs,
       ext,
+      linked: isLink,
+      proxy,
+      // What the studio should actually load in a <video> tag.
+      previewUrl: proxy ? `/${proxy}` : `/${rel}`,
       info: withProbe ? await probeCached(abs) : null,
     });
   }
@@ -74,7 +90,7 @@ async function listDir(dir, extensions, { withProbe = true } = {}) {
 export async function listMedia() {
   ensureDirs();
   const [videos, music, images] = await Promise.all([
-    listDir(SOURCE_DIR, VIDEO_EXT),
+    listDir(SOURCE_DIR, VIDEO_EXT, { withProxy: true }),
     listDir(MUSIC_DIR, AUDIO_EXT),
     listDir(IMAGES_DIR, IMAGE_EXT, { withProbe: false }),
   ]);

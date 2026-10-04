@@ -59,6 +59,9 @@ media/images/   logos, overlays   (.png .jpg .webp .svg)
 assets/fonts/   your own fonts    (.ttf .otf — manifest rebuilds automatically)
 ```
 
+Big or already on disk? Skip the browser — `npm run import -- ~/Movies/*.mp4 --link` points
+the repo at the files without copying a byte. See [docs/media.md](docs/media.md).
+
 ### 3. Edit
 
 - **Add** tab → a text preset (hook, caption, highlight, quote, lower third, handle…)
@@ -94,6 +97,8 @@ produced them, and a `.jpg` poster frame.
 |---|---|
 | `npm run dev` | Studio + API together (live preview) |
 | `npm run setup` | Folders, fonts, sample media, example project |
+| `npm run import -- <files> [--link]` | Bring footage in — `--link` copies nothing |
+| `npm run proxy` | Build 540p stand-ins so big clips scrub smoothly |
 | `npm run render -- <id\|--all>` | Render to MP4 |
 | `npm run download -- --latest [--to DIR]` | Get a finished file out |
 | `npm run exports` | List what's been rendered |
@@ -115,6 +120,7 @@ produced them, and a `.jpg` poster frame.
 │   ├── source/          uploaded clips                          ← ignored by Git
 │   ├── music/           uploaded audio                          ← ignored
 │   ├── images/          logos / overlays                        ← ignored
+│   ├── proxies/         540p preview stand-ins (rebuildable)     ← ignored
 │   └── exports/         rendered videos + posters + sidecars    ← ignored
 ├── assets/
 │   ├── fonts/           .ttf files + fonts.json + metrics       ← tracked
@@ -131,19 +137,24 @@ produced them, and a `.jpg` poster frame.
 └── scripts/             the CLI
 ```
 
-### Why the videos aren't in Git
+### Big files
 
-Source footage and renders are big and change constantly, so `media/` is ignored by default
-while `projects/*.json` — the part that actually describes your edit — is tracked. A diff on
-a project file tells you someone changed a font or moved a caption; a diff on an MP4 tells
-you nothing.
+**Your footage never goes into Git.** `media/` is ignored; `projects/*.json` — the part that
+describes your edit — is tracked. So there's no 25 MB web-upload limit, no 100 MB push
+rejection, and no repo that remembers a 600 MB clip forever. A diff on a project file tells
+you someone changed a font or moved a caption; a diff on an MP4 tells you nothing.
 
-If you do want the binaries versioned:
+Two commands make large files comfortable:
 
 ```bash
-git add -f media/source/hero.mp4          # one file
-git lfs track "media/**/*.mp4"            # or do it properly with LFS
+npm run import -- /Volumes/SSD/day-1 --link   # symlink the folder in — copies 0 bytes
+npm run proxy                                 # 540p stand-ins for smooth scrubbing
 ```
+
+A linked 88 MB 4K clip costs the repo 29 bytes. Its proxy is 441 KB and builds in three
+seconds — the studio previews that and badges it, while **every render reads the original
+file**. Full guide, including Git LFS and sharing footage across machines:
+[docs/media.md](docs/media.md).
 
 ---
 
@@ -232,6 +243,7 @@ all to 12 seconds and renders the lot.
 
 ## Docs
 
+- [docs/media.md](docs/media.md) — big files: linking, proxies, LFS, sharing
 - [docs/project-format.md](docs/project-format.md) — every field in a project file
 - [docs/canva.md](docs/canva.md) — the import routes in detail
 - [docs/architecture.md](docs/architecture.md) — how a render is actually built
