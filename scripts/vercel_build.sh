@@ -8,33 +8,7 @@ set -euo pipefail
 
 mkdir -p dist-web
 
-if [ -n "${GDRIVE_SESSION_URI:-}" ]; then
-  echo "=== Installing uv (isolated Python toolchain) ==="
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
-
-  echo "=== Installing FFmpeg build with libass (Vercel image has none) ==="
-  if ! ffmpeg -hide_banner -filters 2>/dev/null | grep -qw "ass"; then
-    mkdir -p /tmp/ffmpeg-static
-    curl -fsSL -o /tmp/ffmpeg-static/ffmpeg.tar.xz \
-      https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-    tar -xJf /tmp/ffmpeg-static/ffmpeg.tar.xz -C /tmp/ffmpeg-static --strip-components=1
-    export PATH="/tmp/ffmpeg-static:$PATH"
-  fi
-  ffmpeg -hide_banner -version | head -n 1
-  ffmpeg -hide_banner -filters 2>/dev/null | grep -qw "ass" \
-    && echo "libass subtitles filter: available" \
-    || echo "libass subtitles filter: unavailable (captions will be skipped)"
-
-  echo "=== Running render + Google Drive upload pipeline ==="
-  uv run \
-    --python 3.11 \
-    --with gdown \
-    --with imageio-ffmpeg \
-    --with Pillow \
-    --with faster-whisper \
-    python scripts/vercel_render_and_upload.py
-else
+if [ -z "${GDRIVE_SESSION_URI:-}" ]; then
   cat << 'EOF' > dist-web/index.html
 <!doctype html>
 <html><head><meta charset="utf-8"><title>AI Video Studio</title></head>
@@ -42,4 +16,74 @@ else
   <h1>AI Video Studio Ready</h1>
 </body></html>
 EOF
+  exit 0
 fi
+
+echo "=== Installing uv (isolated Python toolchain) ==="
+curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export UV_PYTHON_DOWNLOADS=automatic
+uv python install 3.12 >/dev/null 2>&1 || true
+
+has_ass_filter() {
+  command -v ffmpeg >/dev/null 2>&1 || return 1
+  ffmpeg -hide_banner -filters 2>/dev/null | grep -qw "ass"
+}
+
+install_ffmpeg_with_ass() {
+  local dest=/tmp/ffmpeg-static
+  mkdir -p "$dest"
+
+  # BtbN's gpl builds bundle libass (needed for the burn-in captions filter).
+  echo "=== Fetching BtbN FFmpeg build (libass enabled) ==="
+  if curl -fsSL --retry 3 --max-time 600 -o "$dest/ffmpeg.tar.xz" \
+    https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz; then
+    tar -xJf "$dest/ffmpeg.tar.xz" -C "$dest" --strip-components=1 && \
+      export PATH="$dest/bin:$PATH"
+  fi
+
+  if ! has_ass_filter; then
+    echo "=== Falling back to johnvansickle static build ==="
+    if curl -fsSL --retry 3 --max-time 600 -o "$dest/jvs.tar.xz" \
+      https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz; then
+      mkdir -p "$dest/jvs" && tar -xJf "$dest/jvs.tar.xz" -C "$dest/jvs" --strip-components=1 && \
+        export PATH="$dest/jvs:$PATH"
+    fi
+  fi
+}
+
+if ! has_ass_filter; then
+  install_ffmpeg_with_ass
+fi
+
+ffmpeg -hide_banner -version | head -n 1
+if has_ass_filter; then
+  echo "libass subtitles filter: available (burned-in karaoke captions enabled)"
+else
+  echo "libass subtitles filter: unavailable (captions will be skipped)"
+fi
+
+echo "=== Selecting a Python 3 interpreter for the pipeline ==="
+PY_TARGET=""
+for candidate in 3.12 3.11 3.13 3.10 3; do
+  if uv run --no-project --python "$candidate" python -c "import sys" >/dev/null 2>&1; then
+    PY_TARGET="$candidate"
+    break
+  fi
+done
+
+if [ -z "$PY_TARGET" ]; then
+  echo "No usable Python 3 interpreter found." >&2
+  exit 1
+fi
+echo "Using Python $PY_TARGET"
+
+echo "=== Running render + Google Drive upload pipeline ==="
+uv run \
+  --no-project \
+  --python "$PY_TARGET" \
+  --with gdown \
+  --with imageio-ffmpeg \
+  --with Pillow \
+  --with faster-whisper \
+  python scripts/vercel_render_and_upload.py
