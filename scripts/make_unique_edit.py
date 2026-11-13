@@ -42,6 +42,36 @@ def find_binary(name: str) -> str:
     raise RuntimeError(f"Required binary '{name}' not found on PATH.")
 
 
+def choose_ffmpeg() -> str:
+    """Pick the best available FFmpeg, preferring one with libass captions."""
+    override = os.environ.get("FFMPEG_BIN", "").strip()
+    if override and Path(override).exists():
+        return override
+
+    candidates: list[str] = []
+    found = shutil.which("ffmpeg")
+    if found:
+        candidates.append(found)
+    try:
+        import imageio_ffmpeg  # type: ignore
+
+        bundled = imageio_ffmpeg.get_ffmpeg_exe()
+        if bundled and bundled not in candidates:
+            candidates.append(bundled)
+    except Exception:
+        pass
+
+    if not candidates:
+        raise RuntimeError("No FFmpeg binary found on PATH.")
+
+    for candidate in candidates:
+        if has_filter(candidate, "ass"):
+            print(f"      FFmpeg with libass: {candidate}", flush=True)
+            return candidate
+    print("      No FFmpeg build provides the libass 'ass' filter.", flush=True)
+    return candidates[0]
+
+
 _FILTER_CACHE: dict[tuple[str, str], bool] = {}
 
 
@@ -694,7 +724,7 @@ def main() -> None:
         raise SystemExit(f"Error: Input video not found at {input_path}")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    ffmpeg_bin = find_binary("ffmpeg")
+    ffmpeg_bin = choose_ffmpeg()
 
     print(f"[1/5] Probing {input_path.name}...")
     meta = probe_video(ffmpeg_bin, input_path)

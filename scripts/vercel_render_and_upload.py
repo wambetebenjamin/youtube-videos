@@ -79,6 +79,8 @@ def resolve_ffmpeg() -> str:
     return imageio_ffmpeg.get_ffmpeg_exe()
 
 
+
+
 def display_dimensions(info: str) -> tuple[int, int, int, float]:
     """Parse `ffmpeg -i` stderr into display (width, height, rotation, duration)."""
     width, height = 0, 0

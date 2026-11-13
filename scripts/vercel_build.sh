@@ -25,43 +25,7 @@ export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 export UV_PYTHON_DOWNLOADS=automatic
 uv python install 3.12 >/dev/null 2>&1 || true
 
-has_ass_filter() {
-  command -v ffmpeg >/dev/null 2>&1 || return 1
-  ffmpeg -hide_banner -filters 2>/dev/null | grep -qw "ass"
-}
-
-install_ffmpeg_with_ass() {
-  local dest=/tmp/ffmpeg-static
-  mkdir -p "$dest"
-
-  # BtbN's gpl builds bundle libass (needed for the burn-in captions filter).
-  echo "=== Fetching BtbN FFmpeg build (libass enabled) ==="
-  if curl -fsSL --retry 3 --max-time 600 -o "$dest/ffmpeg.tar.xz" \
-    https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz; then
-    tar -xJf "$dest/ffmpeg.tar.xz" -C "$dest" --strip-components=1 && \
-      export PATH="$dest/bin:$PATH"
-  fi
-
-  if ! has_ass_filter; then
-    echo "=== Falling back to johnvansickle static build ==="
-    if curl -fsSL --retry 3 --max-time 600 -o "$dest/jvs.tar.xz" \
-      https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz; then
-      mkdir -p "$dest/jvs" && tar -xJf "$dest/jvs.tar.xz" -C "$dest/jvs" --strip-components=1 && \
-        export PATH="$dest/jvs:$PATH"
-    fi
-  fi
-}
-
-if ! has_ass_filter; then
-  install_ffmpeg_with_ass
-fi
-
-ffmpeg -hide_banner -version | head -n 1
-if has_ass_filter; then
-  echo "libass subtitles filter: available (burned-in karaoke captions enabled)"
-else
-  echo "libass subtitles filter: unavailable (captions will be skipped)"
-fi
+echo "=== FFmpeg selection is handled by the pipeline (imageio-ffmpeg bundles libass) ==="
 
 echo "=== Selecting a Python 3 interpreter for the pipeline ==="
 PY_TARGET=""
