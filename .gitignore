@@ -1,0 +1,22 @@
+# Dependencies & build caches
+node_modules/
+dist/
+build/
+.remotion/
+
+# Rendered video & preview outputs (keep folder placeholder)
+out/*
+!out/.gitkeep
+
+# Agent skill directories installed by setup-video-studio.sh
+.agents/
+.claude/skills/
+.cursor/
+skills-lock.json
+
+# OS & environment files
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
