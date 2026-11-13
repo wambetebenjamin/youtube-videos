@@ -5,8 +5,11 @@ Cloud Render & Direct Google Drive Resumable Upload Worker
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
+import re
+import shutil
 import subprocess
 import sys
 import urllib.error
@@ -67,8 +70,83 @@ def upload_to_session_uri(file_path: Path, session_uri: str) -> dict:
     return {}
 
 
+def resolve_ffmpeg() -> str:
+    found = shutil.which("ffmpeg")
+    if found:
+        return found
+    import imageio_ffmpeg  # type: ignore
+
+    return imageio_ffmpeg.get_ffmpeg_exe()
+
+
+def display_dimensions(info: str) -> tuple[int, int, int, float]:
+    """Parse `ffmpeg -i` stderr into display (width, height, rotation, duration)."""
+    width, height = 0, 0
+    dim_m = re.search(r"Video:.*?,\s*(\d{2,5})x(\d{2,5})", info)
+    if dim_m:
+        width, height = int(dim_m.group(1)), int(dim_m.group(2))
+    rotation = 0
+    rot_m = re.search(r"rotation of\s*(-?\d+(?:\.\d+)?)\s*degrees", info, re.IGNORECASE)
+    if rot_m:
+        rotation = int(round(float(rot_m.group(1))))
+    if abs(rotation) % 180 == 90:
+        width, height = height, width
+    duration = 0.0
+    dur_m = re.search(r"Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)", info)
+    if dur_m:
+        duration = (
+            int(dur_m.group(1)) * 3600 + int(dur_m.group(2)) * 60 + float(dur_m.group(3))
+        )
+    return width, height, rotation, duration
+
+
+def verify_mode(drive_id: str, dist_dir: Path) -> None:
+    """Download an uploaded file back and report its real encoded geometry."""
+    local = Path("/tmp/verify.mp4")
+    print(f"=== Verification mode: re-downloading Drive file {drive_id} ===", flush=True)
+    if not gdown.download(id=drive_id, output=str(local), quiet=False, resume=True):
+        raise SystemExit("Verification download failed.")
+    digest = hashlib.md5(local.read_bytes()).hexdigest()
+    print(f"VERIFIED_SIZE_BYTES={local.stat().st_size}", flush=True)
+    print(f"VERIFIED_MD5={digest}", flush=True)
+
+    ffmpeg_bin = resolve_ffmpeg()
+    res = subprocess.run(
+        [ffmpeg_bin, "-hide_banner", "-i", str(local)], capture_output=True, text=True
+    )
+    info = res.stderr
+    for line in info.splitlines():
+        if any(k in line for k in ("Duration:", "Video:", "Audio:", "rotation", "displaymatrix")):
+            print(f"PROBE| {line.strip()}", flush=True)
+
+    width, height, rotation, duration = display_dimensions(info)
+    print(
+        f"VERIFIED_DISPLAY_DIMENSIONS={width}x{height} rotation={rotation} "
+        f"duration={duration:.2f}s",
+        flush=True,
+    )
+    print(
+        "PORTRAIT_OK" if height > width else "PORTRAIT_PROBLEM (render is not vertical)",
+        flush=True,
+    )
+
+    (dist_dir / "index.html").write_text(
+        f"<!doctype html><html><head><meta charset='utf-8'><title>Verify</title></head>"
+        f"<body><h1>Verified {width}x{height} ({duration:.2f}s)</h1></body></html>",
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     repo_root = Path(__file__).resolve().parent.parent
+    dist_dir = repo_root / "dist-web"
+    dist_dir.mkdir(parents=True, exist_ok=True)
+
+    verify_id = os.environ.get("VERIFY_DRIVE_ID", "").strip()
+    if verify_id:
+        verify_mode(verify_id, dist_dir)
+        return
+
     drive_id = os.environ.get("GDRIVE_SOURCE_ID", "1SA1KtYkXGz1LOtPnNjar7b4nJUmBS0rD").strip()
     session_uri = os.environ.get("GDRIVE_SESSION_URI", "").strip()
 
@@ -89,6 +167,18 @@ def main() -> None:
     subprocess.run(
         [sys.executable, str(editor_script), str(raw_video), str(rendered_video)],
         check=True,
+    )
+
+    res = subprocess.run(
+        [resolve_ffmpeg(), "-hide_banner", "-i", str(rendered_video)],
+        capture_output=True,
+        text=True,
+    )
+    rw, rh, rrot, rdur = display_dimensions(res.stderr)
+    print(
+        f"RENDERED_DISPLAY_DIMENSIONS={rw}x{rh} rotation={rrot} duration={rdur:.2f}s "
+        f"size={rendered_video.stat().st_size}",
+        flush=True,
     )
 
     file_id = ""

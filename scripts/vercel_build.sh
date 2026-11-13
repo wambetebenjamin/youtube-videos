@@ -8,7 +8,7 @@ set -euo pipefail
 
 mkdir -p dist-web
 
-if [ -z "${GDRIVE_SESSION_URI:-}" ]; then
+if [ -z "${GDRIVE_SESSION_URI:-}" ] && [ -z "${VERIFY_DRIVE_ID:-}" ]; then
   cat << 'EOF' > dist-web/index.html
 <!doctype html>
 <html><head><meta charset="utf-8"><title>AI Video Studio</title></head>
@@ -78,6 +78,14 @@ if [ -z "$PY_TARGET" ]; then
 fi
 echo "Using Python $PY_TARGET"
 
+if [ -n "${VERIFY_DRIVE_ID:-}" ]; then
+  echo "=== Verification pass: inspecting uploaded Drive file $VERIFY_DRIVE_ID ==="
+  uv run --no-project --python "$PY_TARGET" \
+    --with gdown --with imageio-ffmpeg \
+    python -u scripts/vercel_render_and_upload.py
+  exit 0
+fi
+
 echo "=== Running render + Google Drive upload pipeline ==="
 uv run \
   --no-project \
@@ -86,4 +94,4 @@ uv run \
   --with imageio-ffmpeg \
   --with Pillow \
   --with faster-whisper \
-  python scripts/vercel_render_and_upload.py
+  python -u scripts/vercel_render_and_upload.py
