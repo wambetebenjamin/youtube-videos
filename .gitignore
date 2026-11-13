@@ -14,7 +14,9 @@ out/*
 .cursor/
 skills-lock.json
 
-# OS & environment files
+# OS, Python & environment files
+__pycache__/
+*.pyc
 .DS_Store
 *.log
 .env
