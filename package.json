@@ -36,6 +36,9 @@
     "render:preview": "remotion still YouTubeVideo out/preview.png --frame=45",
     "render:youtube": "remotion render YouTubeVideo out/youtube-video.mp4 --codec=h264 --pixel-format=yuv420p",
     "render:reel": "remotion render VerticalReel out/vertical-reel.mp4 --codec=h264 --pixel-format=yuv420p",
+    "gdrive:pull": "bash scripts/gdrive.sh pull",
+    "gdrive:auth": "bash scripts/gdrive.sh auth",
+    "gdrive:push": "bash scripts/gdrive.sh push",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "setup": "bash setup-video-studio.sh"

@@ -29,6 +29,19 @@ Cloud-ready AI Video Studio built for **GitHub Codespaces**, combining **Remotio
    - *"Check `public/pics/` and build a 45-second 1080p YouTube slideshow with smooth transitions, Ken Burns zoom, and lower-third captions, then render to `out/intro.mp4`."*
    - *"Trim the silences from `public/raw-footage/talk.mp4`, reframe it to a 9:16 Reel with animated captions, normalize audio to -14 LUFS, and export to `out/reel.mp4`."*
 
+## Google Drive Pull & Push (No File Size Limit)
+
+```bash
+# 1. Pull any shared Google Drive video/folder straight into public/raw-footage/
+npm run gdrive:pull -- "https://drive.google.com/file/d/<FILE_ID>/view?usp=sharing"
+
+# 2. Connect your Google Drive account once (for uploading finished edits back)
+npm run gdrive:auth
+
+# 3. Upload a finished video to a Google Drive folder URL (or folder name) & get a share link
+npm run gdrive:push -- out/edited-video.mp4 "https://drive.google.com/drive/folders/<FOLDER_ID>"
+```
+
 ## Useful Commands
 
 ```bash

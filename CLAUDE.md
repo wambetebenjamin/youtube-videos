@@ -14,6 +14,9 @@
 
 ## Helpful Commands
 - `npm run dev` — Launch Remotion Studio for interactive timeline preview.
+- `npm run gdrive:pull -- "<google-drive-url>"` — Download any shared Google Drive video/folder (no size limit) into `public/raw-footage/`.
+- `npm run gdrive:auth` — Connect your Google Drive account (`rclone`) once for uploads or private Drive files.
+- `npm run gdrive:push -- out/<video.mp4> "<folder-url-or-name>"` — Upload an exported video from `out/` to Google Drive and print its shareable link.
 - `npm run render:preview` — Render a single still frame to `out/preview.png` for quick layout inspection.
 - `npm run render:youtube` — Render `YouTubeVideo` to `out/youtube-video.mp4`.
 - `npm run render:reel` — Render `VerticalReel` to `out/vertical-reel.mp4`.

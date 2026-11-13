@@ -35,6 +35,8 @@ install_system_packages() {
     ffmpeg \
     git-lfs \
     python3 \
+    python3-pip \
+    rclone \
     ca-certificates \
     curl \
     unzip \
@@ -61,6 +63,11 @@ install_system_packages() {
 }
 
 install_system_packages
+
+echo "Installing Google Drive CLI downloader (gdown)..."
+python3 -m pip install --user --break-system-packages -q gdown 2>/dev/null \
+  || python3 -m pip install --user -q gdown 2>/dev/null \
+  || true
 
 echo "Setting up Git LFS for videos, images, and audio..."
 if command -v git-lfs >/dev/null 2>&1 || git lfs version >/dev/null 2>&1; then
