@@ -1,6 +1,7 @@
 # Dependencies & build caches
 node_modules/
 dist/
+dist-web/
 build/
 .remotion/
 

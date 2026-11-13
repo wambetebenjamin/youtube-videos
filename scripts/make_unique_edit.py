@@ -58,23 +58,40 @@ def probe_video(ffmpeg_bin: str, input_path: Path) -> dict[str, Any]:
         res = subprocess.run(cmd, capture_output=True, text=True, check=True)
         data = json.loads(res.stdout)
         width, height, fps = 1080, 1920, 30.0
+        rotation = 0
         has_audio = False
+        video_found = False
         for stream in data.get("streams", []):
-            if stream.get("codec_type") == "video" and width == 1080:
+            if stream.get("codec_type") == "video" and not video_found:
+                video_found = True
                 width = int(stream.get("width", 1080))
                 height = int(stream.get("height", 1920))
-                r_fps = stream.get("r_frame_rate", "30/1")
+                rot_tag = stream.get("tags", {}).get("rotate")
+                if rot_tag is not None:
+                    try:
+                        rotation = int(round(float(rot_tag)))
+                    except ValueError:
+                        pass
+                for sd in stream.get("side_data_list", []):
+                    if "rotation" in sd:
+                        try:
+                            rotation = int(round(float(sd["rotation"])))
+                        except ValueError:
+                            pass
+                r_fps = stream.get("avg_frame_rate") or stream.get("r_frame_rate", "30/1")
                 if "/" in r_fps:
                     num, den = r_fps.split("/", 1)
                     if float(den) > 0:
                         fps = float(num) / float(den)
             elif stream.get("codec_type") == "audio":
                 has_audio = True
+        if abs(rotation) % 180 == 90:
+            width, height = height, width
         duration = float(data.get("format", {}).get("duration", 0.0))
         return {
             "width": width,
             "height": height,
-            "fps": round(min(max(fps, 24.0), 60.0), 3),
+            "fps": round(min(max(fps, 24.0), 30.0), 3),
             "duration": duration,
             "has_audio": has_audio,
         }
@@ -89,13 +106,16 @@ def probe_video(ffmpeg_bin: str, input_path: Path) -> dict[str, Any]:
     dim_m = re.search(r"Video:.*?,\s*(\d{2,5})x(\d{2,5})", info)
     width = int(dim_m.group(1)) if dim_m else 1080
     height = int(dim_m.group(2)) if dim_m else 1920
+    rot_m = re.search(r"rotation of\s*(-?\d+(?:\.\d+)?)\s*degrees", info, re.IGNORECASE)
+    if rot_m and abs(int(round(float(rot_m.group(1))))) % 180 == 90:
+        width, height = height, width
     fps_m = re.search(r"(\d+(?:\.\d+)?)\s*fps", info)
     fps = float(fps_m.group(1)) if fps_m else 30.0
     has_audio = "Audio:" in info
     return {
         "width": width,
         "height": height,
-        "fps": round(min(max(fps, 24.0), 60.0), 3),
+        "fps": round(min(max(fps, 24.0), 30.0), 3),
         "duration": duration,
         "has_audio": has_audio,
     }
@@ -395,7 +415,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def load_pil_font(size: int, bold: bool = True):
     from PIL import ImageFont  # type: ignore
 
+    repo_font = Path(__file__).resolve().parent.parent / "public" / "fonts" / "DejaVuSans-Bold.ttf"
     candidates = [
+        str(repo_font),
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
         if bold
         else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
@@ -548,12 +570,16 @@ def render_final_composite(
     badge_y = int(round(height * 0.032))
     dur = max(1.0, duration)
 
-    # Escape ASS path for FFmpeg filter syntax
-    escaped_ass = (
-        str(ass_path)
-        .replace("\\", "\\\\")
-        .replace(":", "\\:")
-        .replace("'", "\\'")
+    # Escape ASS path and bundled fonts directory for FFmpeg filter syntax
+    def esc_ff(p: str) -> str:
+        return p.replace("\\", "\\\\").replace(":", "\\:").replace("'", "\\'")
+
+    escaped_ass = esc_ff(str(ass_path))
+    fonts_dir = Path(__file__).resolve().parent.parent / "public" / "fonts"
+    ass_filter = (
+        f"ass=filename='{escaped_ass}':fontsdir='{esc_ff(str(fonts_dir))}'"
+        if fonts_dir.exists()
+        else f"ass=filename='{escaped_ass}'"
     )
 
     # Target video bitrate to stay cleanly under max_mb
@@ -567,7 +593,7 @@ def render_final_composite(
         f"[2:v]format=rgba,fade=t=in:st=3.9:d=0.4:alpha=1[badge];"
         f"[0:v][hook]overlay=x=0:y={hook_y}:enable='between(t,0,3.9)'[v1];"
         f"[v1][badge]overlay=x={badge_x}:y={badge_y}:enable='gte(t,3.9)'[v2];"
-        f"[v2]ass=filename='{escaped_ass}',"
+        f"[v2]{ass_filter},"
         f"drawbox=x=0:y=0:w={even_w}:h={bar_h}:color=black@0.45:t=fill[v3];"
         f"[v3][pbar]overlay=x='-{even_w}+({even_w})*min(1,t/{dur:.3f})':y=0:shortest=1[vout]"
     )
