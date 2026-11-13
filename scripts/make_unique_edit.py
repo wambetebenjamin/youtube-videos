@@ -42,6 +42,31 @@ def find_binary(name: str) -> str:
     raise RuntimeError(f"Required binary '{name}' not found on PATH.")
 
 
+_FILTER_CACHE: dict[tuple[str, str], bool] = {}
+
+
+def has_filter(ffmpeg_bin: str, filter_name: str) -> bool:
+    """Return True when the FFmpeg build exposes the named filter."""
+    key = (ffmpeg_bin, filter_name)
+    if key in _FILTER_CACHE:
+        return _FILTER_CACHE[key]
+    try:
+        res = subprocess.run(
+            [ffmpeg_bin, "-hide_banner", "-filters"],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        available = any(
+            re.match(rf"^\s*[TSC.]+\s+{re.escape(filter_name)}\s", line)
+            for line in res.stdout.splitlines()
+        )
+    except Exception:
+        available = False
+    _FILTER_CACHE[key] = available
+    return available
+
+
 def probe_video(ffmpeg_bin: str, input_path: Path) -> dict[str, Any]:
     ffprobe_bin = shutil.which("ffprobe")
     if ffprobe_bin:
@@ -576,11 +601,16 @@ def render_final_composite(
 
     escaped_ass = esc_ff(str(ass_path))
     fonts_dir = Path(__file__).resolve().parent.parent / "public" / "fonts"
-    ass_filter = (
-        f"ass=filename='{escaped_ass}':fontsdir='{esc_ff(str(fonts_dir))}'"
-        if fonts_dir.exists()
-        else f"ass=filename='{escaped_ass}'"
-    )
+    if has_filter(ffmpeg_bin, "ass"):
+        ass_filter = (
+            f"ass=filename='{escaped_ass}':fontsdir='{esc_ff(str(fonts_dir))}'"
+            if fonts_dir.exists()
+            else f"ass=filename='{escaped_ass}'"
+        )
+    else:
+        # Minimal static ffmpeg builds (e.g. imageio-ffmpeg) ship without libass.
+        print("Note: this FFmpeg has no libass 'ass' filter; skipping burned-in captions.")
+        ass_filter = "null"
 
     # Target video bitrate to stay cleanly under max_mb
     target_total_kbps = int((max_mb * 8192.0) / dur)
