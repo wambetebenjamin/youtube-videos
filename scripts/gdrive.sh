@@ -95,24 +95,52 @@ cmd_pull() {
 cmd_auth() {
   ensure_rclone
 
-  echo "=================================================================="
-  echo "Connecting Google Drive (remote name: gdrive)"
-  echo ""
-  echo "Browser Codespaces tip:"
-  echo "  1. Click the Google sign-in URL printed below and approve access."
-  echo "  2. If your browser lands on '127.0.0.1:53682 refused to connect',"
-  echo "     copy that full http://127.0.0.1:53682/... URL from the address"
-  echo "     bar, open a second terminal tab in Codespaces, and run:"
-  echo "       curl \"<PASTE_THE_127.0.0.1_URL_HERE>\""
-  echo "=================================================================="
-  echo ""
-
   if rclone listremotes 2>/dev/null | grep -q "^gdrive:$"; then
-    echo "Remote 'gdrive:' already exists. Re-authenticating..."
-    rclone config reconnect gdrive:
-  else
-    rclone config create gdrive drive scope=drive
+    echo "Removing existing 'gdrive:' remote to refresh authentication..."
+    rclone config delete gdrive || true
   fi
+
+  local LOG_FILE
+  LOG_FILE="$(mktemp)"
+
+  rclone config create gdrive drive scope=drive >"$LOG_FILE" 2>&1 &
+  local RCLONE_PID=$!
+
+  local LOCAL_AUTH_URL=""
+  for _ in $(seq 1 30); do
+    LOCAL_AUTH_URL="$(grep -oE 'http://127\.0\.0\.1:[0-9]+/auth\?state=[^[:space:]]+' "$LOG_FILE" | head -n 1 || true)"
+    if [ -n "$LOCAL_AUTH_URL" ]; then
+      break
+    fi
+    sleep 0.3
+  done
+
+  if [ -z "$LOCAL_AUTH_URL" ]; then
+    cat "$LOG_FILE"
+    rm -f "$LOG_FILE"
+    wait "$RCLONE_PID"
+    return 0
+  fi
+
+  local GOOGLE_URL
+  GOOGLE_URL="$(curl -sI "$LOCAL_AUTH_URL" | tr -d '\r' | sed -n 's/^[Ll]ocation: //p' | head -n 1)"
+
+  echo "=================================================================="
+  echo "Step 1: Open this Google sign-in link in your browser and click Allow:"
+  echo ""
+  echo "  $GOOGLE_URL"
+  echo ""
+  echo "Step 2: After approving, your browser will redirect to a page that"
+  echo "        says 'This site can't be reached' (127.0.0.1:53682)."
+  echo "        Copy the FULL URL from your browser's address bar and paste it below:"
+  echo "=================================================================="
+  printf "Paste http://127.0.0.1:53682/?... URL here: "
+  local CALLBACK_URL=""
+  read -r CALLBACK_URL
+
+  curl -fsS "$CALLBACK_URL" >/dev/null
+  wait "$RCLONE_PID" || true
+  rm -f "$LOG_FILE"
 
   echo ""
   echo "Google Drive connected! Verifying access..."
