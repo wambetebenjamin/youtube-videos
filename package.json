@@ -1,0 +1,49 @@
+{
+  "name": "youtube-videos",
+  "version": "1.0.0",
+  "description": "AI Video Studio powered by Remotion, FFmpeg, and Agent Skills",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "dependencies": {
+    "@remotion/captions": "4.0.543",
+    "@remotion/cli": "4.0.543",
+    "@remotion/google-fonts": "4.0.543",
+    "@remotion/media": "4.0.543",
+    "@remotion/tailwind-v4": "4.0.543",
+    "@remotion/transitions": "4.0.543",
+    "@remotion/zod-types": "4.0.543",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.543",
+    "tailwindcss": "4.0.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.543",
+    "@types/react": "19.3.0",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "studio": "remotion studio --ipv4 --port 3000 --no-open",
+    "build": "remotion bundle",
+    "render:preview": "remotion still YouTubeVideo out/preview.png --frame=45",
+    "render:youtube": "remotion render YouTubeVideo out/youtube-video.mp4 --codec=h264 --pixel-format=yuv420p",
+    "render:reel": "remotion render VerticalReel out/vertical-reel.mp4 --codec=h264 --pixel-format=yuv420p",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "setup": "bash setup-video-studio.sh"
+  },
+  "allowScripts": {
+    "esbuild": false
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}
