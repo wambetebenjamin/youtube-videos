@@ -8,12 +8,17 @@ the template's page types were re-used and its copy replaced.
 
 ## Download
 
-Click either link and the file downloads straight away.
+Click any link and the file downloads straight away.
 
-* **PDF (the book):** <https://github.com/wambetebenjamin/youtube-videos/raw/arena/f482c0bc-youtube-videos/publishing/chrisco-youth-aflame/book-01-unused-is-lost/unused-is-lost.pdf>
-* **DOCX (editable manuscript):** <https://github.com/wambetebenjamin/youtube-videos/raw/arena/f482c0bc-youtube-videos/publishing/chrisco-youth-aflame/book-01-unused-is-lost/unused-is-lost.docx>
+**PDF, the book (22 pages, A4):**
 
-Google Drive mirrors: PDF `1NvWcGWFh6sXkUekpV9TAdnUr0kBWZ8rR`, DOCX `1n0xbP15Bqe7tpCVHrEYZeFRejHAlKMIz`.
+* GitHub: <https://github.com/wambetebenjamin/youtube-videos/raw/arena/f482c0bc-youtube-videos/publishing/chrisco-youth-aflame/book-01-unused-is-lost/unused-is-lost.pdf>
+* Google Drive: <https://drive.google.com/uc?export=download&id=1FnteHTaj2D-UsyBEO58EtvKl0buBXnRt>
+
+**DOCX, the editable manuscript:**
+
+* GitHub: <https://github.com/wambetebenjamin/youtube-videos/raw/arena/f482c0bc-youtube-videos/publishing/chrisco-youth-aflame/book-01-unused-is-lost/unused-is-lost.docx>
+* Google Drive: <https://drive.google.com/uc?export=download&id=1cN4VVe7uMUL77Bhwx1KsFpHrtAIyVSDl>
 
 ## Files
 
