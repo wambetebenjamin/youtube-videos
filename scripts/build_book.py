@@ -1163,9 +1163,11 @@ def main():
         build_md(p)
         print("wrote", p)
     if a.pdf or do_all:
+        # PDF interior follows the SCHOOL BOOK template (scripts/book_template.py)
+        import book_template
         p = os.path.join(BOOK_DIR, "unused-is-lost.pdf")
-        nums = build_pdf(p)
-        print("wrote", p, nums)
+        n = book_template.build(p)
+        print("wrote", p, n, "pages")
     if a.docx or do_all:
         p = os.path.join(BOOK_DIR, "unused-is-lost.docx")
         build_docx(p)
