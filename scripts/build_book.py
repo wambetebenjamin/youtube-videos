@@ -426,7 +426,7 @@ def build_pdf(out_path: str) -> dict:
         c.setFont("Serif", 9.6)
         c.setFillColor(INK)
         c.drawString(M + 18, state["y"] - 26, "Two laws. Learn them young and they will pay you for the rest of your life.")
-        c.drawString(M + 18, state["y"] - 44, "Ignore them and they will still send the bill — only later.")
+        c.drawString(M + 18, state["y"] - 44, "Ignore them and they will still send the bill, only later.")
 
     def page_part(part, key):
         new_page(number=False)
@@ -796,7 +796,7 @@ def build_md(out_path: str) -> None:
     add("## Contents")
     add("")
     for kick, title, key in CONTENTS:
-        label = f"**{plain(kick)}** — " if kick else ""
+        label = f"**{plain(kick)}** · " if kick else ""
         add(f"- {label}{plain(title)}")
     add("")
     add("---")
@@ -821,7 +821,7 @@ def build_md(out_path: str) -> None:
     add(f"> {plain(PART1['blurb'])}")
     add("")
     for ch in (CH1, CH2, CH3, CH4):
-        add(f"## {plain(ch['kick']).title()} — {plain(ch['title'])}")
+        add(f"## {plain(ch['kick']).title()}: {plain(ch['title'])}")
         add("")
         if "intro" in ch:
             add(md(ch["intro"]))
@@ -839,7 +839,7 @@ def build_md(out_path: str) -> None:
                         add(f"- {md(it)}")
                     add("")
         for n, t, txt in ch.get("items", []):
-            add(f"**{n}. {md(t)}** — {md(txt)}")
+            add(f"**{n}. {md(t)}.** {md(txt)}")
             add("")
         if "prompts" in ch:
             for pr in ch["prompts"]:
@@ -853,7 +853,7 @@ def build_md(out_path: str) -> None:
     add("# PART TWO: The Law of Sowing and Reaping")
     add("")
     for ch in (CH5, CH6, CH7, CH8):
-        add(f"## {plain(ch['kick']).title()} — {plain(ch['title'])}")
+        add(f"## {plain(ch['kick']).title()}: {plain(ch['title'])}")
         add("")
         if "intro" in ch:
             add(md(ch["intro"]))
@@ -868,7 +868,7 @@ def build_md(out_path: str) -> None:
                     add("")
                 elif b[0] == "scripture":
                     add(f"> {md(b[1])}  ")
-                    add(f"> — {md(b[2])}")
+                    add(f"> {md(b[2])}")
                     add("")
                 elif b[0] == "list":
                     for it in b[1]:
@@ -878,17 +878,17 @@ def build_md(out_path: str) -> None:
                     add(f"![{plain(b[2])}](images/{b[1]})")
                     add("")
         for n, t, txt in ch.get("items", []):
-            add(f"**{n}. {md(t)}** — {md(txt)}")
+            add(f"**{n}. {md(t)}.** {md(txt)}")
             add("")
         for wk, title, txt in ch.get("weeks", []):
-            add(f"**{wk} — {md(title)}** {md(txt)}")
+            add(f"**{wk}: {md(title)}.** {md(txt)}")
             add("")
         if "outro" in ch:
             add(md(ch["outro"]))
             add("")
     add("---")
     add("")
-    add(f"## {plain(CLOSE['kick']).title()} — {plain(CLOSE['title'])}")
+    add(f"## {plain(CLOSE['kick']).title()}: {plain(CLOSE['title'])}")
     add("")
     for b in CLOSE["blocks"]:
         if isinstance(b, str):
@@ -896,7 +896,7 @@ def build_md(out_path: str) -> None:
             add("")
         elif b[0] == "scripture":
             add(f"> {plain(b[1])}")
-            add(f"> — {plain(b[2])}", )
+            add(f"> {plain(b[2])}", )
             add("")
         elif b[0] == "pull":
             add(f"> *{md(b[1])}*")
@@ -1053,7 +1053,7 @@ def build_docx(out_path: str) -> None:
                 r = p.add_run(plain(b[1]) + " ")
                 r.italic = True
                 r.font.size = Pt(11)
-                r2 = p.add_run("— " + plain(b[2]))
+                r2 = p.add_run(plain(b[2]))
                 r2.font.size = Pt(9)
                 r2.font.bold = True
                 r2.font.color.rgb = ORANGE
@@ -1139,7 +1139,7 @@ def build_docx(out_path: str) -> None:
         elif b[0] == "imgcredits":
             for n_, s, u in b[1]:
                 p = doc.add_paragraph()
-                r = p.add_run(n_ + " — ")
+                r = p.add_run(n_ + ". ")
                 r.font.size = Pt(9)
                 r2 = p.add_run(f"{s} · {u}")
                 r2.font.size = Pt(9)

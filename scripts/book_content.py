@@ -49,11 +49,11 @@ FOREWORD = [
     "Some sentences are so small that you walk past them, and so true that you never do.",
     "This book is built on one of those sentences. An older man handed it to a younger one a long time ago, "
     "and the younger man spent the rest of his life proving it: <b>whatever you don&rsquo;t use, you lose.</b>",
-    "That is not a proverb about money. It is a law about everything you have been given &mdash; your mind, your body, "
+    "That is not a proverb about money. It is a law about everything you have been given: your mind, your body, "
     "your voice, your ambition, your faith, the people who poured into you, the years in front of you. "
     "It is quiet and it is ruthless. It does not send you a warning letter. It simply takes back what you refuse to put to work.",
     "We are a youth movement inside CHRISCO Fellowship of Churches, and we are writing this little library because we have "
-    "watched too many young people with real gifts arrive at twenty-five with nothing to show for them &mdash; not because "
+    "watched too many young people with real gifts arrive at twenty-five with nothing to show for them, not because "
     "they were wicked, but because nobody told them the rules.",
     "So here are two of the rules. Two basic laws, older than any of us, written into the ground we walk on and into the "
     "Scripture we read. The first is the <b>law of use</b>. The second is the <b>law of sowing and reaping</b>.",
@@ -84,7 +84,7 @@ CH1 = {
         "That is arithmetic that feels honest and is not. You could have worked twice as hard tomorrow <i>and</i> "
         "done something today. The day is not a bank. You cannot deposit it back.",
         "Here is the picture that never leaves you once you have seen it. Tie your arm to your side. Leave it there long enough "
-        "and you will never use it again. Not because anything dramatic happened &mdash; no accident, no diagnosis, no enemy. "
+        "and you will never use it again. Not because anything dramatic happened. No accident, no diagnosis, no enemy. "
         "You simply stopped. And stopping was enough.",
         "The only way to keep the use of the arm is to keep using the arm. If you quit, you lose automatically. "
         "They do not bring it up for a vote. Nobody asks whether you meant well. There is no appeal. "
@@ -116,15 +116,15 @@ CH2 = {
          "Unused ambition does not stay at full strength; it declines into cynicism. Ask: what do I still want, "
          "and when did I stop saying it out loud?"),
         ("04", "Vitality",
-         "Unused vitality diminishes &mdash; in the body first. Ask: what would be different in six months if I moved, "
+         "Unused vitality diminishes, in the body first. Ask: what would be different in six months if I moved, "
          "slept and ate like my body was on assignment?"),
         ("05", "Energy",
          "Energy unused decreases. You cannot store it like grain. Ask: where have I been resting and calling it preparation?"),
         ("06", "Strong feelings",
-         "Conviction, compassion, grief over wrong &mdash; these grow only by being acted on. "
+         "Conviction, compassion, grief over wrong: these grow only by being acted on. "
          "Ask: what moved me recently that I have not yet done anything about?"),
         ("07", "Faith",
-         "Faith unused decreases. Not faith spoken about &mdash; faith exercised. Ask: what am I asking God for that "
+         "Faith unused decreases. Not faith spoken about. Faith exercised. Ask: what am I asking God for that "
          "requires nothing of me?"),
     ],
     "outro": "Seven things. One law. And a mercy buried inside it: the leak is reversible while you can still read these words.",
@@ -134,22 +134,22 @@ CH3 = {
     "kick": "CHAPTER THREE",
     "title": "The Servant Who Played It Safe",
     "blocks": [
-        "Jesus told a story about a man going on a long journey. He called three servants and handed them his property &mdash; "
+        "Jesus told a story about a man going on a long journey. He called three servants and handed them his property: "
         "five talents to one, two to another, one to the last. In those days a talent was a weight of gold, not a personality trait. "
         "These were real, heavy, transferable assets.",
         "&ldquo;Trade with these until I return,&rdquo; he said. Then he left.",
-        "The first two went to work. It was shaky at first &mdash; markets are markets &mdash; but things got rolling, and by the time "
+        "The first two went to work. It was shaky at first, because markets are markets, but things got rolling, and by the time "
         "the master came home the five had become ten and the two had become four. Both had doubled. Neither had been spectacular. "
         "Both had been faithful.",
         "The third servant had a different strategy. He wrapped his talent in cloth, dug a hole, and buried it. "
         "It was, by his own account, a success: he had not lost it. Nothing had been stolen. He handed it back exactly as received, "
         "and he said so with a straight face, as if safety were the same thing as obedience.",
-        "<b>Read Matthew 25:14&ndash;30.</b> The master&rsquo;s verdict is one of the hardest sentences in the Bible: "
+        "<b>Read Matthew 25:14 to 30.</b> The master&rsquo;s verdict is one of the hardest sentences in the Bible: "
         "the talent is taken from the man and given to the one who already has ten. Not because the servant was cruel. "
         "Because he was <i>idle</i>. Because he had confused doing no harm with doing good.",
         ("pull", "The servant was not condemned for what he did with the talent. He was condemned for what he did with the hole.", ""),
         "Before you decide the master was harsh, notice what the story is actually defending: the master&rsquo;s reputation. "
-        "A servant who buries what his master gave him publishes a message about his master &mdash; that he is a hard man, "
+        "A servant who buries what his master gave him publishes a message about his master: that he is a hard man, "
         "that nothing is worth the risk, that the safest thing to do with God is nothing.",
         "That is the lie this book exists to break. God is not glorified by your caution. He is glorified by your use.",
         "Which raises a question only you can answer: what is wrapped in cloth in your life right now, and who told you burying it was wise?",
@@ -189,7 +189,7 @@ CH5 = {
         "And when you go looking for the farmer, you do not have to search far. You will find him in the mirror.",
         ("scripture", "Be not deceived; God is not mocked: for whatsoever a man soweth, that shall he also reap.", "Galatians 6:7"),
         "This is not fatalism, and it is not shame. It is the most hopeful doctrine in the world, because it puts the harvest back "
-        "inside your reach. If the crop is the problem, you cannot fix the crop &mdash; but you can change the seed, and you can start today.",
+        "inside your reach. If the crop is the problem, you cannot fix the crop, but you can change the seed, and you can start today.",
         "That is why the next chapter is not a lecture. It is a set of keys: seven things that are true about this law, "
         "whether you believe them or not, whether you are sixteen or sixty.",
         ("pull", "You cannot argue with a harvest. You can only plant again.", ""),
@@ -206,7 +206,7 @@ CH6 = {
         ("02", "The law is positive",
          "Sow good, reap good. The same machinery that ruins a careless life will quietly build a faithful one."),
         ("03", "The law is <i>more</i>",
-         "You do not get back what you put out &mdash; you get back much more. A small compromise becomes a character. "
+         "You do not get back what you put out. You get back much more. A small compromise becomes a character. "
          "A small obedience becomes a calling."),
         ("04", "There are many ways to sow",
          "Many ways to change a life, to be promoted, to move up, to become free. Do not fixate on the one door "
@@ -218,7 +218,7 @@ CH6 = {
          "Sometimes you do everything right and still lose. That is this planet: opportunity mixed with difficulty. "
          "Do not be naive and do not be bitter. Be ready."),
         ("07", "No sowing, no reaping",
-         "If you do not sow, you do not even have a chance. Not a smaller harvest &mdash; no harvest. "
+         "If you do not sow, you do not even have a chance. Not a smaller harvest: no harvest. "
          "That is the quiet tragedy of a careful life."),
     ],
     "outro": "And one instruction before you close the book: <b>don&rsquo;t try to beat the law.</b> You might as well try to sit on the sun "
@@ -242,7 +242,7 @@ CH7 = {
         "And the field is just as ordinary: your home, your church, your school, your job, your friendships, and the person "
         "nobody else is checking on.",
         ("scripture", "He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also bountifully.", "2 Corinthians 9:6"),
-        "In the morning sow your seed, and in the evening do not withhold your hand &mdash; because you do not know which will prosper, "
+        "In the morning sow your seed, and in the evening do not withhold your hand, because you do not know which will prosper, "
         "this or that, or whether both alike will be good (Ecclesiastes 11:6). That is not a promise of instant results. "
         "It is a promise that seed in the ground is never wasted, even when the harvest is late.",
         ("img", "06-maize-farmer.jpg", "Seed in the ground looks like nothing for a long time. That is the nature of seed.", 168),
@@ -254,7 +254,7 @@ CH7 = {
 CH8 = {
     "kick": "CHAPTER EIGHT",
     "title": "Thirty Days of Sowing",
-    "intro": "A law you agree with changes nothing. A law you practise changes everything. Here is one month of deliberate sowing &mdash; "
+    "intro": "A law you agree with changes nothing. A law you practise changes everything. Here is one month of deliberate sowing: "
              "small enough to finish, serious enough to matter.",
     "weeks": [
         ("WEEK 1", "Sow in your walk with God",
@@ -279,7 +279,7 @@ CLOSE = {
     "kick": "A CHARGE",
     "title": "Don&rsquo;t Let the Springs Pass",
     "blocks": [
-        "Life is brief. Not depressing &mdash; brief. Which means the springs do not come around twice. "
+        "Life is brief. Not sad, only brief. Which means the springs do not come around twice. "
         "The year you are in will pass whether or not you plant anything in it, and it will not come back to be used properly.",
         "So here is the charge, and it is short.",
         "Take a new inventory of yourself. Make sure that all of your talent, your ability, your mind, your ingenuity, "
@@ -287,8 +287,8 @@ CLOSE = {
         "Then go and sow. Not tomorrow. Not after the exams, the wedding, the salary, the breakthrough. Now, with what you have, "
         "in the field you can see.",
         ("scripture", "They that sow in tears shall reap in joy. He that goeth forth and weepeth, bearing precious seed, "
-                      "shall doubtless come again with rejoicing, bringing his sheaves with him.", "Psalm 126:5&ndash;6"),
-        "And when you fail &mdash; and you will &mdash; do not go and hide in shame. Shame buries seed. Repentance replants it.",
+                      "shall doubtless come again with rejoicing, bringing his sheaves with him.", "Psalm 126:5 and 6"),
+        "And when you fail, and you will, do not go and hide in shame. Shame buries seed. Repentance replants it.",
         ("h2", "A prayer to close"),
         "Father, thank You for what You have placed in my hands. Show me what I have buried, and give me the courage to dig it up. "
         "Teach me to sow where I am, with what I have, while I still can. Make my life a field and not a warehouse. "
@@ -300,20 +300,28 @@ CREDITS = [
     ("h2", "About this book"),
     "UNUSED IS LOST is Book One of the CHRISCO Youth Aflame library, a ministry of CHRISCO Fellowship of Churches. "
     "It is written for young people between roughly fifteen and thirty, and for the adults who refuse to give up on them.",
-    "The two laws in this book &mdash; the law of use and the law of sowing and reaping &mdash; are set out in a talk by "
+    "The two laws in this book, the law of use and the law of sowing and reaping, are set out in a talk by "
     "Jim Rohn on basic laws taken from Scripture. This book is an original work written in our own words in response to "
     "that teaching, and is not a transcript or an authorised edition of it. Scripture quotations are from the King James "
     "Version, which is in the public domain.",
     ("h2", "Design and photography"),
-    "Interior design: CHRISCO Youth Aflame creative team. Typefaces: DejaVu Sans and DejaVu Serif (free, open licence). "
-    "Photography is licensed royalty-free and used without modification of its licence terms:",
+    "Interior design: CHRISCO Youth Aflame creative team. The type follows the two families of the house template this "
+    "book is set to: a geometric display sans (Anantason, stood in for by Poppins) and a humanist text face "
+    "(Univers LT Pro, stood in for by Lato). Photography is licensed royalty-free and used without modification of its "
+    "licence terms:",
     ("imgcredits", [
         ("Campfire at night", "Unsplash", "unsplash.com/photos/_wR0kpSkt9A"),
         ("Leap at sunset", "Unsplash", "unsplash.com/photos/fMIsAL72P3U"),
-        ("Starting blocks", "Unsplash", "unsplash.com/photos"),
+        ("Starting blocks", "Unsplash", "unsplash.com/s/photos/young-athlete"),
         ("Choir in light", "Pexels", "pexels.com/photo/7520355"),
         ("Maize farmer, Kenya", "The Habari Network", "thehabarinetwork.com"),
-        ("Wheat field at dusk", "Unsplash", "unsplash.com"),
+        ("Wheat field at dusk", "Unsplash", "unsplash.com/photos/1627230768827"),
+        ("Young man at a window", "Unsplash", "unsplash.com/photos/zBBlSdn6fVA"),
+        ("Hands planting seedlings", "Unsplash", "unsplash.com/photos/q13Zq1Jufks"),
+        ("Guitar in the light", "Unsplash", "unsplash.com/photos/jt8lLfH7mcw"),
+        ("Friends walking", "Pexels", "pexels.com/photo/7972657"),
+        ("Notebook and pen", "Pexels", "pexels.com/photo/17237364"),
+        ("Empty road at dawn", "Pexels", "pexels.com/photo/28202556"),
     ]),
     "Images are the property of their respective photographers and are used under the Unsplash Licence, the Pexels Licence "
     "or with editorial credit as noted. No image in this book is AI-generated.",

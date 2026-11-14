@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""UNUSED IS LOST — interior built to the SCHOOL BOOK template.
+"""UNUSED IS LOST: interior built to the SCHOOL BOOK template.
 
 This module reproduces the reference layout (library/design-references/
 school-prospectus-22pp.pdf) page type for page type: same page size, same
@@ -72,14 +72,20 @@ class Book:
         self.HexColor = HexColor
         self.ParagraphStyle = ParagraphStyle
         self.Paragraph = _P
-        pdfmetrics.registerFont(TTFont("B", os.path.join(FONTS, "DejaVuSans-Bold.ttf")))
-        pdfmetrics.registerFont(TTFont("R", os.path.join(FONTS, "DejaVuSans.ttf")))
-        pdfmetrics.registerFont(TTFont("SB", os.path.join(FONTS, "DejaVuSerif-Bold.ttf")))
-        pdfmetrics.registerFontFamily("R", normal="R", bold="B", italic="R", boldItalic="B")
+        # The template's own two families, followed as closely as their embedded
+        # subsets allow (those subsets carry 46 to 66 glyphs, so they cannot set
+        # a book): display = Anantason-BoldWd125 -> Poppins, body = Univers LT
+        # Pro 55/65 -> Lato. Nothing outside this pair is used anywhere.
+        pdfmetrics.registerFont(TTFont("B", os.path.join(FONTS, "Poppins-Bold.ttf")))
+        pdfmetrics.registerFont(TTFont("SB", os.path.join(FONTS, "Poppins-SemiBold.ttf")))
+        pdfmetrics.registerFont(TTFont("R", os.path.join(FONTS, "Lato-Regular.ttf")))
+        pdfmetrics.registerFont(TTFont("LB", os.path.join(FONTS, "Lato-Bold.ttf")))
+        pdfmetrics.registerFontFamily("R", normal="R", bold="LB", italic="R", boldItalic="LB")
         pdfmetrics.registerFontFamily("B", normal="B", bold="B", italic="B", boldItalic="B")
 
         self.c = canvas.Canvas(path, pagesize=(PW, PH))
-        self.c.setTitle("Unused Is Lost — CHRISCO Youth Aflame")
+        self.c.setFont("R", 10)      # no stray Helvetica in the resource dictionary
+        self.c.setTitle("Unused Is Lost: CHRISCO Youth Aflame")
         self.c.setAuthor("CHRISCO Youth Aflame")
         self.c.setSubject("The Law of Use and the Law of Sowing and Reaping")
 
@@ -175,6 +181,7 @@ class Book:
         """Photo in a rounded window (template photo treatment)."""
         c = self.c
         y = self.Y(y_top + h)
+        r = min(r, w / 2.0 - 0.5, h / 2.0 - 0.5)
         c.saveState()
         p = c.beginPath()
         p.roundRect(x, y, w, h, r)
@@ -200,10 +207,10 @@ class Book:
         c.clipPath(p, stroke=0, fill=0)
         from PIL import Image
         iw, ih = Image.open(path).size
-        W, H = PW, depth_l + 60
+        W, H = PW, depth_l + 70           # H reaches past the deepest point of the wave
         scale = max(W / iw, H / ih)
         dw, dh = iw * scale, ih * scale
-        c.drawImage(path, (W - dw) / 2, PH - H + (H - dh) / 2 + 20, dw, dh, mask="auto")
+        c.drawImage(path, (W - dw) / 2, PH - dh, dw, dh, mask="auto")
         c.restoreState()
 
     def notched_photo(self, path, x, y, w, h):
@@ -368,18 +375,18 @@ class Book:
 # ------------------------------------------------------------------ content --
 TOC = [
     ("Welcome", 3), ("The Two Laws At A Glance", 5),
-    ("Part One — The Law of Use", 6),
+    ("Part One \u00b7 The Law of Use", 6),
     ("One · Nobody Votes On It", 7),
     ("Two · Seven Things That Leak", 8),
     ("Three · The Servant Who Played It Safe", 9),
     ("Four · Take A New Inventory Of Yourself", 10),
-    ("Part Two — The Law Of Sowing And Reaping", 12),
+    ("Part Two \u00b7 The Law Of Sowing And Reaping", 12),
     ("Five · Look In The Mirror", 13),
     ("Six · Seven Keys To Sowing And Reaping", 14),
     ("Seven · The Seed Already In Your Hand", 15),
     ("Eight · Thirty Days Of Sowing", 16),
     ("My Thirty Days", 17),
-    ("A Charge — Don't Let The Springs Pass", 18),
+    ("A Charge: Don't Let The Springs Pass", 18),
     ("A Prayer To Close", 19),
     ("Notes", 20), ("Credits And Acknowledgements", 21),
 ]
@@ -391,7 +398,7 @@ def build(out_path: str):
 
     # ------------------------------------------------------------------ 01 --
     b.new(b.BLUE)
-    b.wavy_photo(os.path.join(IMG, "04-worship-light.jpg"), depth_l=470, depth_r=300)
+    b.wavy_photo(os.path.join(IMG, "01-flame-night.jpg"), depth_l=470, depth_r=300)
     b.blob("toc_green", b.GREEN, dx=340, dy=-250, sx=0.75, sy=0.75)
     b.logo(39.6, 45)
     b.head(61.2, 486.8, ["UNUSED", "IS LOST"], size=62, color=b.WHITE, max_w=440)
@@ -402,24 +409,25 @@ def build(out_path: str):
     b.new(b.BLUE)
     b.blob("toc_green", b.GREEN)
     b.head(62.4, 41.5, ["Table of", "Contents"], size=45, color=b.WHITE, max_w=400)
-    y = 240.0
+    y = 236.0
+    pitch = 30.6
     b.hairline(126.9, 458.9, y - 2.5)
-    b.text(126.9, y + 9, "Table of Contents", B, 12, b.WHITE)
-    b.text(442.8, y + 9, "02", R, 12, b.WHITE)
+    b.text(126.9, y + 9, "Table of Contents", B, 11.5, b.WHITE)
+    b.text(442.8, y + 9, "02", R, 11.5, b.WHITE)
     for label, pg in TOC:
-        y += 36.6 if len(label) < 34 else 44.0
+        y += pitch
         b.hairline(126.9, 458.9, y - 2.5)
-        b.text(126.9, y + 9, label, B, 12, b.WHITE)
-        b.text(442.8, y + 9, "%02d" % pg, R, 12, b.WHITE)
+        b.text(126.9, y + 9, label, B, 11.5, b.WHITE)
+        b.text(442.8, y + 9, "%02d" % pg, R, 11.5, b.WHITE)
     b.pagenum_white()
 
     # ------------------------------------------------------------------ 03 --
     b.new(b.WHITE)
     b.blue_band(616, 560, 58)
-    b.roundphoto(os.path.join(IMG, "04-worship-light.jpg"), 392, 70, 160, 250, r=80)
-    b.blob("welcome_green", b.GREEN, dx=30, dy=-190, sx=0.72, sy=0.72)
-    b.text(66.9, 383.5, "Welcome To", R, 20, b.WHITE)
-    b.head(66.9, 393.4, ["Unused", "Is Lost"], size=45, leading=49.5, color=b.WHITE, max_w=330)
+    b.blob("welcome_green", b.GREEN, dx=-150, dy=-330, sx=0.72, sy=0.72)
+    b.roundphoto(os.path.join(IMG, "12-friends.jpg"), 40, 62, 512, 304, r=74)
+    b.text(66.9, 380.0, "Welcome To", R, 20, b.WHITE)
+    b.head(66.9, 390.0, ["Unused", "Is Lost"], size=54, leading=58.0, color=b.WHITE)
     b.text(66.9, 557.7, "Two laws that decide what a life becomes", R, 20.6, b.WHITE)
     b.text(61.0, 656.0, "FOREWORD", B, 9, b.BLUE, 2.4)
     y = b.block(122.0, 680.0, 380,
@@ -430,12 +438,12 @@ def build(out_path: str):
     y = b.block(122.0, y + 7, 380,
                 "It is not a proverb about money. It is a law about everything you have been given. It does not send "
                 "a warning letter; it simply takes back what you refuse to put to work.", R, 9.6, 13.2)
-    b.hairline(122.0, 502.0, 778.0, b.GREY, 1.0)
-    for i, (lab) in enumerate(["Law One — Use", "Law Two — Sow"]):
+    b.hairline(122.0, 502.0, 762.0, b.GREY, 1.0)
+    for i, (lab) in enumerate(["Law One \u00b7 Use", "Law Two \u00b7 Sow"]):
         x = 122.0 + i * 200
         b.c.setFillColor(b.BLUE)
-        b.c.circle(x, b.Y(798.0), 4.4, stroke=0, fill=1)
-        b.text(x + 13, 802.0, lab, B, 10, b.INK)
+        b.c.circle(x, b.Y(782.0), 4.4, stroke=0, fill=1)
+        b.text(x + 13, 786.0, lab, B, 10, b.INK)
     b.pagenum()
 
     # ------------------------------------------------------------------ 04 --
@@ -444,12 +452,12 @@ def build(out_path: str):
     b.roundphoto(os.path.join(IMG, "02-leap.jpg"), 45, 70, 245, 300, r=90)
     b.text(355.4, 123.0, "Our Vision", B, 21, b.WHITE)
     b.block(355.4, 148.4, 178,
-            "A generation of young people who put everything God gave them to work — and who are not found "
+            "A generation of young people who put everything God gave them to work, and who are not found "
             "with a buried gift in their hands.", R, 9.6, 13.0, b.WHITE)
     b.text(355.4, 236.6, "Our Mission", B, 21, b.WHITE)
     b.block(355.4, 262.5, 178,
             "To teach the two basic laws in plain language, in our own words, to every young person who will read: "
-            "the law of use and the law of sowing and reaping — then send them out to practise them in the ordinary "
+            "the law of use and the law of sowing and reaping, then send them out to practise them in the ordinary "
             "fields of home, church, school and work.", R, 9.6, 13.0, b.WHITE)
     b.text(59.5, 434.4, "Core Values", B, 21, b.WHITE)
     b.pill(59.5, 452.0, "Unused is lost · Sown is not", 11, 34)
@@ -459,7 +467,7 @@ def build(out_path: str):
          "03-starting-blocks.jpg"),
         ("Sow Where You Are",
          "We do not wait for a bigger field. We plant in the one we can see, this week, with what we have.",
-         "06-maize-farmer.jpg"),
+         "11-seedling-hands.jpg"),
     ]):
         x = 61.0 if i == 0 else 336.0
         b.roundphoto(os.path.join(IMG, img), x, 560.0, 210, 120, r=18)
@@ -474,11 +482,11 @@ def build(out_path: str):
     b.head(85.0, 432.0, ["At A Glance"], size=45, color=b.WHITE, max_w=430)
     b.pill(203.0, 510.0, "Basic Laws", 11.5, 33)
     rows = [
-        ("Law One — Use", "Whatever you don't use, you lose. Talent, ability, ambition, vitality, energy, "
+        ("Law One \u00b7 Use", "Whatever you don't use, you lose. Talent, ability, ambition, vitality, energy, "
                           "strong feelings, faith: unused, every one of them declines."),
-        ("Law Two — Sow", "Whatever you are reaping is what you have sown. If the crop is bitter, "
+        ("Law Two \u00b7 Sow", "Whatever you are reaping is what you have sown. If the crop is bitter, "
                           "the farmer is not hard to find."),
-        ("The Turn", "You cannot fix a harvest. You can change a seed — and you can start today."),
+        ("The Turn", "You cannot fix a harvest. You can change a seed, and you can start today."),
     ]
     y = 570.0
     for lab, txt in rows:
@@ -495,11 +503,11 @@ def build(out_path: str):
             "Nothing you own stays yours by accident. Every gift carries a maintenance cost, and the fee is use. "
             "This first part is the audit: what have you been given, and what are you doing with it?", R, 10, 13.6, b.WHITE)
     b.head(85.0, 440.0, ["What The Law Says"], size=21, color=b.INK, leading=24)
-    for i, f in enumerate(("04-worship-light.jpg", "03-starting-blocks.jpg", "02-leap.jpg")):
+    for i, f in enumerate(("01-flame-night.jpg", "02-leap.jpg", "03-starting-blocks.jpg")):
         b.notched_photo(os.path.join(IMG, f), 85 + i * 137, b.Y(660.0), 128, 160)
     b.block(290.0, 680.0, 250,
             "The law of use is quiet and it is ruthless. It never argues with you, never sends a bill on the day. "
-            "It waits — and then it closes the window. A talent unused is lost. An ability unused is lost. "
+            "It waits, and then it closes the window. A talent unused is lost. An ability unused is lost. "
             "It is a law.", R, 10, 13.5)
     b.pill(290.0, 745.0, "Four chapters, one question", 11, 31)
     b.pagenum()
@@ -516,19 +524,19 @@ def build(out_path: str):
                 "There is a kind of person who says, “I'll work twice as hard tomorrow to make up for today.” "
                 "That is arithmetic that feels honest and is not. The day is not a bank; you cannot deposit it back.")
     b.block(85.0, y + 6, 250,
-            "Tie your arm to your side. Leave it there long enough and you will never use it again — not because anything "
+            "Tie your arm to your side. Leave it there long enough and you will never use it again. Not because anything "
             "dramatic happened, but because you stopped. Stopping was enough. If you quit, you lose automatically. "
             "They do not bring it up for a vote.")
-    b.roundphoto(os.path.join(IMG, "03-starting-blocks.jpg"), 352, 348, 185, 250, r=100)
+    b.roundphoto(os.path.join(IMG, "13-guitar.jpg"), 352, 348, 185, 250, r=100)
     b.pill(85.0, 600.0, "So take an inventory", 11, 31)
     b.icon_bullet(85, 652, "Talent", "What am I good at that I have not touched this year?", 430)
     b.icon_bullet(85, 692, "Ambition", "Unused, it does not stay at full strength; it declines into cynicism.", 430)
-    b.icon_bullet(85, 732, "Faith", "Not faith spoken about — faith exercised. Unused, it decreases.", 430)
+    b.icon_bullet(85, 732, "Faith", "Not faith spoken about. Faith exercised. Unused, it decreases.", 430)
     b.pagenum()
 
     # ------------------------------------------------------------- 08 ch 2 --
     b.new(b.WHITE)
-    b.blob("prog_grey", b.GREY, dx=0, dy=-120)
+    b.blob("prog_grey", b.GREY, dx=-130, dy=70)
     b.head(85.0, 76.0, ["Seven Things", "That Leak"], size=45, color=b.INK, leading=46, max_w=430)
     b.text(85.0, 200.0, "CHAPTER TWO", B, 9, b.BLUE, 2.4)
     b.block(85.0, 218.0, 250,
@@ -536,12 +544,12 @@ def build(out_path: str):
             "what a life becomes. Name them plainly and they stop being vague.")
     items = [
         ("01", "Talent", "Unusually good at it, unusually lazy about it. It does not wait forever."),
-        ("02", "Ability", "Talent you have trained. Untrained, it stays a rumour your family repeats."),
+        ("02", "Ability", "Talent you have trained. Untrained, it stays a rumour."),
         ("03", "Ambition", "Unused, it declines into cynicism about people who still want things."),
         ("04", "Vitality", "It diminishes in the body first, long before you notice."),
         ("05", "Energy", "You cannot store it like grain. Rest is not storage."),
         ("06", "Strong feelings", "Conviction and compassion grow only by being acted on."),
-        ("07", "Faith", "Not faith spoken about — faith exercised. Unused, it decreases."),
+        ("07", "Faith", "Not faith spoken about. Faith exercised. Unused, it decreases."),
     ]
     for i, (n, h, t) in enumerate(items):
         col = i // 4
@@ -550,7 +558,7 @@ def build(out_path: str):
         y = 292.0 + row * 104
         b.circle(x + 22, y + 6, 21, b.ORANGE, n, 13, b.WHITE)
         b.text(x + 54, y + 10, h, B, 14, b.INK)
-        b.block(x + 54, y + 22, 160, t, R, 10, 13.2)
+        b.block(x + 54, y + 22, 156, t, R, 10, 13.2)
     b.block(85.0, 714.0, 420, "Seven things. One law. And a mercy inside it: the leak is reversible while you can still read these words.",
             SB, 11, 15, b.BLUE)
     b.pagenum()
@@ -559,15 +567,15 @@ def build(out_path: str):
     b.new(b.WHITE)
     b.blue_band(292, 240, 44)
     b.head(85.0, 92.0, ["The Servant Who", "Played It Safe"], size=45, color=b.WHITE, max_w=470)
-    b.text(85.0, 258.0, "MATTHEW 25:14–30  ·  THREE SERVANTS, ONE BURIED TALENT", B, 8.6, b.WHITE, 1.8)
+    b.text(85.0, 258.0, "MATTHEW 25:14 TO 30  \u00b7  THREE SERVANTS, ONE BURIED TALENT", B, 8.6, b.WHITE, 1.8)
     b.head(85.0, 344.0, ["He Was Not Condemned", "For The Talent"], size=21, leading=24, color=b.INK)
     y = b.block(85.0, 400.0, 250,
-                "A master went on a journey and handed his property to three servants — five talents, two, and one. "
+                "A master went on a journey and handed his property to three servants: five talents, two, and one. "
                 "The first two traded and doubled. The third wrapped his in cloth, dug a hole, and buried it. "
                 "He handed it back exactly as received, and called that a success.")
     b.block(85.0, y + 6, 250,
             "The verdict is one of the hardest sentences in the Bible: the talent is taken from him and given to the man "
-            "who already has ten. Not because he was cruel — because he was idle. He had confused doing no harm with doing good.")
+            "who already has ten. Not because he was cruel, but because he was idle. He had confused doing no harm with doing good.")
     b.roundphoto(os.path.join(IMG, "07-harvest-field.jpg"), 352, 348, 185, 240, r=100)
     b.pill(85.0, 606.0, "The buried gift", 11, 31)
     b.icon_bullet(85, 658, "Safety is not obedience", "Burying the talent was the one thing he could have done differently.", 430)
@@ -576,43 +584,42 @@ def build(out_path: str):
 
     # ------------------------------------------------------------- 10 ch 4 --
     b.new(b.WHITE)
-    b.blob("green_tail", b.GREEN, dx=60, dy=-30)
     b.head(85.0, 80.0, ["Take A New"], size=45, color=b.INK, max_w=430)
     b.head(85.0, 145.0, ["Inventory"], size=45, color=b.INK, max_w=430)
     b.text(85.0, 232.0, "CHAPTER FOUR · WORKSHEET", B, 9, b.BLUE, 2.4)
-    b.block(85.0, 250.0, 250, "An inventory is not a guilt trip. It is a map. Fill it in honestly, in pencil, and revisit it every quarter.")
+    b.block(85.0, 250.0, 300, "An inventory is not a guilt trip. It is a map. Fill it in honestly, in pencil, and revisit it every quarter.")
     hdrs = ["What I have been given", "Where I last used it", "One way to use it"]
     xs = [85.0, 250.0, 385.0]
     b.c.setFillColor(b.BLUE)
-    b.c.rect(85.0, b.Y(320.0), 430, 24, stroke=0, fill=1)
+    b.c.rect(85.0, b.Y(300.0), 430, 24, stroke=0, fill=1)
     for x, hh in zip(xs, hdrs):
-        b.text(x + 6, 315.0, hh.upper(), B, 8, b.WHITE)
-    for r in range(6):
-        yy = 344.0 + r * 34
+        b.text(x + 6, 295.0, hh.upper(), B, 8, b.WHITE)
+    for r in range(7):
+        yy = 324.0 + r * 29
         b.hairline(85.0, 515.0, yy, b.BLUE, 0.6)
     for i, x in enumerate(xs[1:], start=1):
         b.c.setStrokeColor(b.BLUE)
         b.c.setLineWidth(0.6)
-        b.c.line(x - 10, b.Y(344.0), x - 10, b.Y(344.0 + 6 * 34))
-    b.pill(85.0, 566.0, "Three questions", 11, 31)
+        b.c.line(x - 10, b.Y(324.0), x - 10, b.Y(324.0 + 6 * 29))
+    b.pill(85.0, 516.0, "Three questions", 11, 31)
     qs = ["The gift people keep thanking me for is…",
           "The thing I have called “not yet” for over a year is…",
           "What I would attempt this month if I truly believed unused is lost:"]
-    y = 612.0
+    y = 562.0
     for q in qs:
         b.text(85.0, y, q, B, 10.5, b.INK)
         for k in range(2):
-            b.hairline(85.0, 515.0, y + 20 + k * 26, b.GREY, 1.0)
-        y += 78
-    b.text(85.0, y + 6, "Show this page to one person who loves you and is not impressed by you. Then act on the first line before Sunday.",
-           SB, 11, b.BLUE)
+            b.hairline(85.0, 515.0, y + 18 + k * 24, b.GREY, 1.0)
+        y += 64
+    b.block(85.0, y - 18, 430, "Show this page to one person who loves you and is not impressed by you. Then act on the first line before Sunday.",
+            SB, 10.5, 14.6, b.BLUE)
     b.pagenum()
 
     # ------------------------------------------------------------- 11 quote --
     b.new(b.BLUE)
-    b.blob("close_green", b.GREEN, dx=250, dy=340, sx=0.8, sy=0.8)
-    b.head(85.0, 300.0, ["“You don't lose your gift", "in a tragedy. You lose it", "on an ordinary Tuesday.”"],
-           size=32, leading=42, color=b.WHITE, spacing=-0.3)
+    b.blob("close_green", b.GREEN, dx=316, dy=104, sx=0.78, sy=0.78)
+    b.head(85.0, 296.0, ["“You don't lose your gift", "in a tragedy. You lose it", "on an ordinary Tuesday.”"],
+           size=31, leading=41, color=b.WHITE, spacing=-0.3)
     b.text(85.0, 460.0, "BETWEEN PART ONE AND PART TWO", B, 9, b.WHITE, 2.6)
     b.text(85.0, 700.0, "UNUSED IS LOST", B, 10, b.WHITE, 4.0)
     b.pagenum_white()
@@ -623,10 +630,10 @@ def build(out_path: str):
     b.head(85.0, 100.0, ["Part Two"], size=45, color=b.WHITE, max_w=290)
     b.head(85.0, 165.0, ["The Law Of", "Sowing"], size=45, color=b.WHITE, max_w=290)
     b.block(390.0, 112.0, 150,
-            "If the harvest is bitter, the question is not why God is doing this. The question is who planted it — "
+            "If the harvest is bitter, the question is not why God is doing this. The question is who planted it, "
             "and you will find the farmer in the mirror.", R, 10, 13.6, b.WHITE)
     b.head(85.0, 440.0, ["You Reap What You've Sown"], size=21, color=b.INK, leading=24)
-    for i, f in enumerate(("06-maize-farmer.jpg", "07-harvest-field.jpg", "04-worship-light.jpg")):
+    for i, f in enumerate(("06-maize-farmer.jpg", "07-harvest-field.jpg", "11-seedling-hands.jpg")):
         b.notched_photo(os.path.join(IMG, f), 85 + i * 137, b.Y(660.0), 128, 160)
     b.block(290.0, 680.0, 250,
             "The same machinery that ruins a careless life will quietly build a faithful one. Many ways to sow. "
@@ -639,19 +646,19 @@ def build(out_path: str):
     b.blue_band(300, 236, 46)
     b.head(85.0, 96.0, ["Look In", "The Mirror"], size=45, color=b.WHITE, max_w=290)
     b.text(390.0, 118.0, "CHAPTER FIVE", B, 9, b.WHITE, 2.2)
-    b.block(390.0, 134.0, 150, "Two quotings of one law — and only the second one is useful.", R, 10, 13.2, b.WHITE)
+    b.block(390.0, 134.0, 150, "Two readings of one law, and only the second one is useful.", R, 10, 13.2, b.WHITE)
     b.head(85.0, 350.0, ["Whatever You Are Reaping", "Is What You Have Sown"], size=19, leading=23, color=b.INK)
     y = b.block(85.0, 400.0, 250,
                 "The polite version is: you reap what you sow. Everyone nods at that; it makes a good poster. "
                 "The honest version is: whatever you are reaping is what you have sown. That one has a name and an address.")
     b.block(85.0, y + 6, 250,
-            "If the crop is the problem, you cannot fix the crop — but you can change the seed, and you can start today. "
+            "If the crop is the problem, you cannot fix the crop, but you can change the seed, and you can start today. "
             "This is not fatalism. It is the most hopeful doctrine in the world, because it puts the harvest back inside your reach.")
-    b.roundphoto(os.path.join(IMG, "07-harvest-field.jpg"), 366, 344, 172, 240, r=95)
+    b.roundphoto(os.path.join(IMG, "08-window-mirror.jpg"), 366, 344, 172, 240, r=95)
     b.pill(85.0, 630.0, "Be not deceived", 11, 31)
     b.block(85.0, 676.0, 240,
             "“Be not deceived; God is not mocked: for whatsoever a man soweth, that shall he also reap.” "
-            "— Galatians 6:7", SB, 11, 16, b.BLUE)
+            "<br/>Galatians 6:7", SB, 11, 16, b.BLUE)
     b.pagenum()
 
     # ------------------------------------------------------------- 14 ch 6 --
@@ -663,11 +670,11 @@ def build(out_path: str):
     keys = [
         ("01", "Negative", "Sow bad, reap bad. Nobody escapes it by being sincere, well-liked or young."),
         ("02", "Positive", "Sow good, reap good. Same machinery, faithful crop."),
-        ("03", "More", "You get back much more than you put out — in both directions."),
+        ("03", "More", "You get back much more than you put out, in both directions."),
         ("04", "Many ways", "Many ways to change a life. Do not fixate on the one door you are angry at."),
         ("05", "Anyone can", "The question was never can. It is will."),
         ("06", "You can still lose", "Sometimes you do it right and lose. Be ready; do not be bitter."),
-        ("07", "No sow, no reap", "Not a smaller harvest — no harvest at all."),
+        ("07", "No sow, no reap", "Not a smaller harvest. No harvest at all."),
     ]
     y = 270.0
     for n, h, t in keys:
@@ -689,7 +696,7 @@ def build(out_path: str):
     b.text(85.0, 226.0, "CHAPTER SEVEN", B, 9, b.BLUE, 2.4)
     b.block(85.0, 244.0, 250,
             "You may be reading this with very little: no salary, no title, no platform, a rented room and a phone with "
-            "a cracked screen. Good. The law of sowing does not require capital — it requires seed, and you already have some.")
+            "a cracked screen. Good. The law of sowing does not require capital. It requires seed, and you already have some.")
     y = 330.0
     for lab, txt in [("Time", "The most honest seed you own."),
                      ("Words", "Encouragement sown in private returns as courage in public."),
@@ -702,12 +709,13 @@ def build(out_path: str):
     b.pill(85.0, y + 10, "Sow in the field you can see", 11, 31)
     b.block(85.0, y + 58, 250,
             "“He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also "
-            "bountifully.” — 2 Corinthians 9:6", SB, 11, 16, b.BLUE)
+            "bountifully.”<br/>2 Corinthians 9:6", SB, 11, 16, b.BLUE)
     b.pagenum()
 
     # ------------------------------------------------------------- 16 ch 8 --
     b.new(b.WHITE)
-    b.head(85.0, 80.0, ["Thirty Days"], size=45, color=b.INK, max_w=430)
+    b.roundphoto(os.path.join(IMG, "09-notebook.jpg"), 372, 62, 148, 186, r=74)
+    b.head(85.0, 80.0, ["Thirty Days"], size=45, color=b.INK, max_w=272)
     b.head(85.0, 145.0, ["Of Sowing"], size=45, color=b.INK, max_w=430)
     b.text(85.0, 232.0, "CHAPTER EIGHT", B, 9, b.BLUE, 2.4)
     b.block(85.0, 250.0, 260,
@@ -718,16 +726,15 @@ def build(out_path: str):
         ("Week 3", "Sow in a person", "Four hours given to somebody younger or needier than you."),
         ("Week 4", "Sow in your craft", "Forty-five minutes a day on the thing you want to be excellent at. Doing it."),
     ]
-    y = 320.0
+    y = 336.0
     for lab, h, t in weeks:
         b.pill(85.0, y, lab, 11, 31)
         b.text(196.0, y + 10, h, B, 12, b.INK)
-        y = b.block(196.0, y + 20, 320, t, R, 10, 13.2) + 14
+        y = b.block(196.0, y + 20, 320, t, R, 10, 13.2) + 30
     b.pill(85.0, y + 10, "Grade yourself on days sown", 11, 31)
     b.block(85.0, y + 58, 430,
             "Results are God's department; sowing is yours. Keep the book open on a table for thirty days and write one "
-            "line a day. A law you agree with changes nothing — a law you practise changes everything.", R, 10, 13.4)
-    b.photo(os.path.join(IMG, "02-leap.jpg"), 85, b.Y(770.0), 430, 60) if False else None
+            "line a day. A law you agree with changes nothing. A law you practise changes everything.", R, 10, 13.4)
     b.pagenum()
 
     # ---------------------------------------------------------- 17 tracker ---
@@ -754,16 +761,16 @@ def build(out_path: str):
     # ------------------------------------------------------------ 18 charge --
     b.new(b.BLUE)
     b.blob("close_green", b.GREEN, dx=-90, dy=-160, sx=0.9, sy=0.9)
-    b.roundphoto(os.path.join(IMG, "03-starting-blocks.jpg"), 61, 300, 230, 300, r=100)
+    b.roundphoto(os.path.join(IMG, "10-road-dawn.jpg"), 61, 300, 230, 300, r=100)
     b.text(345.0, 120.0, "From The Ministry Desk", R, 15, b.WHITE)
     b.head(345.0, 140.0, ["Don't Let", "The Springs", "Pass"], size=32, leading=38, color=b.WHITE, max_w=196)
     b.text(61.0, 110.0, "CHRISCO YOUTH AFLAME", B, 9.5, b.WHITE, 3.0)
     b.block(61.0, 128.0, 210,
-            "Life is brief — not depressing, brief. The year you are in will pass whether or not you plant anything "
+            "Life is brief, and not in a sad way, only in a brief way. The year you are in will pass whether or not you plant anything "
             "in it, and it will not come back to be used properly.", R, 9.4, 12.8, b.WHITE)
     b.block(61.0, 646.0, 470,
             "Take a new inventory of yourself. Make sure all of your talent, your mind, your faith and your courage are "
-            "being used. Otherwise you lose. It is a law. Then go and sow — not tomorrow, not after the exams, the "
+            "being used. Otherwise you lose. It is a law. Then go and sow. Not tomorrow, not after the exams, the "
             "wedding or the salary. Now, with what you have, in the field you can see.", R, 10, 13.6, b.WHITE)
     b.text(61.0, 730.0, "CHRISCO Fellowship of Churches · A Ministry of CHRISCO Youth Aflame", B, 9.5, b.WHITE)
     b.pagenum_white()
@@ -777,7 +784,8 @@ def build(out_path: str):
                 "Father, thank You for what You have placed in my hands. Show me what I have buried, and give me the "
                 "courage to dig it up. Teach me to sow where I am, with what I have, while I still can. Make my life a "
                 "field and not a warehouse. In the name of Jesus, amen.", SB, 13, 21)
-    b.text(85.0, y + 40, "“They that sow in tears shall reap in joy.” — Psalm 126:5", SB, 12, b.BLUE)
+    b.text(85.0, y + 40, "“They that sow in tears shall reap in joy.”", SB, 12, b.BLUE)
+    b.text(85.0, y + 58, "Psalm 126:5", SB, 12, b.BLUE)
     # blue contact-style block
     b.c.setFillColor(b.BLUE)
     b.c.rect(0, 0, PW, b.Y(576.0), stroke=0, fill=1)
@@ -786,9 +794,9 @@ def build(out_path: str):
             ("What", "Time · Words · Work · Money"),
             ("When", "Today, not next week")]
     for i, (lab, val) in enumerate(cols):
-        x = 70.0 + i * 165
-        b.text(x, 700.0, lab, R, 9.5, b.WHITE)
-        b.text(x, 718.0, val, B, 10.5, b.WHITE)
+        x = 70.0 + i * 172
+        b.text(x, 700.0, lab, R, 9.2, b.WHITE)
+        b.text(x, 717.0, val, B, 9.2, b.WHITE)
     b.text(70.0, 770.0, "CHRISCO Youth Aflame · A Ministry of CHRISCO Fellowship of Churches", B, 10, b.WHITE)
     b.pagenum()
 
@@ -809,20 +817,26 @@ def build(out_path: str):
                 "Churches, written for young people roughly fifteen to thirty and the adults who refuse to give up on them.", R, 9.2, 12.6)
     b.block(85.0, y + 8, 210,
             "The two laws are set out in a talk by Jim Rohn on basic laws taken from Scripture. This is an original work "
-            "in our own words — not a transcript, not an authorised edition. Scripture: King James Version (public domain).", R, 9.2, 12.6)
+            "in our own words, not a transcript and not an authorised edition. Scripture: King James Version (public domain).", R, 9.2, 12.6)
     b.text(320.0, 236.0, "Photography", B, 11, b.INK)
     creds = [("Campfire at night", "Unsplash · _wR0kpSkt9A"),
              ("Leap at sunset", "Unsplash · fMIsAL72P3U"),
              ("Starting blocks", "Unsplash licence"),
              ("Choir in light", "Pexels · 7520355"),
              ("Maize farmer, Kenya", "The Habari Network"),
-             ("Wheat field at dusk", "Unsplash licence")]
-    yy = 254.0
+             ("Wheat field at dusk", "Unsplash licence"),
+             ("Young man at a window", "Unsplash · zBBlSdn6fVA"),
+             ("Hands planting seedlings", "Unsplash · q13Zq1Jufks"),
+             ("Guitar by a window", "Unsplash · jt8lLfH7mcw"),
+             ("Friends walking", "Pexels · 7972657"),
+             ("Notebook and pen", "Pexels · 17237364"),
+             ("Empty road at dawn", "Pexels · 28202556")]
+    yy = 252.0
     for n, s in creds:
-        b.text(320.0, yy, n, B, 9, b.INK)
-        b.text(320.0, yy + 10, s, R, 8.6, b.BLUE)
-        yy += 30
-    b.block(320.0, yy + 2, 205, "No AI-generated imagery is used anywhere in this book.", R, 8.4, 11.6, b.INK)
+        b.text(320.0, yy, n, B, 8.6, b.INK)
+        b.text(320.0, yy + 9.4, s, R, 8.2, b.BLUE)
+        yy += 25.4
+    b.block(320.0, yy + 4, 205, "Every photograph is a real photograph, used under its free licence or by permission. No AI-generated imagery appears anywhere in this book.", R, 8.2, 11.4, b.INK)
     b.text(85.0, 700.0, "CHRISCO Youth Aflame · A Ministry of CHRISCO Fellowship of Churches", B, 9.5, b.BLUE)
     b.text(85.0, 716.0, "First edition · Book One of the Aflame Library", R, 9, b.INK)
     b.pagenum()
