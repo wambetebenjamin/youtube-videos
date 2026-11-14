@@ -6,6 +6,15 @@ Built to the **SCHOOL BOOK** template (`library/design-references/school-prospec
 size, palette, type scale, page furniture and organic shape system. Nothing about the layout was invented;
 the template's page types were re-used and its copy replaced.
 
+## Download
+
+Click either link and the file downloads straight away.
+
+* **PDF (the book):** <https://github.com/wambetebenjamin/youtube-videos/raw/arena/f482c0bc-youtube-videos/publishing/chrisco-youth-aflame/book-01-unused-is-lost/unused-is-lost.pdf>
+* **DOCX (editable manuscript):** <https://github.com/wambetebenjamin/youtube-videos/raw/arena/f482c0bc-youtube-videos/publishing/chrisco-youth-aflame/book-01-unused-is-lost/unused-is-lost.docx>
+
+Google Drive mirrors: PDF `1NvWcGWFh6sXkUekpV9TAdnUr0kBWZ8rR`, DOCX `1n0xbP15Bqe7tpCVHrEYZeFRejHAlKMIz`.
+
 ## Files
 
 | File | What it is |
