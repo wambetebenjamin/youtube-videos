@@ -1,0 +1,4 @@
+*.jpg !filter
+*.jpeg !filter
+*.png !filter
+*.webp !filter

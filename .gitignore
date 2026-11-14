@@ -23,3 +23,6 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+# Scratch: raw image-search downloads (uncurated, mostly watermarked previews)
+image-search/
