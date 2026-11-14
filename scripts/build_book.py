@@ -29,6 +29,7 @@ from book_content import (  # noqa: E402
 BOOK_DIR = os.path.join(ROOT, "publishing", "chrisco-youth-aflame", "book-01-unused-is-lost")
 IMG_DIR = os.path.join(BOOK_DIR, "images")
 FONT_DIR = os.path.join(ROOT, "publishing", "chrisco-youth-aflame", "brand", "fonts")
+BRAND_DIR = os.path.join(ROOT, "publishing", "chrisco-youth-aflame", "brand")
 
 
 def img(name: str) -> str:
@@ -989,6 +990,9 @@ def build_docx(out_path: str) -> None:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     # title page
+    doc.add_picture(os.path.join(BRAND_DIR, "pursue-logo.png"), width=Cm(4.4))
+    doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+    doc.paragraphs[-1].paragraph_format.space_after = Pt(18)
     kick(BOOK["series"] + " · " + BOOK["book_no"])
     head(BOOK["title"], 34)
     body(BOOK["subtitle"], size=13, color=NAVY)

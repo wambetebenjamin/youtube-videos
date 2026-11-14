@@ -23,6 +23,8 @@ Google Drive mirrors: PDF `1NvWcGWFh6sXkUekpV9TAdnUr0kBWZ8rR`, DOCX `1n0xbP15Bqe
 | `unused-is-lost.docx` | Editable manuscript of the same text (not the designed layout). |
 | `book.md` | The manuscript in Markdown. |
 | `images/` | The twelve photographs used in the interior. |
+| `../brand/pursue-logo.pdf` | The **PURSUE** mark as transparent vector art (gold on nothing, no background box). |
+| `../brand/pursue-logo.png` | The same mark as a true RGBA PNG (1840 x 1600), for slides, social and the DOCX title page. |
 
 Rebuild:
 
@@ -35,6 +37,26 @@ python3 scripts/book_template.py         # pdf only
 * `scripts/book_content.py` the manuscript text.
 * `brand/template-shapes.json` the template's organic shapes, extracted from the source PDF and re-used
   for the blue fields, squiggles and photo windows.
+* `scripts/pursue_logo.py` the PURSUE mark itself, drawn as vectors (`draw_mark()`), so it stays sharp at any
+  size and sits on any colour with no plate behind it.
+
+## The cover
+
+Page one is the template's full bleed cover page, with three adjustments so the book opens like a printed
+title rather than a slide:
+
+* the flame photograph is shifted right and shaded down on its left third, which gives the mark a quiet black
+  field to sit on without losing the picture;
+* the hoodie wordmark from the PURSUE garment is redrawn in gold (Cinzel for the letters, Lato for the tagline)
+  and set at the top of the page, on the dark part of the fire, at 150 pt wide;
+* the title, subtitle, gold rule and press line run down the blue field on the same grid as the rest of the
+  book.
+
+The garment print in `library/` is a single flattened JPEG with no transparency, so it could not be lifted
+out as a logo. The mark was reconstructed as vector art instead: a tapering gold ribbon that curls into an
+arrowhead, a thin echo arc, the tracked wordmark and the tagline OVERTAKE · RECOVER ALL. The verse line
+(1 Samuel 30:8) is available with `draw_mark(..., with_verse=True)`. Gold is `#c9a24a`, with `#8f6626` deep
+and `#e4c98b` light for shading.
 
 ## House rules the interior follows
 
@@ -44,7 +66,8 @@ python3 scripts/book_template.py         # pdf only
    and, more importantly, incomplete: each carries between 46 and 66 glyphs, with no punctuation and no
    K, Q, U, X, Y or Z. They cannot set a book. The interior therefore uses the closest free stand-ins in
    `brand/fonts/`: **Poppins Bold / SemiBold** for Anantason and **Lato Regular / Bold** for Univers.
-   No other family is used, and the PDF contains no DejaVu.
+   No third family sets text, and the PDF contains no DejaVu. The logo adds **Cinzel Bold**, used only for
+   the five letters of the wordmark inside the mark, never for reading copy.
 3. **Every photograph is real**, watermark free, cleared for commercial use, and chosen for the subject
    of the page it sits on. No image appears more than twice.
 

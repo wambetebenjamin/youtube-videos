@@ -16,6 +16,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pursue_logo import draw_mark  # noqa: E402  (the ministry mark)
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
@@ -80,6 +83,9 @@ class Book:
         pdfmetrics.registerFont(TTFont("SB", os.path.join(FONTS, "Poppins-SemiBold.ttf")))
         pdfmetrics.registerFont(TTFont("R", os.path.join(FONTS, "Lato-Regular.ttf")))
         pdfmetrics.registerFont(TTFont("LB", os.path.join(FONTS, "Lato-Bold.ttf")))
+        # the PURSUE wordmark only; the mark is artwork, not running text
+        pdfmetrics.registerFont(TTFont("CN", os.path.join(FONTS, "Cinzel-Bold.ttf")))
+        pdfmetrics.registerFont(TTFont("LT", os.path.join(FONTS, "Lato-Regular.ttf")))
         pdfmetrics.registerFontFamily("R", normal="R", bold="LB", italic="R", boldItalic="LB")
         pdfmetrics.registerFontFamily("B", normal="B", bold="B", italic="B", boldItalic="B")
 
@@ -92,6 +98,7 @@ class Book:
         self.BLUE = HexColor("#2a49f2")
         self.ORANGE = HexColor("#fa6704")
         self.GREEN = HexColor("#67cf4e")
+        self.GOLD = HexColor("#c9a24a")
         self.LBLUE = HexColor("#5d81ec")
         self.GREY = HexColor("#ececec")
         self.WHITE = HexColor("#ffffff")
@@ -193,7 +200,7 @@ class Book:
         c.drawImage(path, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh, mask="auto")
         c.restoreState()
 
-    def wavy_photo(self, path, depth_l=430, depth_r=260, bulge=0.0):
+    def wavy_photo(self, path, depth_l=430, depth_r=260, bulge=0.0, shade=None, xshift=0.0):
         """Full-width photo across the top with the template's wavy lower edge."""
         c = self.c
         c.saveState()
@@ -208,9 +215,19 @@ class Book:
         from PIL import Image
         iw, ih = Image.open(path).size
         W, H = PW, depth_l + 70           # H reaches past the deepest point of the wave
-        scale = max(W / iw, H / ih)
+        cov = W + 2 * abs(xshift)         # keep full bleed whatever the crop shift
+        scale = max(cov / iw, H / ih)
         dw, dh = iw * scale, ih * scale
-        c.drawImage(path, (W - dw) / 2, PH - dh, dw, dh, mask="auto")
+        c.drawImage(path, (W - dw) / 2 + xshift, PH - dh, dw, dh, mask="auto", preserveAspectRatio=False)
+        if shade:
+            a0, a1, hgt = shade
+            steps = 150
+            for i in range(steps):
+                a = a0 + (a1 - a0) * (i + 0.5) / steps
+                c.setFillColorRGB(0, 0, 0)
+                self.c.setFillAlpha(max(0.0, min(1.0, a)))
+                hh = hgt / steps + 0.35
+                c.rect(0, PH - hgt + (hgt - (i + 1) * hgt / steps) - hh + hh, PW, hh, stroke=0, fill=1)
         c.restoreState()
 
     def notched_photo(self, path, x, y, w, h):
@@ -356,6 +373,18 @@ class Book:
         for i, ln in enumerate(("CHRISCO", "YOUTH", "AFLAME")):
             self.text(x + s + 9, y_top + 12 + i * 12.4, ln, "B", 10.5 * scale, color or self.WHITE)
 
+    def vshade(self, y_top, height, color, a0=0.0, a1=1.0, x0=0.0, x1=PW, steps=150):
+        """A soft vertical wash: thin bands, so it prints without banding."""
+        c = self.c
+        c.saveState()
+        for i in range(steps):
+            a = a0 + (a1 - a0) * (i + 0.5) / steps
+            c.setFillColor(color)
+            c.setFillAlpha(max(0.0, min(1.0, a)))
+            hh = height / steps + 0.35
+            c.rect(x0, self.Y(y_top + i * height / steps) - hh, x1 - x0, hh, stroke=0, fill=1)
+        c.restoreState()
+
     def blue_band(self, depth_left=392, depth_right=292, curve=52):
         """Full-width blue field across the top with a wavy lower edge."""
         c = self.c
@@ -397,13 +426,30 @@ def build(out_path: str):
     B, R, SB = "B", "R", "SB"
 
     # ------------------------------------------------------------------ 01 --
+    # The cover carries the ministry mark in gold over the night fire, then the
+    # title on the blue field with gold furniture. Same template anatomy.
     b.new(b.BLUE)
-    b.wavy_photo(os.path.join(IMG, "01-flame-night.jpg"), depth_l=470, depth_r=300)
-    b.blob("toc_green", b.GREEN, dx=340, dy=-250, sx=0.75, sy=0.75)
-    b.logo(39.6, 45)
-    b.head(61.2, 486.8, ["UNUSED", "IS LOST"], size=62, color=b.WHITE, max_w=440)
-    b.text(61.2, 700.6, "The Law of Use and the", B, 30.4, b.WHITE, -0.4)
-    b.text(61.2, 733.6, "Law of Sowing and Reaping", B, 30.4, b.WHITE, -0.4)
+    b.wavy_photo(os.path.join(IMG, "01-flame-night.jpg"), depth_l=470, depth_r=300,
+                 shade=(0.52, 0.0, 250.0), xshift=78.0)
+    b.vshade(676.0, 166.0, b.INK, 0.0, 0.15)
+
+    mark_w = 150.0
+    draw_mark(b.c, 61.2, 42.0, mark_w, page_h=PH, on_dark=True)
+
+    b.head(61.2, 494.0, ["UNUSED", "IS LOST"], size=62, color=b.WHITE, max_w=440)
+
+    b.c.setFillColor(b.WHITE)
+    b.c.setFillAlpha(0.88)
+    b.text(61.2, 664.0, "The Law of Use and the", R, 20.0, b.WHITE, 0.0)
+    b.text(61.2, 691.0, "Law of Sowing and Reaping", R, 20.0, b.WHITE, 0.0)
+    b.c.setFillAlpha(0.55)
+    b.c.setStrokeColor(b.GOLD)
+    b.c.setLineWidth(0.9)
+    b.c.line(61.2, b.Y(744.0), 61.2 + 124.0, b.Y(744.0))
+    b.c.setFillAlpha(0.72)
+    b.text(61.2, 786.0, "CHRISCO FELLOWSHIP OF CHURCHES  ·  BOOK ONE OF THE AFLAME LIBRARY",
+           "R", 7.4, b.WHITE, 2.3)
+    b.c.setFillAlpha(1.0)
 
     # ------------------------------------------------------------------ 02 --
     b.new(b.BLUE)
