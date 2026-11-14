@@ -4,9 +4,24 @@ dist/
 build/
 .remotion/
 
-# Rendered video & preview outputs (keep folder placeholder)
+# Cloned third-party tool repositories (provisioned by setup-video-studio.sh)
+tools/
+
+# Duplicate skill trees emitted by some skill CLI versions
+agent/
+
+# Rendered video, graphic & ebook outputs (keep folder placeholders)
 out/*
 !out/.gitkeep
+!out/videos/
+!out/graphics/
+!out/ebooks/
+out/videos/*
+!out/videos/.gitkeep
+out/graphics/*
+!out/graphics/.gitkeep
+out/ebooks/*
+!out/ebooks/.gitkeep
 
 # Agent skill directories installed by setup-video-studio.sh
 .agents/

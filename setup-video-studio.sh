@@ -70,11 +70,22 @@ else
   echo "git-lfs binary not detected; keeping preconfigured .gitattributes LFS rules."
 fi
 
-echo "Creating asset folders..."
-mkdir -p public/raw-footage public/pics public/fonts public/music out
-for dir in public/raw-footage public/pics public/fonts public/music out; do
+echo "Creating studio folder structure..."
+STUDIO_DIRS=(
+  public/raw-footage public/pics public/fonts public/music
+  templates/posters templates/ebooks
+  content/drafts
+  out out/videos out/graphics out/ebooks
+  tools
+)
+mkdir -p "${STUDIO_DIRS[@]}"
+for dir in public/raw-footage public/pics public/fonts public/music \
+           templates/posters templates/ebooks \
+           content/drafts \
+           out/videos out/graphics out/ebooks; do
   touch "$dir/.gitkeep"
 done
+touch out/.gitkeep
 
 echo "Initializing Remotion video engine (if not already present)..."
 if [ ! -f "package.json" ]; then
@@ -91,40 +102,60 @@ npm install
 echo "Ensuring Remotion headless browser is ready..."
 npx remotion browser ensure || true
 
-echo "Installing Remotion & FFmpeg Agent Skills..."
-npx -y skills@latest add remotion-dev/skills -a claude-code github-copilot cursor codex --copy -y || true
-npx -y skills@latest add Remocn/remocn -a claude-code github-copilot cursor codex --copy -y || true
-npx -y ffmpeg-skill@latest --project || true
-npx -y ffmpeg-skill@latest --dir ./.agents/skills || true
-npx -y remotion-ffmpeg-skill@latest --project || true
-npx -y remotion-ffmpeg-skill@latest --dir ./.agents/skills || true
+echo "Cloning third-party studio tools into tools/ ..."
+clone_tool() {
+  local name="$1" url="$2"
+  if [ -d "tools/$name/.git" ]; then
+    echo "  tools/$name already cloned, skipping."
+    return 0
+  fi
+  rm -rf "tools/$name"
+  GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 "$url" "tools/$name" || \
+    echo "  Warning: could not clone $name from $url"
+}
+mkdir -p tools
+clone_tool poster-maker                 https://github.com/dabodamjan/poster-maker.git
+clone_tool duduhaibao                   https://github.com/Shine8592/duduhaibao.git
+clone_tool ebook-generator              https://github.com/RyanFitzgerald/ebook-generator.git
+clone_tool markdown-to-pdf-book-converter https://github.com/romankurnovskii/markdown-to-pdf-book-converter.git
+clone_tool claude-remotion-skill        https://github.com/haidrrrry/claude-remotion-skill.git
+clone_tool herk-edit-kit                https://github.com/nateherkai/herk-edit-kit.git
+
+echo "Installing Agent Skills (video, FFmpeg, posters)..."
+install_skill() {
+  npx -y skills add "$1" --yes </dev/null || \
+    echo "  Warning: could not install skill $1"
+}
+install_skill remotion-dev/skills
+install_skill Remocn/remocn
+install_skill kajisho5/ffmpeg-skill
+install_skill kajisho5/remotion-ffmpeg-skill
+install_skill jiemianduan/poster-style-transfer
+install_skill Chenruishuo/posterly
 
 if [ ! -f "AGENTS.md" ]; then
-  echo "Creating AI Agent Instructions (AGENTS.md)..."
-  cat << 'EOF' > AGENTS.md
-# AI Video Studio Instructions
-- Always check `public/raw-footage/` and `public/pics/` for user-uploaded media.
-- Use Remotion (`src/`) for motion graphics, animated captions, lower thirds, and transitions.
-- Use FFmpeg for trimming silence, reframing 16:9 YouTube videos into 9:16 Reels, and audio normalization.
-- Export all finished videos to the `out/` folder as `.mp4` (H.264, 1080p or 4K).
-- Always render a preview frame or short test clip to verify typography and layout before final render.
-EOF
+  echo "Warning: AGENTS.md is missing; restore it from git (it is a tracked studio file)."
 fi
-
-if [ ! -f "CLAUDE.md" ]; then
+if [ ! -f "CLAUDE.md" ] && [ -f "AGENTS.md" ]; then
   cp AGENTS.md CLAUDE.md
 fi
 
 echo ""
 echo "=========================================================="
-echo "AI Video Studio setup complete!"
+echo "AI Video / Poster / Ebook Studio setup complete!"
 echo "  Node.js : $(node -v 2>/dev/null || echo 'not found')"
 echo "  Python  : $(python3 --version 2>/dev/null || echo 'not found')"
-echo "  FFmpeg  : $(ffmpeg -version 2>/dev/null | head -n 1 || echo 'installs automatically in Codespaces')"
+FFMPEG_BIN="$(command -v ffmpeg || true)"
+if [ -z "$FFMPEG_BIN" ] && [ -d node_modules/@ffmpeg-installer ]; then
+  FFMPEG_BIN="$(node -e "process.stdout.write(require('@ffmpeg-installer/ffmpeg').path)" 2>/dev/null || true)"
+fi
+echo "  FFmpeg  : ${FFMPEG_BIN:-not found (run: apt-get install ffmpeg)}"
+echo "  Tools   : $(ls tools 2>/dev/null | tr '\n' ' ')"
+echo "  Skills  : $(ls .agents/skills 2>/dev/null | wc -l) installed"
 echo ""
 echo "Next steps:"
-echo "  1. Upload photos to public/pics/ and clips to public/raw-footage/"
-echo "  2. Preview in Remotion Studio: npm run dev"
-echo "  3. Render YouTube (16:9):      npm run render:youtube"
-echo "  4. Render Reel/Short (9:16):   npm run render:reel"
+echo "  1. Video   : clips -> public/raw-footage/, photos -> public/pics/, then npm run dev"
+echo "     Render  : npm run render:youtube  |  npm run render:reel   (saved to out/videos/)"
+echo "  2. Posters : drop reference templates in templates/posters/   (export to out/graphics/)"
+echo "  3. Ebooks  : drop raw text in content/drafts/, styles in templates/ebooks/ (export to out/ebooks/)"
 echo "=========================================================="
