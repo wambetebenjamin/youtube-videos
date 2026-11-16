@@ -32,7 +32,10 @@ THEME = THEMES["dark"]
 def build(title: str, eyebrow: str, sub: str, fmt: str) -> str:
     w, h = FORMATS[fmt]
     pad = int(w * 0.075)
-    title_size = int(min(w, h) * (0.085 if fmt != "story" else 0.075))
+    # "wide" is the YouTube thumbnail: it has to survive being shrunk into a grid,
+    # so the title takes a much larger share of the frame than a4/social do.
+    scale = {"wide": 0.155, "story": 0.075}.get(fmt, 0.085)
+    title_size = int(min(w, h) * scale)
     eyebrow_size = max(14, int(title_size * 0.26))
     sub_size = max(15, int(title_size * 0.34))
     return f'''

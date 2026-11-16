@@ -151,15 +151,21 @@ copy that project's shape for a new one.
 for people seeking comfort and direction.
 
 Series rules for this channel (they differ from the general formula):
-- **One story per episode**, not a list of signs. Carry the teaching inside a single passage.
+- **The channel is Bible *stories*.** Episodes must be story-shaped, not teaching-shaped.
+- **One story per episode**, not a list of signs. Carry everything inside a single passage.
+- **Pure retelling = no interpretation until the story has finished.** You don't explain the storm
+  while it is still blowing. Keep the passage's own order, its own ambiguity, and its own questions
+  open (Mark 4 ends on "Who then is this?" — so does the episode).
+- **No teaching/application section, no communion section** in a story episode. Story → prayer → close.
 - **Close with a prayer**, not a comment prompt.
 - **Look `paper`** in `scene.py` — warm, low contrast, no red accent (use the warm poster theme).
 - Pace ~145–150 wpm; leave real silence after each verse.
-- `content/drafts/abbas-table-luke14/` is the reference episode. Copy its shape.
+- Reference episodes: `content/drafts/abbas-table-luke14/` (teaching-shaped, episode 1) and
+  `content/drafts/abbas-table-storm/` (story-shaped, episode 2 — copy **this** shape for stories).
 
-Series rules: second person, present tense; every claim tied to a verse; one metaphor per sign;
-always verify quoted scripture and record the translation in `verses.md` (WEB and KJV are public
-domain — NIV/NKJV/ESV need permission beyond brief quotation).
+Layout rule learned the hard way: in `scene.py`, space cards **by card index**
+(`x = first + i * step`, alternating `y`), never by story time or line id. Line gaps are uneven, so
+time-derived spacing puts cards on top of each other.
 
 ## Per-week production loop
 
