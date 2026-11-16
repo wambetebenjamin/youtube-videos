@@ -127,6 +127,10 @@ npm run render:youtube  # 16:9 YouTube render → out/videos/youtube-video.mp4
 npm run render:reel     # 9:16 Reel/Short render → out/videos/vertical-reel.mp4
 npm run lint            # ESLint + TypeScript type-checks
 npm run ffmpeg:path     # resolved ffmpeg binary path
+npm run env             # open a shell with the studio environment loaded
+npm run poster -- --help    # render a poster to out/graphics/
+npm run ebook -- --help     # build an ebook PDF to out/ebooks/
+npm run gl:shims            # rebuild the software-GL stubs
 npm run film:check      # verify the cinematic-film Python runtime
 npm run film:new -- <dir> --title "<film title>"   # scaffold a cinematic-film project
 npm run animate:build -- pieces/<name>         # build an animate piece to one HTML
@@ -141,6 +145,47 @@ npm run animate:storyboard -- pieces/<name>
 4. Review, then full render to `out/videos/<slug>.mp4` (16:9 long-form + 9:16 cut-down).
 5. Loudness to -14 LUFS / -1 dBTP, captions burned + `.srt`, then complete `delivery.md`.
 6. Log every asset in `credits.md` before publishing.
+
+## Verified working commands (this sandbox)
+
+These three were run end to end and produced real files. Load the environment first.
+
+```bash
+source scripts/activate-studio.sh          # ffmpeg + ffprobe + GL shims + venv on PATH
+
+# 1. LONG-FORM FILM  (cinematic-film / Skia)  -> out/videos/
+npm run film:check                        # must print "ready"
+npm run film:new -- content/drafts/my-film --title "My Film"
+#   ...write script.json, then tts_say.py -> split_takes.py -> build_narration.py
+python3 tools/cinematic-skill/skills/cinematic-film/scripts/render.py \
+  --project content/drafts/my-film --probe 1,5,12 --size 1920x1080
+python3 tools/cinematic-skill/skills/cinematic-film/scripts/render.py \
+  --project content/drafts/my-film --size 1920x1080 \
+  --out out/videos/my-film.mp4 --audio content/drafts/my-film/audio/mix.m4a
+
+# 2. POSTER  (Typst)  -> out/graphics/
+npm run poster -- --title "From Cherry to Cup" --eyebrow "YOUTUBE VIDEOS" \
+  --sub "A 12-minute documentary" --out out/graphics/cherry-to-cup --format story
+#   formats: a4 social square story wide banner   (writes .png @216ppi + .pdf)
+
+# 3. EBOOK  (pandoc -> Typst)  -> out/ebooks/
+npm run ebook -- --src content/drafts/my-book --out out/ebooks/my-book.pdf \
+  --title "From Cherry to Cup" --subtitle "A short field guide"
+```
+
+### Environment gotchas already solved here
+
+- **Old ffmpeg breaks audio chains.** `@ffmpeg-installer/ffmpeg` is a 2018 build; its
+  `loudnorm,aresample` chain fails with *"Cannot select channel layout"*. The studio now uses the
+  modern static ffmpeg from `imageio-ffmpeg` (9.x) copied to `tools/bin/ffmpeg`.
+- **skia-python needs libEGL/libGL** just to import, even for CPU raster. `scripts/build-gl-shims.sh`
+  builds tiny stub libraries (in `scripts/gl-shims/`) that report "no GL context", so Skia uses CPU.
+  `scripts/activate-studio.sh` puts them on `LD_LIBRARY_PATH`. If apt is available, install
+  `libegl1 libgl1` instead — real drivers are preferable.
+- **No browser in a bare sandbox.** Remotion, `animate` (Playwright) and `ebook-generator`
+  (Puppeteer) all need Chromium, which needs `libnspr4`/`libnss3`. That is why posters and ebooks
+  here go through Typst, which renders PNG and PDF with no browser at all.
+- **`make-an-anime` needs Ruby 3.2+ and a paid image/video model API.** Unavailable in this sandbox.
 
 ## Runtime Notes
 

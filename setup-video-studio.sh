@@ -106,17 +106,11 @@ npm install
 echo "Ensuring Remotion headless browser is ready..."
 npx remotion browser ensure || true
 
-echo "Linking bundled ffmpeg / ffprobe onto tools/bin ..."
+echo "Linking ffmpeg / ffprobe onto tools/bin ..."
 mkdir -p tools/bin
-FFMPEG_SRC="$(node -e "process.stdout.write(require('@ffmpeg-installer/ffmpeg').path)" 2>/dev/null || true)"
 FFPROBE_SRC="$(node -e "process.stdout.write(require('@ffprobe-installer/ffprobe').path)" 2>/dev/null || true)"
-[ -n "$FFMPEG_SRC" ] && ln -sf "$FFMPEG_SRC" tools/bin/ffmpeg
 [ -n "$FFPROBE_SRC" ] && ln -sf "$FFPROBE_SRC" tools/bin/ffprobe
-if [ -n "$FFMPEG_SRC" ]; then
-  echo "  ffmpeg  -> $FFMPEG_SRC"
-  echo "  ffprobe -> $FFPROBE_SRC"
-  echo "  Add to PATH: export PATH=\"$PWD/tools/bin:\$PATH\""
-fi
+echo "  ffprobe -> ${FFPROBE_SRC:-not found}"
 
 echo "Setting up the Python film-engine runtime (.venv) ..."
 if command -v python3 >/dev/null 2>&1; then
@@ -126,10 +120,30 @@ if command -v python3 >/dev/null 2>&1; then
     .venv/bin/pip install --quiet -r requirements.txt 2>/dev/null || \
       echo "  Warning: some Python deps failed (skia-python needs libEGL1/libGL1/libfontconfig1)."
   fi
-  .venv/bin/python -c "import skia" 2>/dev/null && echo "  skia-python ready" || \
-    echo "  skia-python not importable yet (install libEGL1 libGL1 libfontconfig1)."
+  # imageio-ffmpeg ships a modern static ffmpeg (9.x); prefer it over the 2018 build.
+  MODERN_FF="$(.venv/bin/python -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())" 2>/dev/null || true)"
+  if [ -n "$MODERN_FF" ] && [ -f "$MODERN_FF" ]; then
+    cp -f "$MODERN_FF" tools/bin/ffmpeg && chmod +x tools/bin/ffmpeg
+    echo "  ffmpeg  -> $MODERN_FF (modern static build)"
+  elif [ -n "$FFMPEG_SRC" ]; then
+    ln -sf "$FFMPEG_SRC" tools/bin/ffmpeg
+    echo "  ffmpeg  -> $FFMPEG_SRC"
+  fi
 else
   echo "  Warning: python3 not found; cinematic-film will be unavailable."
+fi
+
+echo "Building software-GL shims for skia-python (only if libEGL/libGL are absent) ..."
+bash scripts/build-gl-shims.sh || true
+
+echo "Verifying the film engine ..."
+if [ -x .venv/bin/python ]; then
+  if LD_LIBRARY_PATH="$PWD/tools/lib:${LD_LIBRARY_PATH:-}" .venv/bin/python -c "import skia" 2>/dev/null; then
+    echo "  skia-python imports: cinematic-film is ready."
+  else
+    echo "  skia-python still not importable. Install libegl1 libgl1 libfontconfig1,"
+    echo "  or run: bash scripts/build-gl-shims.sh"
+  fi
 fi
 
 echo "Cloning third-party studio tools into tools/ ..."
@@ -190,6 +204,10 @@ fi
 echo "  FFmpeg  : ${FFMPEG_BIN:-not found (run: apt-get install ffmpeg)}"
 echo "  Tools   : $(ls tools 2>/dev/null | tr '\n' ' ')"
 echo "  Skills  : $(ls .agents/skills 2>/dev/null | wc -l) installed"
+echo "  Tools   : $(ls -d tools/*/ 2>/dev/null | wc -l) cloned repos in tools/"
+echo ""
+echo "  IMPORTANT: before running any engine, load the studio environment:"
+echo "      source scripts/activate-studio.sh"
 echo ""
 echo "Next steps:"
 echo "  1. Video   : clips -> public/raw-footage/, photos -> public/pics/, then npm run dev"

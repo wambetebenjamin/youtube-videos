@@ -41,6 +41,25 @@ Cloud-ready production studio built for **GitHub Codespaces**, combining **Remot
   - `tools/` — Cloned third-party tool repositories (gitignored)
   - Git LFS tracks `*.mp4 *.mov *.mkv *.webm *.png *.jpg *.jpeg *.webp *.pdf *.wav *.mp3 *.m4a *.aac`
 
+## Verified Working Pipelines
+
+All three were run end to end in this repo and produced real output.
+
+| Pipeline | Command | Output |
+| --- | --- | --- |
+| Long-form film (Skia) | `npm run film:check` then `render.py --project ... --out out/videos/x.mp4` | H.264 1080p MP4 |
+| Poster (Typst) | `npm run poster -- --title "..." --out out/graphics/x --format story` | PNG @216ppi + PDF |
+| Ebook (pandoc → Typst) | `npm run ebook -- --src content/drafts/book --out out/ebooks/x.pdf --title "..."` | multi-page PDF |
+
+Start with `source scripts/activate-studio.sh` (or `npm run env`). It puts the bundled
+`ffmpeg`/`ffprobe`, the venv, and the software-GL shims on the right paths.
+
+Two environment problems are solved in-repo:
+- **ffmpeg**: the `@ffmpeg-installer` build is from 2018 and breaks `loudnorm,aresample`; the studio
+  uses the modern static ffmpeg from `imageio-ffmpeg` (9.x) at `tools/bin/ffmpeg`.
+- **skia-python**: needs `libEGL`/`libGL` merely to import. `scripts/build-gl-shims.sh` builds stub
+  libraries that report "no GL context" so Skia falls back to CPU raster — identical output, no GPU.
+
 ## Choosing a Video Engine
 
 | You want | Use |

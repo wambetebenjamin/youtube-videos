@@ -1,18 +1,31 @@
-# Python runtime for the code-drawn film engines.
+# Python runtime for the code-drawn film engines and the document pipeline.
 #
 #   python3 -m venv .venv
 #   .venv/bin/pip install -r requirements.txt
+#   bash scripts/build-gl-shims.sh      # only if libEGL/libGL are missing
+#   source scripts/activate-studio.sh
 #
 # Used by:
-#   tools/cinematic-skill   (cinematic-film skill — Skia film engine)
-#   tools/animate           (voice word-timing via faster-whisper)
-#   tools/3dviz-pro-max     (catalog + capture helpers)
-#
-# Note: skia-python needs the system EGL/GL libraries (libEGL1, libGL1, libfontconfig1).
-# In the devcontainer / Codespaces these come from the apt block in setup-video-studio.sh.
+#   tools/cinematic-skill   cinematic-film — Skia film engine (needs skia-python)
+#   tools/animate           word timing for voiceovers (faster-whisper, optional)
+#   tools/3dviz-pro-max     catalog + capture helpers
+#   posters                 typst renders PNG/PDF directly, no browser needed
+#   ebooks                  pypandoc -> typst -> PDF, no LaTeX/Docker needed
 
 skia-python>=87.6
 numpy>=1.24
 pillow>=10
 scipy>=1.10
-faster-whisper>=1.0
+
+# A modern static ffmpeg (9.x). The @ffmpeg-installer build is from 2018 and
+# breaks on `loudnorm,aresample` chains with "Cannot select channel layout".
+imageio-ffmpeg>=0.5
+
+# Document pipeline: Markdown -> Typst -> PDF, plus a bundled pandoc binary.
+typst>=0.13
+pypandoc_binary>=1.13
+
+# Optional: word-level timing for voiceover-driven pieces.
+# faster-whisper>=1.0
+# Optional: browser automation (needs a working Chromium; see docs).
+# playwright>=1.40
