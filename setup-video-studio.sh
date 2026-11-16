@@ -20,7 +20,7 @@ install_system_packages() {
     fi
   fi
 
-  echo "Installing FFmpeg, Python 3, Git LFS, fonts, and Remotion headless Chromium libraries..."
+  echo "Installing FFmpeg, Python 3, Git LFS, fonts, Chromium and Skia GL libraries..."
   if ! $SUDO apt-get update -y; then
     echo "Warning: apt-get update could not reach mirrors; skipping system package installation."
     return 0
@@ -54,6 +54,10 @@ install_system_packages() {
     libgbm1 \
     libpango-1.0-0 \
     libcairo2 \
+    libegl1 \
+    libgl1 \
+    libfontconfig1 \
+    libfreetype6 \
     "$ASOUND_PKG" || {
     echo "Warning: system apt package installation incomplete (mirrors unreachable in restricted network)."
     return 0
@@ -102,6 +106,32 @@ npm install
 echo "Ensuring Remotion headless browser is ready..."
 npx remotion browser ensure || true
 
+echo "Linking bundled ffmpeg / ffprobe onto tools/bin ..."
+mkdir -p tools/bin
+FFMPEG_SRC="$(node -e "process.stdout.write(require('@ffmpeg-installer/ffmpeg').path)" 2>/dev/null || true)"
+FFPROBE_SRC="$(node -e "process.stdout.write(require('@ffprobe-installer/ffprobe').path)" 2>/dev/null || true)"
+[ -n "$FFMPEG_SRC" ] && ln -sf "$FFMPEG_SRC" tools/bin/ffmpeg
+[ -n "$FFPROBE_SRC" ] && ln -sf "$FFPROBE_SRC" tools/bin/ffprobe
+if [ -n "$FFMPEG_SRC" ]; then
+  echo "  ffmpeg  -> $FFMPEG_SRC"
+  echo "  ffprobe -> $FFPROBE_SRC"
+  echo "  Add to PATH: export PATH=\"$PWD/tools/bin:\$PATH\""
+fi
+
+echo "Setting up the Python film-engine runtime (.venv) ..."
+if command -v python3 >/dev/null 2>&1; then
+  [ -d .venv ] || python3 -m venv .venv
+  .venv/bin/pip install --quiet --upgrade pip 2>/dev/null || true
+  if [ -f requirements.txt ]; then
+    .venv/bin/pip install --quiet -r requirements.txt 2>/dev/null || \
+      echo "  Warning: some Python deps failed (skia-python needs libEGL1/libGL1/libfontconfig1)."
+  fi
+  .venv/bin/python -c "import skia" 2>/dev/null && echo "  skia-python ready" || \
+    echo "  skia-python not importable yet (install libEGL1 libGL1 libfontconfig1)."
+else
+  echo "  Warning: python3 not found; cinematic-film will be unavailable."
+fi
+
 echo "Cloning third-party studio tools into tools/ ..."
 clone_tool() {
   local name="$1" url="$2"
@@ -120,6 +150,10 @@ clone_tool ebook-generator              https://github.com/RyanFitzgerald/ebook-
 clone_tool markdown-to-pdf-book-converter https://github.com/romankurnovskii/markdown-to-pdf-book-converter.git
 clone_tool claude-remotion-skill        https://github.com/haidrrrry/claude-remotion-skill.git
 clone_tool herk-edit-kit                https://github.com/nateherkai/herk-edit-kit.git
+clone_tool animate                      https://github.com/cth9191/animate.git
+clone_tool 3dviz-pro-max                https://github.com/viettranx/3dviz-pro-max.git
+clone_tool cinematic-skill              https://github.com/Moh4696/cinematic-skill.git
+clone_tool claude-make-an-anime         https://github.com/makevoid/claude-make-an-anime.git
 
 echo "Installing Agent Skills (video, FFmpeg, posters)..."
 install_skill() {
@@ -132,6 +166,10 @@ install_skill kajisho5/ffmpeg-skill
 install_skill kajisho5/remotion-ffmpeg-skill
 install_skill jiemianduan/poster-style-transfer
 install_skill Chenruishuo/posterly
+install_skill Moh4696/cinematic-skill
+install_skill cth9191/animate
+install_skill viettranx/3dviz-pro-max
+install_skill makevoid/claude-make-an-anime
 
 if [ ! -f "AGENTS.md" ]; then
   echo "Warning: AGENTS.md is missing; restore it from git (it is a tracked studio file)."

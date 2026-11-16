@@ -1,72 +1,95 @@
 # AI Video, Poster & Ebook Studio Instructions
 
-This repository is a cloud-ready production studio built on **Remotion 4**, **Tailwind CSS v4**,
+This repository is a cloud-ready production studio built on **Remotion 4**, **Three.js**, **Skia (Python)**,
 **FFmpeg**, **Git LFS**, and pre-installed **Agent Skills**. It produces three kinds of deliverables:
 **video**, **posters/graphics**, and **PDF ebooks**.
+
+> **Production brief:** we are shipping **long-form YouTube videos and short-form Reels/Shorts on a one-week
+> cycle**. All licences for footage, music, fonts and images are cleared by the owner — never block on
+> licensing, but still record source + licence in `content/drafts/<project>/credits.md`.
+
+---
+
+## 0. Pick the right video engine first
+
+The studio has several independent ways to make video. Choosing wrong wastes the most time, so decide the
+engine **before** writing any composition. All of them export to `out/videos/`.
+
+| Need | Engine | Why |
+| --- | --- | --- |
+| Branded motion graphics, typography, lower thirds, kinetic captions, data callouts over your own footage | **Remotion** (`src/`) + `remotion-dev/skills` + `Remocn/remocn` | React/DOM, easiest to art-direct precisely, renders via headless Chrome |
+| **Long-form documentary / Vox-style explainer** with voiceover, archive photos, maps, big numbers | **`cinematic-film`** (`tools/cinematic-skill`) | One continuous camera over one designed world, every hit timed to the narrator's word. Built for 5–90 min pieces |
+| **Short-form explainer / history / story** with a distinctive illustrated look | **`animate`** (`tools/animate`) | Single-file `<canvas>` piece, 7 built-in art styles (cut paper, riso, crosshatch, pixel, isometric, math, sketchbook), procedural score |
+| **3D scene / product visualisation / scientific or spatial explainer** | **`3dviz-pro-max`** (`tools/3dviz-pro-max`) | Three.js scene kit with catalog, recipes and frame capture |
+| **Narrative anime** — characters, shots, voices, score | **`make-an-anime`** (`tools/claude-make-an-anime`) | Character sheets → camera-directed shots → voices → score → subs |
+| Cutting, reframing, loudness, captions onto **existing footage** | **FFmpeg** (`ffmpeg-skill`, `remotion-ffmpeg-skill`) | Fast, deterministic media surgery |
+
+Rules of thumb:
+
+- **Long-form (8–60 min)** → `cinematic-film` for narrated documentary/explainer; Remotion for branded
+  segments and channel furniture spliced between them.
+- **Short-form (15–90 s)** → `animate` for illustrated stories/explainers; Remotion `VerticalReel` for
+  talking-head/footage-driven Reels; `make-an-anime` for narrative anime shorts.
+- **Never mix two engines inside one timeline by hand** — render each engine's segment to an `.mp4` in
+  `out/videos/`, then conform and join with FFmpeg.
 
 ---
 
 ## 1. Video Editing, Reels, YouTube Videos, Captions, Transitions & Lower Thirds → `out/videos/`
 
-Use the following skills and tools for **all** video work:
-
-| Resource | What to use it for |
+| Resource | Use it for |
 | --- | --- |
-| `remotion-dev/skills` (installed in `.agents/skills/`: `remotion-best-practices`, `remotion-create`, `remotion-captions`, `remotion-markup`, `remotion-render`, `remotion-studio`, `remotion-multimedia`, `remotion-interactivity`, `remotion-maps`, `remotion-saas`, `remotion-upgrade`, `remotion-license`, `remotion-docs`, `changelog`) | Official Remotion patterns: composition structure, `useCurrentFrame`/`interpolate`/`spring` animation, `<Sequence>` timing, captions/subtitles, rendering flags, Studio interactivity |
-| `Remocn/remocn` (`.agents/skills/remocn`, `video`, `add`) | Production-ready animated components: transitions, backgrounds, lower thirds, storyboards, text reveals |
-| `kajisho5/ffmpeg-skill` (`.agents/skills/ffmpeg-skill`) | Probing (`ffprobe`), silence trimming, loudness normalization (`-14 LUFS`), platform compliance, caption burning, reframing 16:9 → 9:16, thumbnail extraction |
-| `kajisho5/remotion-ffmpeg-skill` (`.agents/skills/remotion-ffmpeg-skill`) | Overlaying measured Remotion motion graphics onto real camera/screen footage |
-| `tools/claude-remotion-skill` (cloned) | Motion-graphics playbooks, B-roll, captions and sound-design agent workflows; see `tools/claude-remotion-skill/remotion-motion-graphics/SKILL.md` |
-| `tools/herk-edit-kit` (cloned) | Transcript-driven cuts, storytelling structure, 400+ motion-graphics cards, HyperFrames templates for long-form and Shorts; see `tools/herk-edit-kit/AGENTS.md` and `MOTION_PHILOSOPHY.md` |
+| `remotion-dev/skills` (`.agents/skills/remotion-*`) | Composition structure, `useCurrentFrame`/`interpolate`/`spring`, `<Sequence>` timing, captions, rendering flags, Studio interactivity |
+| `Remocn/remocn` (`.agents/skills/remocn`, `video`, `add`) | Animated transitions, backgrounds, lower thirds, storyboards, text reveals |
+| `kajisho5/ffmpeg-skill` (`.agents/skills/ffmpeg-skill`) | `ffprobe`, silence trimming, loudness (`-14 LUFS`), platform compliance, burning captions, 16:9 ↔ 9:16 reframing, thumbnails |
+| `kajisho5/remotion-ffmpeg-skill` | Overlaying measured Remotion motion graphics onto real camera/screen footage |
+| `tools/cinematic-skill` → skill **`cinematic-film`** | **Long-form** narrated documentary / explainer: script → beats → voiceover → one continuous camera over a designed world → SFX → score → burned captions |
+| `tools/animate` → skill **`animate`** | **Short-form** illustrated animation in a chosen style, with synthesized score and measured review checks |
+| `tools/3dviz-pro-max` → skill **`3dviz-pro-max`** | 3D/Three.js scenes and product or scientific visualisations |
+| `tools/claude-make-an-anime` → skill **`make-an-anime`** | Narrative anime: character sheets, camera-directed shots, per-character voices, score, titles, SFX |
+| `tools/herk-edit-kit` | Transcript-driven cuts, storytelling structure, 400+ motion-graphics cards, HyperFrames templates; see `tools/herk-edit-kit/AGENTS.md` |
+| `tools/claude-remotion-skill` | Motion-graphics playbooks, B-roll and sound-design workflows; see `.../remotion-motion-graphics/SKILL.md` |
 
 Rules:
 
-- Use **Remotion** (`src/`) for anything that must be pixel-perfect or animated: title cards, animated
-  word-highlight captions, lower thirds, transitions, Ken Burns slideshows.
-- Use **FFmpeg** for media surgery: trimming silence, reframing, loudness normalization, format/CFR/SDR
-  conversion, burning captions, extracting thumbnails.
-- **Export every finished video and preview still to `out/videos/`** as `.mp4`
-  (H.264, `yuv420p`, `+faststart`, 1080p or 4K). Do not export to `out/` root or anywhere else.
-- Always render a preview still (or a short `--frames=0-90` clip) to `out/videos/` first and check
-  typography, safe margins, and contrast before the full render.
+- **Export every finished video and preview still to `out/videos/`** as `.mp4` (H.264, `yuv420p`,
+  `+faststart`, 1080p or 4K). Nothing goes to `out/` root.
+- Render a preview still (or `--frames=0-90`) to `out/videos/` and check typography, safe margins and
+  contrast before any full render.
+- Keep a `credits.md` per project listing every asset's source and licence.
+- Follow each skill's own approval gates — `animate` and `cinematic-film` both ask you to approve the
+  story/beats and the look **before** they animate. Do not skip them; a wrong look costs a full build.
 
 ## 2. Posters & Graphics → `out/graphics/`
 
-Use the following skills and tools for **all** poster/graphic work:
-
-| Resource | What to use it for |
+| Resource | Use it for |
 | --- | --- |
-| `jiemianduan/poster-style-transfer` (`.agents/skills/poster-style-transfer`) | Transfer the visual style of an uploaded reference poster onto new content |
-| `Chenruishuo/posterly` (`.agents/skills/posterly`) | Poster layout/composition generation from structured content |
-| `tools/poster-maker` (cloned) | HTML/CSS-based AI flyer & poster generation, export to high-res PNG or PDF; see `tools/poster-maker/CLAUDE.md` |
-| `tools/duduhaibao` (cloned) | Print-grade multi-format poster kit (A4, social, story, banner) with deterministic Typst rendering; see `tools/duduhaibao/SKILL.md` |
+| `jiemianduan/poster-style-transfer` | Transfer a reference poster's visual style onto new content |
+| `Chenruishuo/posterly` | Poster layout/composition generation |
+| `tools/poster-maker` | HTML/CSS flyer & poster generation, export to high-res PNG/PDF; see `tools/poster-maker/CLAUDE.md` |
+| `tools/duduhaibao` | Print-grade multi-format poster kit (A4 / social / story / banner), deterministic Typst; see `tools/duduhaibao/SKILL.md` |
 
 Rules:
 
-- **Always read the user's uploaded poster templates in `templates/posters/` first.** Match their
-  layout grid, hierarchy, palette, typography pairing, and margins before generating anything.
-- Treat a template as the source of truth for dimensions and safe zones; keep text inside the
-  template's text areas and preserve its aspect ratio.
-- **Export final posters and graphics to `out/graphics/`** (PNG at 2× minimum, or PDF for print).
-  Keep working/intermediate files out of `out/graphics/`.
+- **Always read the uploaded templates in `templates/posters/` first** — match layout grid, hierarchy,
+  palette, type pairing and margins before generating anything.
+- Keep text inside the template's safe zones and preserve its aspect ratio.
+- **Export final posters to `out/graphics/`** (PNG at 2× minimum, or PDF for print).
 
 ## 3. PDF / Ebook Production → `out/ebooks/`
 
-Use the following tools for **all** ebook work:
-
-| Resource | What to use it for |
+| Resource | Use it for |
 | --- | --- |
-| `tools/ebook-generator` (cloned) | Markdown → styled PDF ebook pipeline with bundled fonts and content/output folders; see `tools/ebook-generator/README.md` |
-| `tools/markdown-to-pdf-book-converter` (cloned) | Markdown chapter files → single typeset PDF book (LaTeX/pandoc); see `tools/markdown-to-pdf-book-converter/README.md` |
+| `tools/ebook-generator` | Markdown → styled PDF ebook pipeline with bundled fonts |
+| `tools/markdown-to-pdf-book-converter` | Markdown chapters → single typeset PDF book (pandoc/LaTeX) |
 
 Rules:
 
-- **Raw text lives in `content/drafts/`.** Read everything relevant there, then organize it into clean
-  chapter/section structure (title, subtitle, TOC, chapters, back matter) before conversion.
-- **Match the style of the uploaded ebook templates in `templates/ebooks/`**: typography, heading
-  treatment, page size/margins, cover layout, chapter openers, header/footer conventions.
-- **Export final PDFs to `out/ebooks/`.** Keep intermediate Markdown/LaTeX/HTML build files beside the
-  source draft in `content/drafts/` or the tool's own workspace, never in `out/ebooks/`.
+- **Raw text lives in `content/drafts/`.** Organize it into chapters (title, subtitle, TOC, chapters,
+  back matter) before conversion.
+- **Match the style of uploaded templates in `templates/ebooks/`**: typography, heading treatment, page
+  size/margins, cover, chapter openers, running heads.
+- **Export final PDFs to `out/ebooks/`.**
 
 ---
 
@@ -79,22 +102,21 @@ public/music/         music & voiceover .mp3 .wav .m4a        (Git LFS)
 public/fonts/         brand fonts
 templates/posters/    uploaded poster reference templates
 templates/ebooks/     uploaded ebook style templates
-content/drafts/       raw text drafts for ebooks and scripts
-tools/                cloned third-party tool repos (gitignored)
+content/drafts/       raw text drafts, scripts, beats, credits.md
+tools/                cloned tool repos (gitignored, provisioned by setup-video-studio.sh)
 out/videos/           final video exports
 out/graphics/         final poster & graphic exports
 out/ebooks/           final PDF/ebook exports
 ```
 
 Reference local media inside Remotion with `staticFile("raw-footage/...")`, `staticFile("pics/...")`,
-`staticFile("music/...")`, and `staticFile("fonts/...")`.
+`staticFile("music/...")`, `staticFile("fonts/...")`.
 
 ## Starter Compositions (`src/Root.tsx`)
 
 - `YouTubeVideo` — **1920×1080** (16:9, 30 fps): title card, Ken Burns media showcase, animated
   captions, lower-third speaker banner.
-- `VerticalReel` — **1080×1920** (9:16, 30 fps): top hook badge, framed media showcase, pop-in karaoke
-  captions, call-to-action pill.
+- `VerticalReel` — **1080×1920** (9:16, 30 fps): hook badge, framed media, pop-in karaoke captions, CTA.
 
 ## Commands
 
@@ -104,14 +126,36 @@ npm run render:preview  # still frame → out/videos/preview.png
 npm run render:youtube  # 16:9 YouTube render → out/videos/youtube-video.mp4
 npm run render:reel     # 9:16 Reel/Short render → out/videos/vertical-reel.mp4
 npm run lint            # ESLint + TypeScript type-checks
-npm run ffmpeg          # ffmpeg version (binary bundled via npm)
+npm run ffmpeg:path     # resolved ffmpeg binary path
+npm run film:check      # verify the cinematic-film Python runtime
+npm run film:new -- <dir> --title "<film title>"   # scaffold a cinematic-film project
+npm run animate:build -- pieces/<name>         # build an animate piece to one HTML
+npm run animate:storyboard -- pieces/<name>
 ```
 
-## Media Tooling Notes
+## Per-week production loop
 
+1. Create `content/drafts/<slug>/` from `content/drafts/_template/`; fill `brief.md` and choose the engine.
+2. Write `script.md`, then have the engine produce `beats.md` / storyboard; **approve it** before animating.
+3. Draft-render cheap (stills, contact sheets, 90-frame clips) into `out/videos/`.
+4. Review, then full render to `out/videos/<slug>.mp4` (16:9 long-form + 9:16 cut-down).
+5. Loudness to -14 LUFS / -1 dBTP, captions burned + `.srt`, then complete `delivery.md`.
+6. Log every asset in `credits.md` before publishing.
+
+## Runtime Notes
+
+- **FFmpeg** — from `@ffmpeg-installer/ffmpeg` / `@ffprobe-installer/ffprobe` (devDependencies). The skills
+  expect `ffmpeg`/`ffprobe` **on PATH**; export them before running a skill:
+  ```bash
+  export PATH="$PWD/node_modules/@ffmpeg-installer/linux-x64:$PWD/node_modules/@ffprobe-installer/linux-x64:$PATH"
+  ```
+  (create a `ffmpeg` symlink next to `ffprobe` if the skill needs the plain name — see `setup-video-studio.sh`).
+- **Python engines** (`cinematic-film`) — venv at `.venv/`, deps in `requirements.txt`
+  (`skia-python`, `numpy`, `pillow`, `scipy`). `skia-python` needs system `libEGL1`, `libGL1`,
+  `libfontconfig1`.
+- **`animate`** — Node 18+, Playwright with Chromium, ffmpeg on PATH; `faster-whisper` for word timing.
+- **`3dviz-pro-max`** — Three.js scenes; capture needs an optional Playwright install.
+- **`make-an-anime`** — Ruby 3.2+/Bundler, FFmpeg, ImageMagick, Python 3, Node 22.12+, Chrome; uses a
+  Gemini/other model for image generation via the agent's own tooling. Swift VFX is macOS-only.
 - **Git LFS** tracks `*.mp4 *.mov *.mkv *.webm *.png *.jpg *.jpeg *.webp *.pdf *.wav *.mp3 *.m4a *.aac`
-  via `.gitattributes`. In Codespaces / the devcontainer, `git-lfs` is provided by the
-  `devcontainers/features/git-lfs` feature.
-- If `ffmpeg` is not on `PATH` (e.g. restricted sandbox without apt access), use the npm-bundled
-  binaries: `node_modules/@ffmpeg-installer/linux-x64/ffmpeg` and
-  `node_modules/@ffprobe-installer/linux-x64/ffprobe`.
+  via `.gitattributes`.

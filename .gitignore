@@ -23,6 +23,11 @@ out/graphics/*
 out/ebooks/*
 !out/ebooks/.gitkeep
 
+# Python virtualenv for the code-drawn film engines (skia / numpy / pillow)
+.venv/
+__pycache__/
+*.pyc
+
 # Agent skill directories installed by setup-video-studio.sh
 .agents/
 .claude/skills/

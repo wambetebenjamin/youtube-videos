@@ -1,0 +1,18 @@
+# Python runtime for the code-drawn film engines.
+#
+#   python3 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+#
+# Used by:
+#   tools/cinematic-skill   (cinematic-film skill — Skia film engine)
+#   tools/animate           (voice word-timing via faster-whisper)
+#   tools/3dviz-pro-max     (catalog + capture helpers)
+#
+# Note: skia-python needs the system EGL/GL libraries (libEGL1, libGL1, libfontconfig1).
+# In the devcontainer / Codespaces these come from the apt block in setup-video-studio.sh.
+
+skia-python>=87.6
+numpy>=1.24
+pillow>=10
+scipy>=1.10
+faster-whisper>=1.0

@@ -5,6 +5,7 @@ Cloud-ready production studio built for **GitHub Codespaces**, combining **Remot
 ## What's Included
 
 - **`.devcontainer/devcontainer.json`** — Launches a 4-core / 8 GB Debian 13 (`trixie`) + Node.js 22 container with Git LFS, forwarded port `3000` for Remotion Studio, and GitHub Copilot + Claude Code extensions.
+- **`requirements.txt`** — Python runtime for the code-drawn film engines (`skia-python`, `numpy`, `pillow`, `scipy`, `faster-whisper`), installed into `.venv/` by the setup script.
 - **`setup-video-studio.sh`** — One-click idempotent setup script (`postCreateCommand`) that installs FFmpeg 7+, Python 3, Remotion's headless Chromium dependencies, npm packages, all 6 AI Agent Skills, and the 6 cloned tool repositories:
   - [`remotion-dev/skills`](https://github.com/remotion-dev/skills) — Official Remotion best practices, captions, markup, rendering, and Studio interactivity skills
   - [`Remocn/remocn`](https://github.com/Remocn/remocn) — Production-ready Remotion animations, transitions, backgrounds, and storyboard workflows
@@ -13,9 +14,16 @@ Cloud-ready production studio built for **GitHub Codespaces**, combining **Remot
   - [`jiemianduan/poster-style-transfer`](https://github.com/jiemianduan/poster-style-transfer) — Transfer a reference poster's visual style onto new content
   - [`Chenruishuo/posterly`](https://github.com/Chenruishuo/posterly) — Poster layout and composition generation
 - **Cloned tool repositories (`tools/`, gitignored)** — provisioned by the setup script:
-  - [`poster-maker`](https://github.com/dabodamjan/poster-maker) & [`duduhaibao`](https://github.com/Shine8592/duduhaibao) — poster/flyer generation (HTML/CSS and print-grade Typst)
-  - [`ebook-generator`](https://github.com/RyanFitzgerald/ebook-generator) & [`markdown-to-pdf-book-converter`](https://github.com/romankurnovskii/markdown-to-pdf-book-converter) — Markdown → styled PDF ebooks
-  - [`claude-remotion-skill`](https://github.com/haidrrrry/claude-remotion-skill) & [`herk-edit-kit`](https://github.com/nateherkai/herk-edit-kit) — Remotion motion-graphics and transcript-driven editing workflows
+  - **Video**
+    - [`cinematic-skill`](https://github.com/Moh4696/cinematic-skill) — `cinematic-film`: long-form narrated documentary / Vox-style explainers, one continuous camera over a code-drawn world
+    - [`animate`](https://github.com/cth9191/animate) — short-form procedural animation in 7 built-in styles (cut paper, riso, crosshatch, pixel, isometric, math, sketchbook)
+    - [`3dviz-pro-max`](https://github.com/viettranx/3dviz-pro-max) — Three.js 3D scenes, product and scientific visualisation
+    - [`claude-make-an-anime`](https://github.com/makevoid/claude-make-an-anime) — narrative anime: character sheets, shots, voices, score
+    - [`claude-remotion-skill`](https://github.com/haidrrrry/claude-remotion-skill) & [`herk-edit-kit`](https://github.com/nateherkai/herk-edit-kit) — Remotion motion-graphics and transcript-driven editing workflows
+  - **Posters** — [`poster-maker`](https://github.com/dabodamjan/poster-maker) & [`duduhaibao`](https://github.com/Shine8592/duduhaibao) (HTML/CSS flyers, print-grade Typst)
+  - **Ebooks** — [`ebook-generator`](https://github.com/RyanFitzgerald/ebook-generator) & [`markdown-to-pdf-book-converter`](https://github.com/romankurnovskii/markdown-to-pdf-book-converter) (Markdown → styled PDF)
+  - All ten are MIT-licensed.
+- **`content/drafts/_template/`** — copy per project: `brief.md` (incl. engine choice), `script.md`, `beats.md`, `credits.md`, `delivery.md`
 - **Starter Remotion Compositions (`src/`)**:
   - `YouTubeVideo` (`1920×1080`, 16:9, 30 fps) — Title card, Ken Burns media backdrop, lower third, and animated word-highlight captions
   - `VerticalReel` (`1080×1920`, 9:16, 30 fps) — Reels / Shorts / TikTok vertical template with hook badge, animated captions, and CTA
@@ -32,6 +40,29 @@ Cloud-ready production studio built for **GitHub Codespaces**, combining **Remot
   - `out/ebooks/` — Final PDF/ebook exports
   - `tools/` — Cloned third-party tool repositories (gitignored)
   - Git LFS tracks `*.mp4 *.mov *.mkv *.webm *.png *.jpg *.jpeg *.webp *.pdf *.wav *.mp3 *.m4a *.aac`
+
+## Choosing a Video Engine
+
+| You want | Use |
+| --- | --- |
+| Branded motion graphics, lower thirds, kinetic captions over your own footage | **Remotion** (`src/`) |
+| A long-form narrated documentary or Vox-style explainer | **`cinematic-film`** (`tools/cinematic-skill`) |
+| A short illustrated explainer/story in a distinctive style | **`animate`** (`tools/animate`) |
+| A 3D scene, product or scientific visualisation | **`3dviz-pro-max`** (`tools/3dviz-pro-max`) |
+| A narrative anime | **`make-an-anime`** (`tools/claude-make-an-anime`) |
+| Cutting, reframing, loudness, captions on existing footage | **FFmpeg** (`ffmpeg-skill`) |
+
+Render each engine's segment to `out/videos/`, then conform and join with FFmpeg. Full routing rules
+live in `AGENTS.md`.
+
+### Media toolchain on PATH
+
+The Python and Node skills call `ffmpeg`/`ffprobe` by name. The bundled binaries are symlinked into
+`tools/bin/` by the setup script:
+
+```bash
+export PATH="$PWD/tools/bin:$PATH"
+```
 
 ## How to Launch in GitHub Codespaces
 

@@ -41,7 +41,11 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "setup": "bash setup-video-studio.sh",
-    "ffmpeg": "node -e \"console.log(require('@ffmpeg-installer/ffmpeg').path)\""
+    "ffmpeg:path": "node -e \"console.log(require('@ffmpeg-installer/ffmpeg').path)\"",
+    "film:check": ".venv/bin/python tools/cinematic-skill/skills/cinematic-film/scripts/check_setup.py",
+    "film:new": ".venv/bin/python tools/cinematic-skill/skills/cinematic-film/scripts/new_project.py",
+    "animate:build": "node tools/animate/plugins/animate/skills/animate/tools/build.mjs",
+    "animate:storyboard": "node tools/animate/plugins/animate/skills/animate/tools/storyboard.mjs"
   },
   "allowScripts": {
     "esbuild": false
