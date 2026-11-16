@@ -121,10 +121,11 @@ def build_film(doc):
     # The question is left open, so the camera opens with it: back to the whole crossing,
     # both shores in frame, nothing explained. Then it settles at the far shore for the prayer.
     film.shot(L(76) + 0.3, 600, -300, 0.100)                    # the whole route, question hanging
+
     # The prayer is prayed over the whole crossing, not at one card: stay wide enough that every
     # verse of the story is still in frame, and drift very slowly toward the far shore.
     film.shot(L(PRAYER_LINE) + 0.1, 300, -400, 0.101)
-    film.shot(L(99) + 3.0, 1500, 300, 0.118)
+    film.shot(L(99) + 2.0, 1500, 300, 0.118)
 
     film.shot(L(100) + 0.5, VERSES[7][2], VERSES[7][3], 0.330)  # Psalm 4:8
     # the last lines are said over the whole crossing — every verse of the story in one frame,

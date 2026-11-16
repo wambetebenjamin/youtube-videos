@@ -73,19 +73,19 @@ Sit, listen, and encounter God — one story, one prayer at a time.
 
 ## Chapters
 
-| Time | Chapter | Scene |
-| --- | --- | --- |
-| 00:00 | "Let's go over to the other side" | T01 |
-| 01:29 | The storm | T02 |
-| 02:38 | "Don't you care?" | T03 |
-| 03:40 | Peace, be still | T04 |
-| 04:57 | Why are you afraid? | T05 |
-| 06:13 | Who then is this? | T06 |
-| 07:15 | Prayer | T07 |
-| 08:54 | A blessing to sleep on | T08 |
+| Time | Chapter |
+| --- | --- |
+| 00:00 | "Let us go over to the other side" |
+| 1:10 | The storm |
+| 2:05 | "Do you not care?" |
+| 2:57 | Peace, be still |
+| 4:02 | "Why are you so afraid?" |
+| 4:56 | "Who then is this?" |
+| 5:40 | Prayer |
+| 6:52 | A blessing to sleep on |
 
-> Times are from the **placeholder narration** (`build_narration.py`, 562.9 s total). Re-run after
-> the real read and regenerate from `audio/timing.json`.
+> Times are from the **real narration** (`audio/timing.json`, 440.2 s total). If the read is
+> re-recorded, regenerate the table the same way — never hand-edit it.
 
 ## Companion Short (9:16)
 
@@ -95,7 +95,7 @@ The strongest 40 seconds in this episode is **the four words** — lines 40–54
 | Item | Value |
 | --- | --- |
 | Hook (first 1.5 s) | "The wind was louder than the voice — until He stood up." |
-| Lines | 40–54 (`script.json`, scene `T04_peace_be_still`) |
+| Lines | 40–54 (`script.json`, scene `T04_peace_be_still`, 2:57–4:02) |
 | Length | ~45–55 s |
 | Closing card | PEACE. BE STILL. |
 | Build | its own 9:16 project, `--format story` thumbnail |
@@ -110,9 +110,10 @@ asked in a hospital corridor.
 
 ## Publishing checklist
 
-- [ ] Real voiceover recorded — warm, unhurried, **~145 wpm**; keep the pause before "Peace" long
-- [ ] Loudness to **-14 LUFS**, true peak **-1 dBTP**
-- [ ] Burned captions + `.srt` (this channel is watched with captions on)
+- [x] Real voiceover recorded — warm, unhurried, ~155 wpm (7:20 total)
+- [x] Narration normalized (measured −16.6 dB mean, −1.5 dB peak); master to **-14 LUFS** on export
+- [x] `.srt` written: `out/videos/abbas-table-storm.srt` (198 cues)
+- [ ] Burned caption pass (optional — YouTube can use the `.srt`)
 - [ ] Chapters pasted after the real read
 - [ ] Thumbnail: `out/graphics/abbas-table-storm-thumb.png` (1920×1080, text **PEACE, BE STILL**)
 - [ ] End screen: next story + subscribe

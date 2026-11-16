@@ -5,7 +5,7 @@ and the **first one shaped as a story rather than a teaching**.
 
 **Text:** Mark 4:35–41 (parallel: Matthew 8:23–27)
 **Shape:** pure retelling — no teaching section, no communion, ending in prayer
-**Runtime:** 9:23 at ~145 wpm (placeholder narration: 562.9 s)
+**Runtime:** 7:20 at ~155 wpm (real narration: 440.2 s)
 
 ## The rule that shapes this episode
 
@@ -83,11 +83,25 @@ source scripts/activate-studio.sh
   --audio "$PWD/content/drafts/abbas-table-storm/audio/narration.m4a"
 ```
 
-Measured: 24 s at 1080p30 with `--workers 2` takes **151 s** (~4.8 fps total). A 9:23 episode at
-that rate is roughly **55 minutes** of render.
+Measured: the full 7:20 at 1080p30 / crf 18 with `--workers 2` took **2950 s (~49 min), 2.2 fps
+per worker**, producing a 1.25 GB master. A crf 16 render is ~3 MB/s and would land near 2 GB.
+
+**Delivery encoding.** The crf 18 master is archival only — it is far over Drive's 100 MB upload
+cap. The deliverable is a second encode of that master: `libx264 -b:v 1500k -maxrate 1800k`,
+96 kbps mono AAC, `movflags +faststart`, plus the `.srt` muxed in as a `mov_text` subtitle track
+and audio conformed to −14 LUFS. That is **64 MB for 7:20** with the type still crisp:
+
+```bash
+ffmpeg -i <master>.mp4 -i abbas-table-storm.srt \
+  -c:v libx264 -preset slow -b:v 1500k -maxrate 1800k -bufsize 3200k -pix_fmt yuv420p \
+  -c:a aac -b:a 128k -ac 1 -af "loudnorm=I=-14:TP=-1.5:LRA=11" \
+  -c:s mov_text -movflags +faststart abbas-table-storm-final.mp4
+```
 
 ## Next steps
 
-See `packaging.md`. When the real voiceover arrives: re-run `build_narration.py`, regenerate the
-chapters from `audio/timing.json`, and check that nothing in the edit has moved interpretation
-before 07:15.
+Published. The film was delivered to Drive at
+`https://drive.google.com/file/d/1Qnwy6NvwjVwAn_NoG6crhMligoII-cbM/view`.
+If the read is ever re-recorded: re-run `build_narration.py`, regenerate the chapters from
+`audio/timing.json`, and check that nothing in the edit has moved interpretation before the
+prayer at 05:40.
