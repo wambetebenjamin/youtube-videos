@@ -1,0 +1,648 @@
+{
+ "title": "There Was Room For You",
+ "takes": [
+  {
+   "take": "T01_open",
+   "lines": [
+    {
+     "id": 1,
+     "text": "You do not come crawling in.",
+     "spoken": "You do not come crawling in.",
+     "hero": "the title, small and warm",
+     "typed": "THERE WAS ROOM FOR YOU",
+     "gap_after": 0.7
+    },
+    {
+     "id": 2,
+     "text": "Enter into his gates with thanksgiving. Into his courts with praise.",
+     "spoken": "Enter into his gates with thanksgiving. Into his courts with praise.",
+     "hero": "Psalm 100:4, typeset",
+     "typed": "PSALM 100:4",
+     "gap_after": 0.7
+    },
+    {
+     "id": 3,
+     "text": "Give thanks to him, and bless his name.",
+     "spoken": "Give thanks to him, and bless his name.",
+     "hero": "the verse, softened",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 4,
+     "text": "That verse says enter. The way you enter a home you have been invited to.",
+     "spoken": "That verse says enter. The way you enter a home you have been invited to.",
+     "hero": "a warm doorway",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 5,
+     "text": "Gates, then courts, then the door.",
+     "spoken": "Gates, then courts, then the door.",
+     "hero": "three frames, opening",
+     "typed": "GATES  COURTS  DOOR",
+     "gap_after": 0.7
+    },
+    {
+     "id": 6,
+     "text": "And behind the door, a table that is already set.",
+     "spoken": "And behind the door, a table that is already set.",
+     "hero": "a set table, candlelight",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 7,
+     "text": "But most of us have been standing on the step for years.",
+     "spoken": "But most of us have been standing on the step for years.",
+     "hero": "a doorstep, evening",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 8,
+     "text": "Knocking politely. Offering to eat in the kitchen. Apologising for our shoes.",
+     "spoken": "Knocking politely. Offering to eat in the kitchen. Apologising for our shoes.",
+     "hero": "a kitchen doorway",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 9,
+     "text": "And here is the thing He keeps saying, in story after story.",
+     "spoken": "And here is the thing He keeps saying, in story after story.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 10,
+     "text": "There was room for you.",
+     "spoken": "There was room for you.",
+     "hero": "the title, held",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 11,
+     "text": "Not room in general. Room at the table, with a place set, and a name written on it.",
+     "spoken": "Not room in general. Room at the table, with a place set, and a name written on it.",
+     "hero": "a place card, name written",
+     "typed": "",
+     "gap_after": 0.7
+    }
+   ]
+  },
+  {
+   "take": "T02_the_verse",
+   "lines": [
+    {
+     "id": 12,
+     "text": "There is a verse that makes people nervous.",
+     "spoken": "There is a verse that makes people nervous.",
+     "hero": "card, a closed book",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 13,
+     "text": "But when you are invited, go and sit in the lowest place.",
+     "spoken": "But when you are invited, go and sit in the lowest place.",
+     "hero": "Luke 14:10, typeset",
+     "typed": "LUKE 14:10",
+     "gap_after": 0.7
+    },
+    {
+     "id": 14,
+     "text": "So that when he who invited you comes, he may tell you, friend, move up higher.",
+     "spoken": "So that when he who invited you comes, he may tell you, friend, move up higher.",
+     "hero": "the verse, a hand lifting",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 15,
+     "text": "On the first read, this sounds like advice about being humble so you can be praised.",
+     "spoken": "On the first read, this sounds like advice about being humble so you can be praised.",
+     "hero": "card, two seats",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 16,
+     "text": "But look at what is really happening in that room.",
+     "spoken": "But look at what is really happening in that room.",
+     "hero": "the room, wide",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 17,
+     "text": "The host is moving people up.",
+     "spoken": "The host is moving people up.",
+     "hero": "the host, walking the table",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 18,
+     "text": "That is all. The host walks around the table and lifts people.",
+     "spoken": "That is all. The host walks around the table and lifts people.",
+     "hero": "a hand, lifting",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 19,
+     "text": "He is not testing anyone to catch them out. He is looking for someone to lift.",
+     "spoken": "He is not testing anyone to catch them out. He is looking for someone to lift.",
+     "hero": "the table, warm",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 20,
+     "text": "The whole scene starts because Jesus noticed something.",
+     "spoken": "The whole scene starts because Jesus noticed something.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 21,
+     "text": "He noticed how they chose the best seats.",
+     "spoken": "He noticed how they chose the best seats.",
+     "hero": "Luke 14:7, typeset",
+     "typed": "LUKE 14:7",
+     "gap_after": 0.7
+    },
+    {
+     "id": 22,
+     "text": "We chose the best seats because we were afraid there would not be one.",
+     "spoken": "We chose the best seats because we were afraid there would not be one.",
+     "hero": "a crowded table",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 23,
+     "text": "That is the real fear. Not pride. Fear.",
+     "spoken": "That is the real fear. Not pride. Fear.",
+     "hero": "card, small",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 24,
+     "text": "And so we do the opposite in our thinking.",
+     "spoken": "And so we do the opposite in our thinking.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 25,
+     "text": "We put ourselves last. Not with the humility of a guest who trusts the host.",
+     "spoken": "We put ourselves last. Not with the humility of a guest who trusts the host.",
+     "hero": "an empty chair, last seat",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 26,
+     "text": "But with the fear of a child who has been turned away before.",
+     "spoken": "But with the fear of a child who has been turned away before.",
+     "hero": "a child at a door",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 27,
+     "text": "There is a difference, and God knows it, and He comes for us either way.",
+     "spoken": "There is a difference, and God knows it, and He comes for us either way.",
+     "hero": "the door, warm light",
+     "typed": "",
+     "gap_after": 0.7
+    }
+   ]
+  },
+  {
+   "take": "T03_the_door",
+   "lines": [
+    {
+     "id": 28,
+     "text": "Eight verses on, the same meal turns.",
+     "spoken": "Eight verses on, the same meal turns.",
+     "hero": "card, the room dimming",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 29,
+     "text": "He said to his servant, go out quickly into the streets and lanes of the city.",
+     "spoken": "He said to his servant, go out quickly into the streets and lanes of the city.",
+     "hero": "Luke 14:21, typeset",
+     "typed": "LUKE 14:21",
+     "gap_after": 0.7
+    },
+    {
+     "id": 30,
+     "text": "And bring in the poor, maimed, blind, and lame.",
+     "spoken": "And bring in the poor, maimed, blind, and lame.",
+     "hero": "the streets, evening",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 31,
+     "text": "The servant comes back and says, lord, it is done as you commanded.",
+     "spoken": "The servant comes back and says, lord, it is done as you commanded.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 32,
+     "text": "And there is still room.",
+     "spoken": "And there is still room.",
+     "hero": "the verse, held",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 33,
+     "text": "So the master says, go out into the highways and hedges.",
+     "spoken": "So the master says, go out into the highways and hedges.",
+     "hero": "a road, hedgerow",
+     "typed": "LUKE 14:23",
+     "gap_after": 0.7
+    },
+    {
+     "id": 34,
+     "text": "And compel them to come in, that my house may be filled.",
+     "spoken": "And compel them to come in, that my house may be filled.",
+     "hero": "the house, full of light",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 35,
+     "text": "Look who has to be compelled.",
+     "spoken": "Look who has to be compelled.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 36,
+     "text": "It is not the honoured guest.",
+     "spoken": "It is not the honoured guest.",
+     "hero": "an honoured seat",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 37,
+     "text": "It is the one standing in the hedge at the edge of the road, in the dark.",
+     "spoken": "It is the one standing in the hedge at the edge of the road, in the dark.",
+     "hero": "a figure in the hedge",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 38,
+     "text": "Who has already decided they do not qualify, and has stopped walking toward the door.",
+     "spoken": "Who has already decided they do not qualify, and has stopped walking toward the door.",
+     "hero": "a stopped figure",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 39,
+     "text": "Maybe you have stopped walking toward the door.",
+     "spoken": "Maybe you have stopped walking toward the door.",
+     "hero": "card, very quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 40,
+     "text": "I want to tell you what Scripture says about that, quietly, without any pressure.",
+     "spoken": "I want to tell you what Scripture says about that, quietly, without any pressure.",
+     "hero": "card, soft",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 41,
+     "text": "Draw near to God, and he will draw near to you.",
+     "spoken": "Draw near to God, and he will draw near to you.",
+     "hero": "James 4:8, typeset",
+     "typed": "JAMES 4:8",
+     "gap_after": 0.7
+    },
+    {
+     "id": 42,
+     "text": "That is the whole transaction. You turn toward the house, and the Father is already coming down the road.",
+     "spoken": "That is the whole transaction. You turn toward the house, and the Father is already coming down the road.",
+     "hero": "the road, a figure approaching",
+     "typed": "",
+     "gap_after": 0.7
+    }
+   ]
+  },
+  {
+   "take": "T04_the_ask",
+   "lines": [
+    {
+     "id": 43,
+     "text": "There is one thing this table asks.",
+     "spoken": "There is one thing this table asks.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 44,
+     "text": "A table with a place for everyone is still a table with a host.",
+     "spoken": "A table with a place for everyone is still a table with a host.",
+     "hero": "the table, set",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 45,
+     "text": "It is not a room without a door. It is a home with an open door.",
+     "spoken": "It is not a room without a door. It is a home with an open door.",
+     "hero": "an open door",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 46,
+     "text": "So there is one thing this table asks. And it is the same thing a family asks.",
+     "spoken": "So there is one thing this table asks. And it is the same thing a family asks.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 47,
+     "text": "Come as family.",
+     "spoken": "Come as family.",
+     "hero": "card, warm",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 48,
+     "text": "But as many as received him, to them he gave the right to become God's children.",
+     "spoken": "But as many as received him, to them he gave the right to become God's children.",
+     "hero": "John 1:12, typeset",
+     "typed": "JOHN 1:12",
+     "gap_after": 0.7
+    },
+    {
+     "id": 49,
+     "text": "Receive. Become. That is the whole door.",
+     "spoken": "Receive. Become. That is the whole door.",
+     "hero": "card, two words",
+     "typed": "RECEIVE.  BECOME.",
+     "gap_after": 0.7
+    },
+    {
+     "id": 50,
+     "text": "You do not clean up and then come.",
+     "spoken": "You do not clean up and then come.",
+     "hero": "a doorway, light",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 51,
+     "text": "You come, and He brings you in as a child of the house.",
+     "spoken": "You come, and He brings you in as a child of the house.",
+     "hero": "inside the house, warm",
+     "typed": "",
+     "gap_after": 0.7
+    }
+   ]
+  },
+  {
+   "take": "T05_communion",
+   "lines": [
+    {
+     "id": 52,
+     "text": "At Abba's Table, we remember the table the way Jesus gave it to us.",
+     "spoken": "At Abba's Table, we remember the table the way Jesus gave it to us.",
+     "hero": "the bread and cup",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 53,
+     "text": "Jesus took bread, and when he had blessed, he broke it, and gave to them.",
+     "spoken": "Jesus took bread, and when he had blessed, he broke it, and gave to them.",
+     "hero": "Mark 14:22, typeset",
+     "typed": "MARK 14:22",
+     "gap_after": 0.7
+    },
+    {
+     "id": 54,
+     "text": "And said, take, eat. This is my body.",
+     "spoken": "And said, take, eat. This is my body.",
+     "hero": "the bread, broken",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 55,
+     "text": "He took the cup, and when he had given thanks, he gave to them. They all drank of it.",
+     "spoken": "He took the cup, and when he had given thanks, he gave to them. They all drank of it.",
+     "hero": "the cup, poured",
+     "typed": "MARK 14:23",
+     "gap_after": 0.7
+    },
+    {
+     "id": 56,
+     "text": "He said, this is my blood of the new covenant, which is poured out for many.",
+     "spoken": "He said, this is my blood of the new covenant, which is poured out for many.",
+     "hero": "the cup, held",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 57,
+     "text": "There is no fence around this table, except the door you are already standing at.",
+     "spoken": "There is no fence around this table, except the door you are already standing at.",
+     "hero": "an open table",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 58,
+     "text": "The bread is not a reward for a good week. The cup is not a prize.",
+     "spoken": "The bread is not a reward for a good week. The cup is not a prize.",
+     "hero": "card, quiet",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 59,
+     "text": "It is a place set, for you, by the Host.",
+     "spoken": "It is a place set, for you, by the Host.",
+     "hero": "the place setting",
+     "typed": "",
+     "gap_after": 0.7
+    }
+   ]
+  },
+  {
+   "take": "T06_prayer",
+   "lines": [
+    {
+     "id": 60,
+     "text": "Let us pray.",
+     "spoken": "Let us pray.",
+     "hero": "card, low light",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 61,
+     "text": "Father, thank You for the door that is open.",
+     "spoken": "Father, thank You for the door that is open.",
+     "hero": "a warm door",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 62,
+     "text": "I have stood outside it so long that I started calling it closed.",
+     "spoken": "I have stood outside it so long that I started calling it closed.",
+     "hero": "the doorstep, night",
+     "typed": "I CALLED IT CLOSED",
+     "gap_after": 0.9
+    },
+    {
+     "id": 63,
+     "text": "I have knocked politely and offered to eat in the kitchen.",
+     "spoken": "I have knocked politely and offered to eat in the kitchen.",
+     "hero": "a kitchen doorway",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 64,
+     "text": "And all the while the place was already set.",
+     "spoken": "And all the while the place was already set.",
+     "hero": "the table, candlelight",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 65,
+     "text": "Tonight I would like to sit down.",
+     "spoken": "Tonight I would like to sit down.",
+     "hero": "an empty chair, pulling out",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 66,
+     "text": "Thank You that the Spirit who brought me to Your table is the same Spirit who calls You Abba.",
+     "spoken": "Thank You that the Spirit who brought me to Your table is the same Spirit who calls You Abba.",
+     "hero": "card, warm",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 67,
+     "text": "Father. Thank You that I am not an honoured guest, but a child of the house.",
+     "spoken": "Father. Thank You that I am not an honoured guest, but a child of the house.",
+     "hero": "a child at the table",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 68,
+     "text": "And Father, for the one still standing in the hedge.",
+     "spoken": "And Father, for the one still standing in the hedge.",
+     "hero": "a figure at the roadside",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 69,
+     "text": "The one who thinks the room is full.",
+     "spoken": "The one who thinks the room is full.",
+     "hero": "the house, lit",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 70,
+     "text": "Go out and compel them in.",
+     "spoken": "Go out and compel them in.",
+     "hero": "Luke 14:23, small",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 71,
+     "text": "Bring them home.",
+     "spoken": "Bring them home.",
+     "hero": "the road, warm",
+     "typed": "",
+     "gap_after": 0.9
+    },
+    {
+     "id": 72,
+     "text": "In Jesus' name, amen.",
+     "spoken": "In Jesus' name, amen.",
+     "hero": "card, held",
+     "typed": "",
+     "gap_after": 0.9
+    }
+   ]
+  },
+  {
+   "take": "T07_close",
+   "lines": [
+    {
+     "id": 73,
+     "text": "He who comes to me I will in no way throw out.",
+     "spoken": "He who comes to me I will in no way throw out.",
+     "hero": "John 6:37, typeset",
+     "typed": "JOHN 6:37",
+     "gap_after": 0.7
+    },
+    {
+     "id": 74,
+     "text": "There was room for you.",
+     "spoken": "There was room for you.",
+     "hero": "the title, held",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 75,
+     "text": "There still is.",
+     "spoken": "There still is.",
+     "hero": "card, warm",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 76,
+     "text": "Sit, listen, and encounter God. One story, one prayer at a time.",
+     "spoken": "Sit, listen, and encounter God. One story, one prayer at a time.",
+     "hero": "the table, candle",
+     "typed": "ABBA'S TABLE",
+     "gap_after": 0.7
+    }
+   ]
+  }
+ ]
+}

@@ -146,6 +146,17 @@ high-performing Bible-teaching video (title engine, cold-open → misdiagnosis �
 `content/drafts/pruning-not-punishment/` is a fully written, lint-clean episode built with it —
 copy that project's shape for a new one.
 
+**Channel:** Abba's Table — [@abbastablestories](https://youtube.com/@abbastablestories),
+"Bible and communion at Abba's Table". Quiet, warm, communion-first: Bible stories plus prayers,
+for people seeking comfort and direction.
+
+Series rules for this channel (they differ from the general formula):
+- **One story per episode**, not a list of signs. Carry the teaching inside a single passage.
+- **Close with a prayer**, not a comment prompt.
+- **Look `paper`** in `scene.py` — warm, low contrast, no red accent (use the warm poster theme).
+- Pace ~145–150 wpm; leave real silence after each verse.
+- `content/drafts/abbas-table-luke14/` is the reference episode. Copy its shape.
+
 Series rules: second person, present tense; every claim tied to a verse; one metaphor per sign;
 always verify quoted scripture and record the translation in `verses.md` (WEB and KJV are public
 domain — NIV/NKJV/ESV need permission beyond brief quotation).

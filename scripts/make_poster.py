@@ -20,7 +20,13 @@ FORMATS = {  # width, height in pt
     "banner": (600, 1600),
 }
 
-THEME = dict(bg="#0B0B0F", fg="#F5F5F7", muted="#8B8B99", accent="#E4572E")
+THEMES = {
+    # default: high-contrast dark, for the teaching series
+    "dark":  dict(bg="#0B0B0F", fg="#F5F5F7", muted="#8B8B99", accent="#E4572E"),
+    # Abba's Table: warm paper, low contrast, nothing alarming
+    "warm":  dict(bg="#F4EDE4", fg="#2E2721", muted="#8A7A69", accent="#B0744A"),
+}
+THEME = THEMES["dark"]
 
 
 def build(title: str, eyebrow: str, sub: str, fmt: str) -> str:
@@ -51,7 +57,10 @@ def main() -> int:
     ap.add_argument("--out", required=True, help="path without extension, e.g. out/graphics/poster")
     ap.add_argument("--format", default="story", choices=sorted(FORMATS))
     ap.add_argument("--ppi", type=int, default=216, help="raster resolution (216 = 3x)")
+    ap.add_argument("--theme", default="dark", choices=sorted(THEMES))
     a = ap.parse_args()
+    global THEME
+    THEME = THEMES[a.theme]
 
     try:
         import typst
