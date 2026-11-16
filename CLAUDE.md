@@ -137,6 +137,19 @@ npm run animate:build -- pieces/<name>         # build an animate piece to one H
 npm run animate:storyboard -- pieces/<name>
 ```
 
+## Bible-teaching series
+
+`content/drafts/_formula/bible-teaching-formula.md` holds the deconstructed structure of a
+high-performing Bible-teaching video (title engine, cold-open → misdiagnosis → thesis, the
+5-part "sign" block, packaging). Use it as the skeleton for every teaching.
+
+`content/drafts/pruning-not-punishment/` is a fully written, lint-clean episode built with it —
+copy that project's shape for a new one.
+
+Series rules: second person, present tense; every claim tied to a verse; one metaphor per sign;
+always verify quoted scripture and record the translation in `verses.md` (WEB and KJV are public
+domain — NIV/NKJV/ESV need permission beyond brief quotation).
+
 ## Per-week production loop
 
 1. Create `content/drafts/<slug>/` from `content/drafts/_template/`; fill `brief.md` and choose the engine.

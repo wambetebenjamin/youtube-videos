@@ -1,0 +1,1142 @@
+{
+ "title": "Pruning Is Not Punishment",
+ "takes": [
+  {
+   "take": "T01_cold_open",
+   "lines": [
+    {
+     "id": 1,
+     "text": "Something is dying, and you did not ask it to.",
+     "spoken": "Something is dying, and you did not ask it to.",
+     "hero": "the title, set big",
+     "typed": "PRUNING IS NOT PUNISHMENT",
+     "gap_after": 0.55
+    },
+    {
+     "id": 2,
+     "text": "Not a person, necessarily. A thing you were good at.",
+     "spoken": "Not a person, necessarily. A thing you were good at.",
+     "hero": "card THE GOOD THING",
+     "typed": "THE GOOD THING",
+     "gap_after": 0.55
+    },
+    {
+     "id": 3,
+     "text": "A room you used to walk into and feel at home in.",
+     "spoken": "A room you used to walk into and feel at home in.",
+     "hero": "card THE ROOM",
+     "typed": "THE ROOM",
+     "gap_after": 0.55
+    },
+    {
+     "id": 4,
+     "text": "A way of praying that used to feel like a conversation, and now feels like talking to a ceiling.",
+     "spoken": "A way of praying that used to feel like a conversation, and now feels like talking to a ceiling.",
+     "hero": "card THE CEILING",
+     "typed": "THE CEILING",
+     "gap_after": 0.55
+    },
+    {
+     "id": 5,
+     "text": "And here is the part that keeps you up. Nothing obviously went wrong.",
+     "spoken": "And here is the part that keeps you up. Nothing obviously went wrong.",
+     "hero": "card NOTHING WENT WRONG",
+     "typed": "NOTHING WENT WRONG",
+     "gap_after": 0.55
+    },
+    {
+     "id": 6,
+     "text": "You did not sin your way here. You did not get lazy.",
+     "spoken": "You did not sin your way here. You did not get lazy.",
+     "hero": "card NO OBVIOUS SIN",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 7,
+     "text": "You were faithful. And the leaves still came off.",
+     "spoken": "You were faithful. And the leaves still came off.",
+     "hero": "a branch, leaves falling",
+     "typed": "FAITHFUL. AND STILL CUT.",
+     "gap_after": 0.55
+    },
+    {
+     "id": 8,
+     "text": "So you have been doing the only thing you know to do. Apologising.",
+     "spoken": "So you have been doing the only thing you know to do. Apologising.",
+     "hero": "card APOLOGISING",
+     "typed": "APOLOGISING",
+     "gap_after": 0.55
+    },
+    {
+     "id": 9,
+     "text": "Repenting of things you did not do. Confessing a dryness you cannot trace to any disobedience.",
+     "spoken": "Repenting of things you did not do. Confessing a dryness you cannot trace to any disobedience.",
+     "hero": "card FALSE REPENTANCE",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 10,
+     "text": "That is the wrong question. And a lot of people are asking it this week.",
+     "spoken": "That is the wrong question. And a lot of people are asking it this week.",
+     "hero": "card THE WRONG QUESTION",
+     "typed": "",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T02_the_trap",
+   "lines": [
+    {
+     "id": 11,
+     "text": "Here is a trap that catches sincere Christians more than any other.",
+     "spoken": "Here is a trap that catches sincere Christians more than any other.",
+     "hero": "card THE TRAP",
+     "typed": "THE TRAP",
+     "gap_after": 0.55
+    },
+    {
+     "id": 12,
+     "text": "We assume that anything God cuts, He cuts in anger.",
+     "spoken": "We assume that anything God cuts, He cuts in anger.",
+     "hero": "a blade, cold light",
+     "typed": "CUT IN ANGER?",
+     "gap_after": 0.55
+    },
+    {
+     "id": 13,
+     "text": "It is a reasonable assumption, if your only image of God is a judge.",
+     "spoken": "It is a reasonable assumption, if your only image of God is a judge.",
+     "hero": "card THE JUDGE",
+     "typed": "THE JUDGE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 14,
+     "text": "A judge cuts to punish. So when the branch comes off, we go looking for the crime.",
+     "spoken": "A judge cuts to punish. So when the branch comes off, we go looking for the crime.",
+     "hero": "a courtroom, then a vineyard",
+     "typed": "THE COURTROOM",
+     "gap_after": 0.55
+    },
+    {
+     "id": 15,
+     "text": "And that misdiagnosis is expensive. It produces three things, every time.",
+     "spoken": "And that misdiagnosis is expensive. It produces three things, every time.",
+     "hero": "three cards, stacked",
+     "typed": "THREE THINGS",
+     "gap_after": 0.55
+    },
+    {
+     "id": 16,
+     "text": "One. False repentance. You confess sin you have not committed.",
+     "spoken": "One. False repentance. You confess sin you have not committed.",
+     "hero": "card FALSE REPENTANCE",
+     "typed": "1  FALSE REPENTANCE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 17,
+     "text": "Which trains you to distrust God's own voice.",
+     "spoken": "Which trains you to distrust God's own voice.",
+     "hero": "card DISTRUST",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 18,
+     "text": "Two. Despair. After enough dry weeks you conclude He has set you aside.",
+     "spoken": "Two. Despair. After enough dry weeks you conclude He has set you aside.",
+     "hero": "card DESPAIR",
+     "typed": "2  DESPAIR",
+     "gap_after": 0.55
+    },
+    {
+     "id": 19,
+     "text": "Three. Self-protection. You stop planting anything new, because you assume it will be cut too.",
+     "spoken": "Three. Self-protection. You stop planting anything new, because you assume it will be cut too.",
+     "hero": "card SELF-PROTECTION",
+     "typed": "3  SELF-PROTECTION",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T03_the_thesis",
+   "lines": [
+    {
+     "id": 20,
+     "text": "But scripture gives us a completely different picture of why God cuts.",
+     "spoken": "But scripture gives us a completely different picture of why God cuts.",
+     "hero": "card A DIFFERENT PICTURE",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 21,
+     "text": "It is not a courtroom. It is a vineyard.",
+     "spoken": "It is not a courtroom. It is a vineyard.",
+     "hero": "a vineyard, warm light",
+     "typed": "NOT A COURTROOM. A VINEYARD.",
+     "gap_after": 0.55
+    },
+    {
+     "id": 22,
+     "text": "God prunes where He intends to produce.",
+     "spoken": "God prunes where He intends to produce.",
+     "hero": "card THE THESIS",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 23,
+     "text": "Jesus says it in one verse that most of us have read too fast.",
+     "spoken": "Jesus says it in one verse that most of us have read too fast.",
+     "hero": "the verse, typeset large",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 24,
+     "text": "Every branch in me that does not bear fruit, he takes away.",
+     "spoken": "Every branch in me that does not bear fruit, he takes away.",
+     "hero": "verse line one",
+     "typed": "JOHN 15:2",
+     "gap_after": 0.55
+    },
+    {
+     "id": 25,
+     "text": "Every branch that bears fruit, he prunes, that it may bear more fruit.",
+     "spoken": "Every branch that bears fruit, he prunes, that it may bear more fruit.",
+     "hero": "verse line two, highlighted",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 26,
+     "text": "Look carefully at who gets pruned. Not the barren branch. The fruitful one.",
+     "spoken": "Look carefully at who gets pruned. Not the barren branch. The fruitful one.",
+     "hero": "two branches, one highlighted",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 27,
+     "text": "The barren branch is taken away. The fruitful branch is pruned.",
+     "spoken": "The barren branch is taken away. The fruitful branch is pruned.",
+     "hero": "the two branches, labelled",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 28,
+     "text": "And pruning is not removal. It is reduction with an intent.",
+     "spoken": "And pruning is not removal. It is reduction with an intent.",
+     "hero": "a cut, then new growth",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 29,
+     "text": "So the question is not what did I do wrong. It is what am I being made ready to carry.",
+     "spoken": "So the question is not what did I do wrong. It is what am I being made ready to carry.",
+     "hero": "card THE NEW QUESTION",
+     "typed": "WHAT AM I BEING MADE READY TO CARRY?",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T04_sign_one",
+   "lines": [
+    {
+     "id": 30,
+     "text": "There are five marks of pruning that separate it from punishment.",
+     "spoken": "There are five marks of pruning that separate it from punishment.",
+     "hero": "card FIVE MARKS",
+     "typed": "5 MARKS OF PRUNING",
+     "gap_after": 0.55
+    },
+    {
+     "id": 31,
+     "text": "Sign one. What leaves is green.",
+     "spoken": "Sign one. What leaves is green.",
+     "hero": "card SIGN ONE",
+     "typed": "1  WHAT LEAVES IS GREEN",
+     "gap_after": 0.55
+    },
+    {
+     "id": 32,
+     "text": "Punishment targets what is already dead.",
+     "spoken": "Punishment targets what is already dead.",
+     "hero": "a dead branch",
+     "typed": "PUNISHMENT TARGETS THE DEAD",
+     "gap_after": 0.55
+    },
+    {
+     "id": 33,
+     "text": "Pruning targets what is alive and healthy.",
+     "spoken": "Pruning targets what is alive and healthy.",
+     "hero": "a green branch, being cut",
+     "typed": "PRUNING TARGETS THE LIVING",
+     "gap_after": 0.55
+    },
+    {
+     "id": 34,
+     "text": "Which is why pruning always feels like a loss, and never feels like justice.",
+     "spoken": "Which is why pruning always feels like a loss, and never feels like justice.",
+     "hero": "card A LOSS, NOT JUSTICE",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 35,
+     "text": "It does not feel fair, because it is not about fairness. It is about fruit.",
+     "spoken": "It does not feel fair, because it is not about fairness. It is about fruit.",
+     "hero": "card FRUIT NOT FAIRNESS",
+     "typed": "FRUIT, NOT FAIRNESS",
+     "gap_after": 0.55
+    },
+    {
+     "id": 36,
+     "text": "Think about what came off in the last year. It was working.",
+     "spoken": "Think about what came off in the last year. It was working.",
+     "hero": "card IT WAS WORKING",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 37,
+     "text": "You were the one people called. And it did not fail. It was lifted.",
+     "spoken": "You were the one people called. And it did not fail. It was lifted.",
+     "hero": "a hand, lifting something",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 38,
+     "text": "Moses is the model here.",
+     "spoken": "Moses is the model here.",
+     "hero": "card MOSES",
+     "typed": "MOSES",
+     "gap_after": 0.55
+    },
+    {
+     "id": 39,
+     "text": "He refused to be called the son of Pharaoh's daughter.",
+     "spoken": "He refused to be called the son of Pharaoh's daughter.",
+     "hero": "a palace, then a desert",
+     "typed": "HEBREWS 11:24",
+     "gap_after": 0.55
+    },
+    {
+     "id": 40,
+     "text": "Choosing mistreatment with God's people over the pleasures of sin.",
+     "spoken": "Choosing mistreatment with God's people over the pleasures of sin.",
+     "hero": "the verse, typeset",
+     "typed": "HEBREWS 11:25",
+     "gap_after": 0.55
+    },
+    {
+     "id": 41,
+     "text": "Notice what did not change. The palace stayed standing. The food did not get worse.",
+     "spoken": "Notice what did not change. The palace stayed standing. The food did not get worse.",
+     "hero": "the palace, unchanged",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 42,
+     "text": "What changed was Moses. His spirit had outgrown the container of Egypt.",
+     "spoken": "What changed was Moses. His spirit had outgrown the container of Egypt.",
+     "hero": "a container, too small",
+     "typed": "HIS SPIRIT HAD OUTGROWN IT",
+     "gap_after": 0.55
+    },
+    {
+     "id": 43,
+     "text": "Sometimes the pruning is a place you are still good at.",
+     "spoken": "Sometimes the pruning is a place you are still good at.",
+     "hero": "card STILL GOOD AT IT",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 44,
+     "text": "God is not revoking it. He is asking whether you will still be carrying it next season.",
+     "spoken": "God is not revoking it. He is asking whether you will still be carrying it next season.",
+     "hero": "a door, open",
+     "typed": "NOT REVOKED. RELEASED.",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T05_sign_two",
+   "lines": [
+    {
+     "id": 45,
+     "text": "Sign two. It is quiet.",
+     "spoken": "Sign two. It is quiet.",
+     "hero": "card SIGN TWO",
+     "typed": "2  IT IS QUIET",
+     "gap_after": 0.55
+    },
+    {
+     "id": 46,
+     "text": "Punishment is loud. It has an indictment, a sentence, and a date.",
+     "spoken": "Punishment is loud. It has an indictment, a sentence, and a date.",
+     "hero": "card LOUD",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 47,
+     "text": "Pruning is quiet. Nothing is explained. No charge, no verdict, no closure.",
+     "spoken": "Pruning is quiet. Nothing is explained. No charge, no verdict, no closure.",
+     "hero": "an empty room",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 48,
+     "text": "It is a gardener with a knife and no commentary.",
+     "spoken": "It is a gardener with a knife and no commentary.",
+     "hero": "the gardener, in silence",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 49,
+     "text": "You are praying and getting nothing back. Not a rebuke. Nothing.",
+     "spoken": "You are praying and getting nothing back. Not a rebuke. Nothing.",
+     "hero": "card NOTHING",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 50,
+     "text": "Consider Joseph. Two vivid dreams at seventeen, then a pit, then a sale, then an accusation.",
+     "spoken": "Consider Joseph. Two vivid dreams at seventeen, then a pit, then a sale, then an accusation.",
+     "hero": "cards, in sequence",
+     "typed": "JOSEPH",
+     "gap_after": 0.55
+    },
+    {
+     "id": 51,
+     "text": "Scripture records no word from God to Joseph for thirteen years.",
+     "spoken": "Scripture records no word from God to Joseph for thirteen years.",
+     "hero": "a long empty timeline",
+     "typed": "13 YEARS",
+     "gap_after": 0.55
+    },
+    {
+     "id": 52,
+     "text": "No voice. No angel. No verse.",
+     "spoken": "No voice. No angel. No verse.",
+     "hero": "card SILENCE",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 53,
+     "text": "And yet the writer of Genesis says the thing that undoes the whole silence.",
+     "spoken": "And yet the writer of Genesis says the thing that undoes the whole silence.",
+     "hero": "the verse, typeset",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 54,
+     "text": "You meant evil against me, but God meant it for good.",
+     "spoken": "You meant evil against me, but God meant it for good.",
+     "hero": "verse, highlighted",
+     "typed": "GENESIS 50:20",
+     "gap_after": 0.55
+    },
+    {
+     "id": 55,
+     "text": "To bring to pass, as it is today, to save many people alive.",
+     "spoken": "To bring to pass, as it is today, to save many people alive.",
+     "hero": "verse line two",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 56,
+     "text": "God was not absent in the silence. He was working in a medium the silence concealed.",
+     "spoken": "God was not absent in the silence. He was working in a medium the silence concealed.",
+     "hero": "card CONCEALED WORK",
+     "typed": "WORKING IN THE SILENCE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 57,
+     "text": "His silence is not His absence. Sometimes it is the sound of Him working on something He has not shown you yet.",
+     "spoken": "His silence is not His absence. Sometimes it is the sound of Him working on something He has not shown you yet.",
+     "hero": "card SILENCE IS NOT ABSENCE",
+     "typed": "SILENCE IS NOT ABSENCE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 58,
+     "text": "The vision is yet for the appointed time. Though it takes time, wait for it.",
+     "spoken": "The vision is yet for the appointed time. Though it takes time, wait for it.",
+     "hero": "the verse",
+     "typed": "HABAKKUK 2:3",
+     "gap_after": 0.55
+    },
+    {
+     "id": 59,
+     "text": "It will surely come. It will not delay.",
+     "spoken": "It will surely come. It will not delay.",
+     "hero": "verse, highlighted",
+     "typed": "",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T06_sign_three",
+   "lines": [
+    {
+     "id": 60,
+     "text": "Sign three. You are being reduced, not corrected.",
+     "spoken": "Sign three. You are being reduced, not corrected.",
+     "hero": "card SIGN THREE",
+     "typed": "3  REDUCED, NOT CORRECTED",
+     "gap_after": 0.55
+    },
+    {
+     "id": 61,
+     "text": "A gardener does not take off branches to punish the tree.",
+     "spoken": "A gardener does not take off branches to punish the tree.",
+     "hero": "the gardener again",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 62,
+     "text": "He takes off what spends the tree's strength without returning fruit.",
+     "spoken": "He takes off what spends the tree's strength without returning fruit.",
+     "hero": "two branches, one removed",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 63,
+     "text": "The tree ends up smaller and stronger. Not corrected and resentful.",
+     "spoken": "The tree ends up smaller and stronger. Not corrected and resentful.",
+     "hero": "a tree, pruned, healthy",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 64,
+     "text": "Your options are narrowing. Doors that used to open are not opening.",
+     "spoken": "Your options are narrowing. Doors that used to open are not opening.",
+     "hero": "card NARROWING",
+     "typed": "NARROWING",
+     "gap_after": 0.55
+    },
+    {
+     "id": 65,
+     "text": "Your calendar is emptying. And your flesh reads that as decline.",
+     "spoken": "Your calendar is emptying. And your flesh reads that as decline.",
+     "hero": "an empty calendar",
+     "typed": "DECLINE?",
+     "gap_after": 0.55
+    },
+    {
+     "id": 66,
+     "text": "Look at what God did to Israel's army before He gave them a victory.",
+     "spoken": "Look at what God did to Israel's army before He gave them a victory.",
+     "hero": "card GIDEON",
+     "typed": "GIDEON",
+     "gap_after": 0.55
+    },
+    {
+     "id": 67,
+     "text": "Gideon gathers thirty two thousand men. God sends most of them home.",
+     "spoken": "Gideon gathers thirty two thousand men. God sends most of them home.",
+     "hero": "counters falling",
+     "typed": "32,000",
+     "gap_after": 0.55
+    },
+    {
+     "id": 68,
+     "text": "Down to three hundred.",
+     "spoken": "Down to three hundred.",
+     "hero": "the number, alone",
+     "typed": "300",
+     "gap_after": 0.55
+    },
+    {
+     "id": 69,
+     "text": "And the reason is stated plainly. The people are too many for me.",
+     "spoken": "And the reason is stated plainly. The people are too many for me.",
+     "hero": "the verse",
+     "typed": "JUDGES 7:2",
+     "gap_after": 0.55
+    },
+    {
+     "id": 70,
+     "text": "Lest Israel brag, saying, my own hand has saved me.",
+     "spoken": "Lest Israel brag, saying, my own hand has saved me.",
+     "hero": "verse, highlighted",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 71,
+     "text": "The reduction was the preparation.",
+     "spoken": "The reduction was the preparation.",
+     "hero": "card THE REDUCTION",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 72,
+     "text": "God did not shrink the army because they were weak. He shrank it because they were strong enough to take the credit.",
+     "spoken": "God did not shrink the army because they were weak. He shrank it because they were strong enough to take the credit.",
+     "hero": "the small army, spotlight",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 73,
+     "text": "God will reduce your resources before He increases your assignment.",
+     "spoken": "God will reduce your resources before He increases your assignment.",
+     "hero": "card REDUCE THEN INCREASE",
+     "typed": "REDUCE, THEN INCREASE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 74,
+     "text": "Because an assignment that does not need Him is not an assignment He can bless.",
+     "spoken": "Because an assignment that does not need Him is not an assignment He can bless.",
+     "hero": "card NOT HIS TO BLESS",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 75,
+     "text": "If your capacity is shrinking and your dependence is growing, you are not being demoted. You are being fitted.",
+     "spoken": "If your capacity is shrinking and your dependence is growing, you are not being demoted. You are being fitted.",
+     "hero": "card FITTED",
+     "typed": "",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T07_sign_four",
+   "lines": [
+    {
+     "id": 76,
+     "text": "Sign four. The old tools go blunt.",
+     "spoken": "Sign four. The old tools go blunt.",
+     "hero": "card SIGN FOUR",
+     "typed": "4  THE OLD TOOLS GO BLUNT",
+     "gap_after": 0.55
+    },
+    {
+     "id": 77,
+     "text": "The methods that used to work stop working.",
+     "spoken": "The methods that used to work stop working.",
+     "hero": "tools, laid out, dulled",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 78,
+     "text": "This is the one that terrifies competent people.",
+     "spoken": "This is the one that terrifies competent people.",
+     "hero": "card THE COMPETENT",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 79,
+     "text": "You have a way of doing this. Your approach. Your instincts.",
+     "spoken": "You have a way of doing this. Your approach. Your instincts.",
+     "hero": "cards, in sequence",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 80,
+     "text": "And one day they simply do not return results.",
+     "spoken": "And one day they simply do not return results.",
+     "hero": "an empty result, on screen",
+     "typed": "NO RESULTS",
+     "gap_after": 0.55
+    },
+    {
+     "id": 81,
+     "text": "The strategy that used to close. The argument that used to land. The routine that used to fill you.",
+     "spoken": "The strategy that used to close. The argument that used to land. The routine that used to fill you.",
+     "hero": "three cards",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 82,
+     "text": "You are working harder and getting less. You assume you have lost your edge.",
+     "spoken": "You are working harder and getting less. You assume you have lost your edge.",
+     "hero": "card LOST THE EDGE",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 83,
+     "text": "Peter, a professional fisherman, fishes all night on his own expertise and catches nothing.",
+     "spoken": "Peter, a professional fisherman, fishes all night on his own expertise and catches nothing.",
+     "hero": "an empty net, at night",
+     "typed": "PETER",
+     "gap_after": 0.55
+    },
+    {
+     "id": 84,
+     "text": "Master, we worked all night, and took nothing.",
+     "spoken": "Master, we worked all night, and took nothing.",
+     "hero": "the verse",
+     "typed": "LUKE 5:5",
+     "gap_after": 0.55
+    },
+    {
+     "id": 85,
+     "text": "But at your word I will let down the net.",
+     "spoken": "But at your word I will let down the net.",
+     "hero": "verse, highlighted",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 86,
+     "text": "An expert failed at his own trade. Not because he forgot how to fish.",
+     "spoken": "An expert failed at his own trade. Not because he forgot how to fish.",
+     "hero": "the nets, re-cast",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 87,
+     "text": "Because his competence had become his confidence.",
+     "spoken": "Because his competence had become his confidence.",
+     "hero": "card COMPETENCE TO CONFIDENCE",
+     "typed": "COMPETENCE BECAME CONFIDENCE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 88,
+     "text": "And Jesus needed the net to come up full only after the word came first.",
+     "spoken": "And Jesus needed the net to come up full only after the word came first.",
+     "hero": "a full net, dawn light",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 89,
+     "text": "When your competence stops working, God is not retiring you.",
+     "spoken": "When your competence stops working, God is not retiring you.",
+     "hero": "card NOT RETIRED",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 90,
+     "text": "He is relocating your confidence. From your hands to His word.",
+     "spoken": "He is relocating your confidence. From your hands to His word.",
+     "hero": "card HANDS TO WORD",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 91,
+     "text": "The blunt tools are a mercy. They are the only thing that will get a capable person to ask for help.",
+     "spoken": "The blunt tools are a mercy. They are the only thing that will get a capable person to ask for help.",
+     "hero": "card A MERCY",
+     "typed": "",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T08_sign_five",
+   "lines": [
+    {
+     "id": 92,
+     "text": "Sign five. There is fruit you did not plant.",
+     "spoken": "Sign five. There is fruit you did not plant.",
+     "hero": "card SIGN FIVE",
+     "typed": "5  FRUIT YOU DID NOT PLANT",
+     "gap_after": 0.55
+    },
+    {
+     "id": 93,
+     "text": "After pruning, you find growth you never sowed.",
+     "spoken": "After pruning, you find growth you never sowed.",
+     "hero": "new growth, close up",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 94,
+     "text": "Not the growth you were working for. Not the old branch returning.",
+     "spoken": "Not the growth you were working for. Not the old branch returning.",
+     "hero": "two branches, one new",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 95,
+     "text": "Something else. A patience you did not have.",
+     "spoken": "Something else. A patience you did not have.",
+     "hero": "card PATIENCE",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 96,
+     "text": "A hunger for scripture you did not manufacture.",
+     "spoken": "A hunger for scripture you did not manufacture.",
+     "hero": "card HUNGER",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 97,
+     "text": "A capacity to sit with people in pain that you could not have trained.",
+     "spoken": "A capacity to sit with people in pain that you could not have trained.",
+     "hero": "card CAPACITY",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 98,
+     "text": "And it embarrasses you a little, because you did not do the work for it.",
+     "spoken": "And it embarrasses you a little, because you did not do the work for it.",
+     "hero": "card UNDESERVED",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 99,
+     "text": "Those who wait for Yahweh will renew their strength.",
+     "spoken": "Those who wait for Yahweh will renew their strength.",
+     "hero": "the verse",
+     "typed": "ISAIAH 40:31",
+     "gap_after": 0.55
+    },
+    {
+     "id": 100,
+     "text": "They will mount up with wings like eagles.",
+     "spoken": "They will mount up with wings like eagles.",
+     "hero": "wings, slow motion",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 101,
+     "text": "They will run, and not be weary. They will walk, and not faint.",
+     "spoken": "They will run, and not be weary. They will walk, and not faint.",
+     "hero": "verse, highlighted",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 102,
+     "text": "Notice the order. Wait first, then wings.",
+     "spoken": "Notice the order. Wait first, then wings.",
+     "hero": "card WAIT, THEN WINGS",
+     "typed": "WAIT FIRST. THEN WINGS.",
+     "gap_after": 0.55
+    },
+    {
+     "id": 103,
+     "text": "The strength is renewed. It is not the old strength restored. It is a different strength issued.",
+     "spoken": "The strength is renewed. It is not the old strength restored. It is a different strength issued.",
+     "hero": "card RENEWED, NOT RESTORED",
+     "typed": "RENEWED, NOT RESTORED",
+     "gap_after": 0.55
+    },
+    {
+     "id": 104,
+     "text": "The proof of your faith is more precious than gold that perishes, even though it is tested by fire.",
+     "spoken": "The proof of your faith is more precious than gold that perishes, even though it is tested by fire.",
+     "hero": "gold, in fire",
+     "typed": "1 PETER 1:7",
+     "gap_after": 0.55
+    },
+    {
+     "id": 105,
+     "text": "Gold is not tested because it is suspected. It is tested because it is valuable.",
+     "spoken": "Gold is not tested because it is suspected. It is tested because it is valuable.",
+     "hero": "card VALUABLE",
+     "typed": "TESTED BECAUSE VALUABLE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 106,
+     "text": "The fruit of pruning is never the branch you lost. It is a root you did not know you had.",
+     "spoken": "The fruit of pruning is never the branch you lost. It is a root you did not know you had.",
+     "hero": "card A ROOT YOU DID NOT KNOW",
+     "typed": "",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T09_the_turn",
+   "lines": [
+    {
+     "id": 107,
+     "text": "So what do you actually do, this week, if you suspect you are being pruned.",
+     "spoken": "So what do you actually do, this week, if you suspect you are being pruned.",
+     "hero": "card THIS WEEK",
+     "typed": "THIS WEEK",
+     "gap_after": 0.55
+    },
+    {
+     "id": 108,
+     "text": "One. Stop repenting of things you did not do.",
+     "spoken": "One. Stop repenting of things you did not do.",
+     "hero": "card STEP ONE",
+     "typed": "1  STOP FALSE REPENTANCE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 109,
+     "text": "False repentance is not humility. It is a way of making the silence your fault so you can control it.",
+     "spoken": "False repentance is not humility. It is a way of making the silence your fault so you can control it.",
+     "hero": "card CONTROL",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 110,
+     "text": "If the Spirit is convicting you, He will be specific.",
+     "spoken": "If the Spirit is convicting you, He will be specific.",
+     "hero": "card SPECIFIC",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 111,
+     "text": "Two. Ask a different question.",
+     "spoken": "Two. Ask a different question.",
+     "hero": "card STEP TWO",
+     "typed": "2  ASK DIFFERENTLY",
+     "gap_after": 0.55
+    },
+    {
+     "id": 112,
+     "text": "Not what did I do wrong. But what am I being made ready to carry.",
+     "spoken": "Not what did I do wrong. But what am I being made ready to carry.",
+     "hero": "card THE QUESTION",
+     "typed": "WHAT AM I BEING MADE READY TO CARRY?",
+     "gap_after": 0.55
+    },
+    {
+     "id": 113,
+     "text": "The second question has an answer. The first one, in a pruning season, does not.",
+     "spoken": "The second question has an answer. The first one, in a pruning season, does not.",
+     "hero": "card AN ANSWER",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 114,
+     "text": "Three. Be still long enough to find out.",
+     "spoken": "Three. Be still long enough to find out.",
+     "hero": "card STEP THREE",
+     "typed": "3  BE STILL",
+     "gap_after": 0.55
+    },
+    {
+     "id": 115,
+     "text": "Yahweh will fight for you, and you shall be still.",
+     "spoken": "Yahweh will fight for you, and you shall be still.",
+     "hero": "the verse",
+     "typed": "EXODUS 14:14",
+     "gap_after": 0.55
+    },
+    {
+     "id": 116,
+     "text": "Be still, and know that I am God.",
+     "spoken": "Be still, and know that I am God.",
+     "hero": "the verse",
+     "typed": "PSALM 46:10",
+     "gap_after": 0.55
+    },
+    {
+     "id": 117,
+     "text": "Stillness is not passivity. It is the posture of someone who has stopped forcing the door.",
+     "spoken": "Stillness is not passivity. It is the posture of someone who has stopped forcing the door.",
+     "hero": "card STILLNESS",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 118,
+     "text": "Four. Guard the peace that does not match your circumstances.",
+     "spoken": "Four. Guard the peace that does not match your circumstances.",
+     "hero": "card STEP FOUR",
+     "typed": "4  GUARD THE PEACE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 119,
+     "text": "And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts.",
+     "spoken": "And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts.",
+     "hero": "the verse",
+     "typed": "PHILIPPIANS 4:7",
+     "gap_after": 0.55
+    },
+    {
+     "id": 120,
+     "text": "If you have a calm about this that you cannot explain and did not produce, do not talk yourself out of it.",
+     "spoken": "If you have a calm about this that you cannot explain and did not produce, do not talk yourself out of it.",
+     "hero": "card DO NOT TALK YOURSELF OUT OF IT",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 121,
+     "text": "That peace is evidence. It is the Gardener's hand on the frame.",
+     "spoken": "That peace is evidence. It is the Gardener's hand on the frame.",
+     "hero": "the hand on the frame",
+     "typed": "EVIDENCE",
+     "gap_after": 0.55
+    },
+    {
+     "id": 122,
+     "text": "Five. Let the lament be real.",
+     "spoken": "Five. Let the lament be real.",
+     "hero": "card STEP FIVE",
+     "typed": "5  LET THE LAMENT BE REAL",
+     "gap_after": 0.55
+    },
+    {
+     "id": 123,
+     "text": "Pruning hurts. It is allowed to hurt.",
+     "spoken": "Pruning hurts. It is allowed to hurt.",
+     "hero": "card IT IS ALLOWED TO HURT",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 124,
+     "text": "You do not have to pretend the branch did not matter.",
+     "spoken": "You do not have to pretend the branch did not matter.",
+     "hero": "the cut branch, kept",
+     "typed": "",
+     "gap_after": 0.55
+    }
+   ]
+  },
+  {
+   "take": "T10_close",
+   "lines": [
+    {
+     "id": 125,
+     "text": "Isaiah gives us the promise that makes all of this bearable.",
+     "spoken": "Isaiah gives us the promise that makes all of this bearable.",
+     "hero": "card ISAIAH",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 126,
+     "text": "Behold, I will do a new thing. It springs out now. Do you not know it?",
+     "spoken": "Behold, I will do a new thing. It springs out now. Do you not know it?",
+     "hero": "the verse",
+     "typed": "ISAIAH 43:19",
+     "gap_after": 0.55
+    },
+    {
+     "id": 127,
+     "text": "I will even make a way in the wilderness, and rivers in the desert.",
+     "spoken": "I will even make a way in the wilderness, and rivers in the desert.",
+     "hero": "desert, then water",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 128,
+     "text": "It springs out now. Not after you have earned it.",
+     "spoken": "It springs out now. Not after you have earned it.",
+     "hero": "card NOW",
+     "typed": "NOW",
+     "gap_after": 0.55
+    },
+    {
+     "id": 129,
+     "text": "Not after you have worked out what you did wrong.",
+     "spoken": "Not after you have worked out what you did wrong.",
+     "hero": "card NOT LATER",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 130,
+     "text": "Now. In the middle of the quiet. In the middle of the reduced version of your life.",
+     "spoken": "Now. In the middle of the quiet. In the middle of the reduced version of your life.",
+     "hero": "the quiet room, warm",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 131,
+     "text": "While the wound is still fresh.",
+     "spoken": "While the wound is still fresh.",
+     "hero": "card STILL FRESH",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 132,
+     "text": "You are not being punished. You are being prepared.",
+     "spoken": "You are not being punished. You are being prepared.",
+     "hero": "the title, held",
+     "typed": "NOT PUNISHED. PREPARED.",
+     "gap_after": 0.55
+    },
+    {
+     "text": "If this gave you language for something you have been carrying,",
+     "spoken": "If this gave you language for something you have been carrying,",
+     "hero": "card SHARE THIS",
+     "typed": "",
+     "gap_after": 0.45,
+     "id": 133
+    },
+    {
+     "text": "share it with the person who keeps asking God what they did wrong.",
+     "spoken": "share it with the person who keeps asking God what they did wrong.",
+     "hero": "card THE PERSON WHO KEEPS ASKING",
+     "typed": "KEEPS ASKING WHAT THEY DID WRONG",
+     "id": 134
+    },
+    {
+     "id": 135,
+     "text": "Somebody in your life is in a pruning season and thinks it is a verdict.",
+     "spoken": "Somebody in your life is in a pruning season and thinks it is a verdict.",
+     "hero": "card A VERDICT",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 136,
+     "text": "Stay rooted. He is not done with you.",
+     "spoken": "Stay rooted. He is not done with you.",
+     "hero": "final card",
+     "typed": "STAY ROOTED",
+     "gap_after": 0.55
+    }
+   ]
+  }
+ ]
+}
