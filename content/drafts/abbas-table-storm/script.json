@@ -8,113 +8,113 @@
      "id": 1,
      "text": "It had been a long day by the water.",
      "spoken": "It had been a long day by the water.",
-     "hero": "the shore at dusk",
-     "typed": "PEACE, BE STILL",
-     "gap_after": 0.45
+     "hero": "01_shore_dusk",
+     "typed": "",
+     "gap_after": 0.55
     },
     {
      "id": 2,
-     "text": "All afternoon Jesus had been teaching from a boat, because the crowd on the shore was so thick.",
-     "spoken": "All afternoon Jesus had been teaching from a boat, because the crowd on the shore was so thick.",
-     "hero": "a boat, a crowd on the shore",
+     "text": "All afternoon Jesus had been teaching from a boat, pushed a little way out from the shore, because the crowd had grown too thick to stand in.",
+     "spoken": "All afternoon Jesus had been teaching from a boat, pushed a little way out from the shore, because the crowd had grown too thick to stand in.",
+     "hero": "01_shore_dusk",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 3,
-     "text": "He had told them about seed and soil, about lamps and measures.",
-     "spoken": "He had told them about seed and soil, about lamps and measures.",
-     "hero": "small cards, seed, lamp",
+     "text": "They came down the hillside in twos and threes and then in dozens, farmers and fishermen, mothers with children on their hips, old men who had walked further than they meant to.",
+     "spoken": "They came down the hillside in twos and threes and then in dozens, farmers and fishermen, mothers with children on their hips, old men who had walked further than they meant to.",
+     "hero": "02_teaching_from_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 4,
-     "text": "About a mustard seed that starts smaller than everything, and ends up taller than a man.",
-     "spoken": "About a mustard seed that starts smaller than everything, and ends up taller than a man.",
-     "hero": "a small seed, then a tree",
+     "text": "They stood at the edge of the lake with their sandals in their hands and the water around their ankles, and they did not leave.",
+     "spoken": "They stood at the edge of the lake with their sandals in their hands and the water around their ankles, and they did not leave.",
+     "hero": "02_teaching_from_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 5,
-     "text": "By evening He was tired.",
-     "spoken": "By evening He was tired.",
-     "hero": "the light going",
+     "text": "So He sat down in a boat and taught them from the water, and His voice carried across the shallows to the last person on the bank.",
+     "spoken": "So He sat down in a boat and taught them from the water, and His voice carried across the shallows to the last person on the bank.",
+     "hero": "02_teaching_from_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 6,
-     "text": "On that day, when evening had come, he said to them, let us go over to the other side.",
-     "spoken": "On that day, when evening had come, he said to them, let us go over to the other side.",
-     "hero": "Mark 4:35, typeset",
-     "typed": "MARK 4:35",
-     "gap_after": 0.45
+     "text": "He told them about a farmer who went out to sow, and threw seed on the path and on the rock and among the thorns and into good soil.",
+     "spoken": "He told them about a farmer who went out to sow, and threw seed on the path and on the rock and among the thorns and into good soil.",
+     "hero": "03_seed_and_soil",
+     "typed": "",
+     "gap_after": 0.95
     },
     {
      "id": 7,
-     "text": "That is all He said. Not a warning. Not a forecast. Just, let us go over to the other side.",
-     "spoken": "That is all He said. Not a warning. Not a forecast. Just, let us go over to the other side.",
-     "hero": "the far shore, distance",
+     "text": "He told them about a lamp that no one lights in order to put it under a basket.",
+     "spoken": "He told them about a lamp that no one lights in order to put it under a basket.",
+     "hero": "03_seed_and_soil",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 8,
-     "text": "And they went. They left the crowd standing on the shore.",
-     "spoken": "And they went. They left the crowd standing on the shore.",
-     "hero": "the crowd, left behind",
+     "text": "He told them about a mustard seed, the smallest thing a man can hold between two fingers, that becomes a tree big enough for the birds to nest in.",
+     "spoken": "He told them about a mustard seed, the smallest thing a man can hold between two fingers, that becomes a tree big enough for the birds to nest in.",
+     "hero": "03_seed_and_soil",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 9,
-     "text": "They took Him into the boat exactly as He was. Still dusty. Still with the day in His shoulders.",
-     "spoken": "They took Him into the boat exactly as He was. Still dusty. Still with the day in His shoulders.",
-     "hero": "a boat pushing off",
+     "text": "The afternoon went slowly, the way afternoons do when there is nowhere else to be.",
+     "spoken": "The afternoon went slowly, the way afternoons do when there is nowhere else to be.",
+     "hero": "04_let_us_go_over",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 10,
-     "text": "And Mark adds a small detail that matters later. Other small boats were with them.",
-     "spoken": "And Mark adds a small detail that matters later. Other small boats were with them.",
-     "hero": "other boats, following",
-     "typed": "OTHER BOATS WERE WITH HIM",
-     "gap_after": 0.45
+     "text": "The sun came down the sky and touched the water and turned the whole lake the colour of copper.",
+     "spoken": "The sun came down the sky and touched the water and turned the whole lake the colour of copper.",
+     "hero": "04_let_us_go_over",
+     "typed": "",
+     "gap_after": 0.55
     },
     {
      "id": 11,
-     "text": "They were not alone out there. This was not a private crossing. There were witnesses.",
-     "spoken": "They were not alone out there. This was not a private crossing. There were witnesses.",
-     "hero": "the boats on the water",
+     "text": "When evening had come, He looked at the men in the boat with Him and said the simplest thing in the world.",
+     "spoken": "When evening had come, He looked at the men in the boat with Him and said the simplest thing in the world.",
+     "hero": "04_let_us_go_over",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 12,
-     "text": "Several of these men had fished this water their whole lives.",
-     "spoken": "Several of these men had fished this water their whole lives.",
-     "hero": "weathered hands, nets",
+     "text": "Let us go over to the other side.",
+     "spoken": "Let us go over to the other side.",
+     "hero": "04_let_us_go_over",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 13,
-     "text": "They knew the Sea of Galilee. They knew how fast it could turn.",
-     "spoken": "They knew the Sea of Galilee. They knew how fast it could turn.",
-     "hero": "the hills, the water",
+     "text": "Not, let us find shelter. Not, let us wait for morning. Let us go over to the other side, as though the far shore were the most ordinary place to spend the night.",
+     "spoken": "Not, let us find shelter. Not, let us wait for morning. Let us go over to the other side, as though the far shore were the most ordinary place to spend the night.",
+     "hero": "04_let_us_go_over",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 14,
-     "text": "They were not afraid of boats.",
-     "spoken": "They were not afraid of boats.",
-     "hero": "the boat, steady",
+     "text": "So they left the crowd standing on the beach and put their hands to the oars.",
+     "spoken": "So they left the crowd standing on the beach and put their hands to the oars.",
+     "hero": "05_other_boats",
      "typed": "",
-     "gap_after": 1.8
+     "gap_after": 1.5
     }
    ]
   },
@@ -123,115 +123,123 @@
    "lines": [
     {
      "id": 15,
-     "text": "It came up fast, the way it does on that lake.",
-     "spoken": "It came up fast, the way it does on that lake.",
-     "hero": "the sky darkening",
+     "text": "The lake is not a gentle place, whatever it looks like at sunset.",
+     "spoken": "The lake is not a gentle place, whatever it looks like at sunset.",
+     "hero": "05_other_boats",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 16,
-     "text": "A big wind storm arose, and the waves beat into the boat, so much that the boat was already filled.",
-     "spoken": "A big wind storm arose, and the waves beat into the boat, so much that the boat was already filled.",
-     "hero": "Mark 4:37, typeset",
-     "typed": "MARK 4:37",
-     "gap_after": 0.45
+     "text": "It sits in a bowl of hills, and cold air comes down those hills without warning and meets the warm air off the water, and the surface stands up as if something underneath had turned over in its sleep.",
+     "spoken": "It sits in a bowl of hills, and cold air comes down those hills without warning and meets the warm air off the water, and the surface stands up as if something underneath had turned over in its sleep.",
+     "hero": "05_other_boats",
+     "typed": "",
+     "gap_after": 0.55
     },
     {
      "id": 17,
-     "text": "Matthew says the boat was covered with the waves.",
-     "spoken": "Matthew says the boat was covered with the waves.",
-     "hero": "water over the side",
+     "text": "Other small boats had put out with them, and their lamps were scattered across the black water behind, each one a small warm dot in the dark.",
+     "spoken": "Other small boats had put out with them, and their lamps were scattered across the black water behind, each one a small warm dot in the dark.",
+     "hero": "05_other_boats",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 18,
-     "text": "The wind first. A sound like a wall.",
-     "spoken": "The wind first. A sound like a wall.",
-     "hero": "wind on the water",
+     "text": "Nobody on that water that night was thinking about a sermon.",
+     "spoken": "Nobody on that water that night was thinking about a sermon.",
+     "hero": "06_storm_rising",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 19,
-     "text": "Then the water. Not spray. Weight.",
-     "spoken": "Then the water. Not spray. Weight.",
-     "hero": "a wave breaking in",
+     "text": "It came down on them all at once.",
+     "spoken": "It came down on them all at once.",
+     "hero": "06_storm_rising",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 20,
-     "text": "Waves breaking over the side and into the hull, and the men bailing with whatever their hands found.",
-     "spoken": "Waves breaking over the side and into the hull, and the men bailing with whatever their hands found.",
-     "hero": "hands bailing",
+     "text": "A great storm of wind, the kind that takes the breath out of a man's mouth and throws it back in his face.",
+     "spoken": "A great storm of wind, the kind that takes the breath out of a man's mouth and throws it back in his face.",
+     "hero": "06_storm_rising",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 21,
-     "text": "And the bailing not keeping up.",
-     "spoken": "And the bailing not keeping up.",
-     "hero": "the water rising",
+     "text": "The sail cracked and fought and the mast leaned, and the oars that had been pulling steadily a moment before were suddenly only sticks in a man's hands.",
+     "spoken": "The sail cracked and fought and the mast leaned, and the oars that had been pulling steadily a moment before were suddenly only sticks in a man's hands.",
+     "hero": "06_storm_rising",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 22,
-     "text": "These were fishermen.",
-     "spoken": "These were fishermen.",
-     "hero": "a fisherman, soaked",
+     "text": "The waves beat into the boat, one after another, so that the boat was already filling.",
+     "spoken": "The waves beat into the boat, one after another, so that the boat was already filling.",
+     "hero": "07_waves_into_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 23,
-     "text": "And they were losing.",
-     "spoken": "And they were losing.",
-     "hero": "the boat, low in the water",
+     "text": "They bailed with whatever came to hand, a wooden bucket, a clay jar, two cupped hands, and the water came in faster than they could throw it out.",
+     "spoken": "They bailed with whatever came to hand, a wooden bucket, a clay jar, two cupped hands, and the water came in faster than they could throw it out.",
+     "hero": "07_waves_into_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 24,
-     "text": "And in the middle of it, Mark records something that has troubled readers for two thousand years.",
-     "spoken": "And in the middle of it, Mark records something that has troubled readers for two thousand years.",
-     "hero": "card, quiet",
+     "text": "This was not weather to them. These were fishermen. They had spent their whole lives on this lake and they knew exactly what it was saying.",
+     "spoken": "This was not weather to them. These were fishermen. They had spent their whole lives on this lake and they knew exactly what it was saying.",
+     "hero": "07_waves_into_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 25,
-     "text": "He himself was in the stern, asleep on the cushion.",
-     "spoken": "He himself was in the stern, asleep on the cushion.",
-     "hero": "Mark 4:38, typeset",
-     "typed": "MARK 4:38",
-     "gap_after": 0.45
+     "text": "They knew the weight a boat can take before it stops answering the oar.",
+     "spoken": "They knew the weight a boat can take before it stops answering the oar.",
+     "hero": "08_boat_filling",
+     "typed": "",
+     "gap_after": 0.95
     },
     {
      "id": 26,
-     "text": "Asleep.",
-     "spoken": "Asleep.",
-     "hero": "a sleeping figure, the storm around",
+     "text": "They knew the sound a hull makes when the sea has decided to have it.",
+     "spoken": "They knew the sound a hull makes when the sea has decided to have it.",
+     "hero": "08_boat_filling",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 27,
-     "text": "Not praying. Not bracing. Not calming the sea before it got bad.",
-     "spoken": "Not praying. Not bracing. Not calming the sea before it got bad.",
-     "hero": "the stern, still",
+     "text": "The water was over their ankles now, cold as a knife, slapping between the benches as the boat came down off each wave.",
+     "spoken": "The water was over their ankles now, cold as a knife, slapping between the benches as the boat came down off each wave.",
+     "hero": "08_boat_filling",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 28,
-     "text": "Asleep, on a cushion, in the back of a boat that was filling with water.",
-     "spoken": "Asleep, on a cushion, in the back of a boat that was filling with water.",
-     "hero": "the cushion, the water",
+     "text": "Their nets were a sodden heap. The clay jar had gone over. One man had lost his grip on the rigging and a second man caught his arm and held it.",
+     "spoken": "Their nets were a sodden heap. The clay jar had gone over. One man had lost his grip on the rigging and a second man caught his arm and held it.",
+     "hero": "08_boat_filling",
      "typed": "",
-     "gap_after": 1.8
+     "gap_after": 0.95
+    },
+    {
+     "id": 29,
+     "text": "And in the middle of all of it, in the back of the boat, on the little leather cushion where the steersman usually sits, Jesus was asleep.",
+     "spoken": "And in the middle of all of it, in the back of the boat, on the little leather cushion where the steersman usually sits, Jesus was asleep.",
+     "hero": "09_asleep_on_cushion",
+     "typed": "",
+     "gap_after": 1.5
     }
    ]
   },
@@ -239,92 +247,124 @@
    "take": "T03_the_question",
    "lines": [
     {
-     "id": 29,
-     "text": "They woke him up.",
-     "spoken": "They woke him up.",
-     "hero": "a hand on a shoulder",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
      "id": 30,
-     "text": "And they said, teacher, do you not care that we are dying.",
-     "spoken": "And they said, teacher, do you not care that we are dying.",
-     "hero": "Mark 4:38, typeset",
+     "text": "He himself was in the stern, asleep on the cushion.",
+     "spoken": "He himself was in the stern, asleep on the cushion.",
+     "hero": "09_asleep_on_cushion",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 31,
-     "text": "Do you not care.",
-     "spoken": "Do you not care.",
-     "hero": "card, held",
+     "text": "Not sitting with His eyes closed. Not braced and waiting. Asleep, with His head on the cushion and the water coming over the side of the boat.",
+     "spoken": "Not sitting with His eyes closed. Not braced and waiting. Asleep, with His head on the cushion and the water coming over the side of the boat.",
+     "hero": "09_asleep_on_cushion",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 32,
-     "text": "Not save us. Not help. The first thing out of their mouths is not a prayer. It is a wound.",
-     "spoken": "Not save us. Not help. The first thing out of their mouths is not a prayer. It is a wound.",
-     "hero": "card, quiet",
-     "typed": "NOT A PRAYER. A WOUND.",
-     "gap_after": 0.45
+     "text": "It is the strangest detail in the whole story, and Mark does not soften it.",
+     "spoken": "It is the strangest detail in the whole story, and Mark does not soften it.",
+     "hero": "09_asleep_on_cushion",
+     "typed": "",
+     "gap_after": 0.55
     },
     {
      "id": 33,
-     "text": "Matthew has them say, save us, Lord, we are dying.",
-     "spoken": "Matthew has them say, save us, Lord, we are dying.",
-     "hero": "Matthew 8:25, typeset",
-     "typed": "MATTHEW 8:25",
-     "gap_after": 0.45
+     "text": "The sea is trying to kill them and the one they came out with is resting.",
+     "spoken": "The sea is trying to kill them and the one they came out with is resting.",
+     "hero": "09_asleep_on_cushion",
+     "typed": "",
+     "gap_after": 0.55
     },
     {
      "id": 34,
-     "text": "Mark keeps the accusatory edge. Both are true at once.",
-     "spoken": "Mark keeps the accusatory edge. Both are true at once.",
-     "hero": "two cards, together",
+     "text": "They woke Him.",
+     "spoken": "They woke Him.",
+     "hero": "10_they_wake_him",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 35,
-     "text": "When you are terrified, and someone who could help is asleep, the fear comes out as an accusation.",
-     "spoken": "When you are terrified, and someone who could help is asleep, the fear comes out as an accusation.",
-     "hero": "card, soft",
+     "text": "They did not wake Him gently. Men do not wake anyone gently on a night like that.",
+     "spoken": "They did not wake Him gently. Men do not wake anyone gently on a night like that.",
+     "hero": "10_they_wake_him",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 36,
-     "text": "That is what fear does when it has been left alone too long.",
-     "spoken": "That is what fear does when it has been left alone too long.",
-     "hero": "a dark boat, long night",
-     "typed": "FEAR LEFT ALONE TOO LONG",
-     "gap_after": 0.45
+     "text": "Hands on His shoulder, voices in His face, water running off their elbows onto Him.",
+     "spoken": "Hands on His shoulder, voices in His face, water running off their elbows onto Him.",
+     "hero": "10_they_wake_him",
+     "typed": "",
+     "gap_after": 0.55
     },
     {
      "id": 37,
-     "text": "And note what they did not do. They did not lose their faith.",
-     "spoken": "And note what they did not do. They did not lose their faith.",
-     "hero": "card, quiet",
+     "text": "Their words come to us still wet.",
+     "spoken": "Their words come to us still wet.",
+     "hero": "10_they_wake_him",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 38,
-     "text": "They went to Jesus. Angry, and frightened, and half accusing.",
-     "spoken": "They went to Jesus. Angry, and frightened, and half accusing.",
-     "hero": "a figure moving to the stern",
+     "text": "Teacher, don't you care that we are dying.",
+     "spoken": "Teacher, don't you care that we are dying.",
+     "hero": "10_they_wake_him",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 39,
-     "text": "But they went to Him. In a boat. In the dark. And they woke Him.",
-     "spoken": "But they went to Him. In a boat. In the dark. And they woke Him.",
-     "hero": "a hand reaching",
+     "text": "And a question like that is never only a question.",
+     "spoken": "And a question like that is never only a question.",
+     "hero": "11_do_you_not_care",
      "typed": "",
-     "gap_after": 1.8
+     "gap_after": 0.95
+    },
+    {
+     "id": 40,
+     "text": "Underneath it there is an accusation, and underneath the accusation there is something older and harder than the storm.",
+     "spoken": "Underneath it there is an accusation, and underneath the accusation there is something older and harder than the storm.",
+     "hero": "11_do_you_not_care",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 41,
+     "text": "They had left their boats and their families and their trade for Him. They had believed He was worth more than all of it combined.",
+     "spoken": "They had left their boats and their families and their trade for Him. They had believed He was worth more than all of it combined.",
+     "hero": "11_do_you_not_care",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 42,
+     "text": "And now the water was coming in, and He was not doing anything about it.",
+     "spoken": "And now the water was coming in, and He was not doing anything about it.",
+     "hero": "11_do_you_not_care",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 43,
+     "text": "So they said, don't you care.",
+     "spoken": "So they said, don't you care.",
+     "hero": "11_do_you_not_care",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 44,
+     "text": "It is the question of every person who has ever prayed hard and heard the wind keep going.",
+     "spoken": "It is the question of every person who has ever prayed hard and heard the wind keep going.",
+     "hero": "11_do_you_not_care",
+     "typed": "",
+     "gap_after": 1.5
     }
    ]
   },
@@ -332,124 +372,116 @@
    "take": "T04_peace_be_still",
    "lines": [
     {
-     "id": 40,
-     "text": "He awoke.",
-     "spoken": "He awoke.",
-     "hero": "a figure rising",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 41,
-     "text": "And rebuked the wind, and said to the sea, peace, be still.",
-     "spoken": "And rebuked the wind, and said to the sea, peace, be still.",
-     "hero": "Mark 4:39, typeset",
-     "typed": "MARK 4:39",
-     "gap_after": 0.45
-    },
-    {
-     "id": 42,
-     "text": "Peace. Be still.",
-     "spoken": "Peace. Be still.",
-     "hero": "the words alone, large",
-     "typed": "PEACE.  BE STILL.",
-     "gap_after": 0.45
-    },
-    {
-     "id": 43,
-     "text": "Mark uses the same word for rebuked that he uses when Jesus silences a demon.",
-     "spoken": "Mark uses the same word for rebuked that he uses when Jesus silences a demon.",
-     "hero": "card, quiet",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 44,
-     "text": "He is not calming weather. He is speaking to something.",
-     "spoken": "He is not calming weather. He is speaking to something.",
-     "hero": "the sea, listening",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
      "id": 45,
-     "text": "In the Greek, peace, be still is closer to be silent. Be muzzled.",
-     "spoken": "In the Greek, peace, be still is closer to be silent. Be muzzled.",
-     "hero": "the Greek, small",
+     "text": "He got up.",
+     "spoken": "He got up.",
+     "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 46,
-     "text": "The same command He gives to an unclean spirit.",
-     "spoken": "The same command He gives to an unclean spirit.",
-     "hero": "card, quiet",
+     "text": "That is the first thing to notice. He did not shout from where He lay. He stood up in the boat, on legs that had to find the boards as they dropped and lifted.",
+     "spoken": "That is the first thing to notice. He did not shout from where He lay. He stood up in the boat, on legs that had to find the boards as they dropped and lifted.",
+     "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 47,
-     "text": "He stands up in a boat, in a storm that professional sailors have already lost to, and He speaks four words.",
-     "spoken": "He stands up in a boat, in a storm that professional sailors have already lost to, and He speaks four words.",
-     "hero": "the boat, the storm",
+     "text": "And He rebuked the wind, and said to the sea, Peace. Be still.",
+     "spoken": "And He rebuked the wind, and said to the sea, Peace. Be still.",
+     "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 48,
-     "text": "And it stopped.",
-     "spoken": "And it stopped.",
-     "hero": "the water, flat",
+     "text": "The words in the oldest copies are not calm words.",
+     "spoken": "The words in the oldest copies are not calm words.",
+     "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 49,
-     "text": "Not gradually. Not the wind dying down over the next hour.",
-     "spoken": "Not gradually. Not the wind dying down over the next hour.",
-     "hero": "card, quiet",
+     "text": "They are the words a man uses to tell a violent animal to get down.",
+     "spoken": "They are the words a man uses to tell a violent animal to get down.",
+     "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 50,
-     "text": "The wind ceased, and there was a great calm.",
-     "spoken": "The wind ceased, and there was a great calm.",
-     "hero": "Mark 4:39, typeset",
+     "text": "Silence. Muzzle it. Come to a stop.",
+     "spoken": "Silence. Muzzle it. Come to a stop.",
+     "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 51,
-     "text": "Mark uses a word that means a deep, flat, unnatural stillness.",
-     "spoken": "Mark uses a word that means a deep, flat, unnatural stillness.",
-     "hero": "flat water, unnaturally still",
+     "text": "The wind dropped, and there was a great calm.",
+     "spoken": "The wind dropped, and there was a great calm.",
+     "hero": "13_the_calm",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 52,
-     "text": "The kind that makes men more frightened than the storm did.",
-     "spoken": "The kind that makes men more frightened than the storm did.",
-     "hero": "the men, staring",
+     "text": "Great is the word. Mark could have said the sea grew quiet. He says a great calm came over it, the way a great fear had come over them a minute before.",
+     "spoken": "Great is the word. Mark could have said the sea grew quiet. He says a great calm came over it, the way a great fear had come over them a minute before.",
+     "hero": "13_the_calm",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 53,
-     "text": "He makes the storm a calm, so that its waves are still.",
-     "spoken": "He makes the storm a calm, so that its waves are still.",
-     "hero": "Psalm 107:29, typeset",
-     "typed": "PSALM 107:29",
-     "gap_after": 0.45
+     "text": "The waves did not subside. They stopped.",
+     "spoken": "The waves did not subside. They stopped.",
+     "hero": "13_the_calm",
+     "typed": "",
+     "gap_after": 0.95
     },
     {
      "id": 54,
-     "text": "The psalmist had written that about God. The men in the boat watched a man do it.",
-     "spoken": "The psalmist had written that about God. The men in the boat watched a man do it.",
-     "hero": "the verse and the boat",
-     "typed": "THEY WATCHED A MAN DO IT",
-     "gap_after": 1.8
+     "text": "The sail came down and hung still. The water in the bottom of the boat stopped slapping and simply lay there, reflecting the lamp.",
+     "spoken": "The sail came down and hung still. The water in the bottom of the boat stopped slapping and simply lay there, reflecting the lamp.",
+     "hero": "13_the_calm",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 55,
+     "text": "And the silence after that kind of noise is a thing a person never forgets.",
+     "spoken": "And the silence after that kind of noise is a thing a person never forgets.",
+     "hero": "13_the_calm",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 56,
+     "text": "Imagine the next thirty seconds in that boat.",
+     "spoken": "Imagine the next thirty seconds in that boat.",
+     "hero": "13_the_calm",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 57,
+     "text": "Men standing in ankle-deep water, holding a bucket, holding a rope, holding a jar, not moving, listening.",
+     "spoken": "Men standing in ankle-deep water, holding a bucket, holding a rope, holding a jar, not moving, listening.",
+     "hero": "13_the_calm",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 58,
+     "text": "The storm had been the loudest thing any of them had ever heard, and it had stopped in the middle of a sentence.",
+     "spoken": "The storm had been the loudest thing any of them had ever heard, and it had stopped in the middle of a sentence.",
+     "hero": "13_the_calm",
+     "typed": "",
+     "gap_after": 1.5
     }
    ]
   },
@@ -457,124 +489,124 @@
    "take": "T05_why_afraid",
    "lines": [
     {
-     "id": 55,
+     "id": 59,
      "text": "Now the sea is flat, and the storm is over, and you would expect relief.",
      "spoken": "Now the sea is flat, and the storm is over, and you would expect relief.",
-     "hero": "flat water, dawn",
+     "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 56,
-     "text": "Instead He said to them, why are you so afraid.",
-     "spoken": "Instead He said to them, why are you so afraid.",
-     "hero": "Mark 4:40, typeset",
-     "typed": "MARK 4:40",
-     "gap_after": 0.45
-    },
-    {
-     "id": 57,
-     "text": "How is it that you have no faith.",
-     "spoken": "How is it that you have no faith.",
-     "hero": "the verse, gentle",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 58,
-     "text": "He does not say, why did you wake me.",
-     "spoken": "He does not say, why did you wake me.",
-     "hero": "card, quiet",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 59,
-     "text": "He does not say, I told you we were going to the other side.",
-     "spoken": "He does not say, I told you we were going to the other side.",
-     "hero": "the far shore, visible",
-     "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 60,
-     "text": "He asks about the fear.",
-     "spoken": "He asks about the fear.",
-     "hero": "card, held",
+     "text": "Instead He said to them, Why are you so afraid. How is it that you have no faith.",
+     "spoken": "Instead He said to them, Why are you so afraid. How is it that you have no faith.",
+     "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 61,
-     "text": "Because the fear was not really about the water.",
-     "spoken": "Because the fear was not really about the water.",
-     "hero": "the sea, calm",
+     "text": "He does not say, why did you wake me.",
+     "spoken": "He does not say, why did you wake me.",
+     "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 62,
-     "text": "The water only made it visible.",
-     "spoken": "The water only made it visible.",
-     "hero": "card, quiet",
+     "text": "He does not say, I told you we were going to the other side.",
+     "spoken": "He does not say, I told you we were going to the other side.",
+     "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 63,
-     "text": "They had been in a boat with Him the entire time.",
-     "spoken": "They had been in a boat with Him the entire time.",
-     "hero": "the boat, the figure",
+     "text": "He asks about the fear, and He asks it after the water is flat.",
+     "spoken": "He asks about the fear, and He asks it after the water is flat.",
+     "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 64,
-     "text": "The storm did not change who was in the boat.",
-     "spoken": "The storm did not change who was in the boat.",
-     "hero": "card, quiet",
+     "text": "That is the mercy in the question. He does not interrogate them in the wind. He gets them safe first, and then He asks them to look at their own hearts.",
+     "spoken": "That is the mercy in the question. He does not interrogate them in the wind. He gets them safe first, and then He asks them to look at their own hearts.",
+     "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 65,
-     "text": "It only revealed what they actually believed about Him.",
-     "spoken": "It only revealed what they actually believed about Him.",
-     "hero": "the men, looking at Him",
+     "text": "Because the fear was never really about the water.",
+     "spoken": "Because the fear was never really about the water.",
+     "hero": "15_fear_in_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 66,
-     "text": "That He might sleep through their dying. That He might not care.",
-     "spoken": "That He might sleep through their dying. That He might not care.",
-     "hero": "the stern, the cushion",
+     "text": "The water only made it visible.",
+     "spoken": "The water only made it visible.",
+     "hero": "15_fear_in_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 67,
-     "text": "And here is the mercy in the question. He asks it after the calm.",
-     "spoken": "And here is the mercy in the question. He asks it after the calm.",
-     "hero": "flat water, light",
+     "text": "They had been in a boat with Him the entire time.",
+     "spoken": "They had been in a boat with Him the entire time.",
+     "hero": "15_fear_in_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 68,
-     "text": "He does not interrogate them in the wind. He gets them safe first.",
-     "spoken": "He does not interrogate them in the wind. He gets them safe first.",
-     "hero": "the boat, safe",
+     "text": "The storm did not change who was in the boat with them. It only revealed what they actually believed about Him.",
+     "spoken": "The storm did not change who was in the boat with them. It only revealed what they actually believed about Him.",
+     "hero": "15_fear_in_boat",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 69,
-     "text": "And then He asks them to look at their own hearts.",
-     "spoken": "And then He asks them to look at their own hearts.",
-     "hero": "a hand on a chest",
+     "text": "That He might sleep through their dying.",
+     "spoken": "That He might sleep through their dying.",
+     "hero": "15_fear_in_boat",
      "typed": "",
-     "gap_after": 1.8
+     "gap_after": 0.95
+    },
+    {
+     "id": 70,
+     "text": "That He might not care.",
+     "spoken": "That He might not care.",
+     "hero": "16_he_cares",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 71,
+     "text": "Anyone who has sat up at night with that question knows how heavy it is.",
+     "spoken": "Anyone who has sat up at night with that question knows how heavy it is.",
+     "hero": "16_he_cares",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 72,
+     "text": "And He answers it, not with a lecture, but by standing up and stopping the sea.",
+     "spoken": "And He answers it, not with a lecture, but by standing up and stopping the sea.",
+     "hero": "16_he_cares",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 73,
+     "text": "So now the question turns around and rests on them.",
+     "spoken": "So now the question turns around and rests on them.",
+     "hero": "16_he_cares",
+     "typed": "",
+     "gap_after": 1.5
     }
    ]
   },
@@ -582,92 +614,116 @@
    "take": "T06_who_is_this",
    "lines": [
     {
-     "id": 70,
-     "text": "They were greatly afraid, and said to one another.",
-     "spoken": "They were greatly afraid, and said to one another.",
-     "hero": "Mark 4:41, typeset",
-     "typed": "MARK 4:41",
-     "gap_after": 0.45
-    },
-    {
-     "id": 71,
-     "text": "Who then is this, that even the wind and the sea obey him.",
-     "spoken": "Who then is this, that even the wind and the sea obey him.",
-     "hero": "the verse, large",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 72,
-     "text": "They went out afraid of the storm. They came back afraid of Him.",
-     "spoken": "They went out afraid of the storm. They came back afraid of Him.",
-     "hero": "the boat, both states",
-     "typed": "AFRAID OF THE STORM. AFRAID OF HIM.",
-     "gap_after": 0.45
-    },
-    {
-     "id": 73,
-     "text": "That is the last verse of the story, and it is left open on purpose.",
-     "spoken": "That is the last verse of the story, and it is left open on purpose.",
-     "hero": "card, quiet",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
      "id": 74,
-     "text": "Mark does not tell us the answer. He tells us the question.",
-     "spoken": "Mark does not tell us the answer. He tells us the question.",
-     "hero": "the shore, empty",
+     "text": "They were greatly afraid, and said to one another, Who then is this, that even the wind and the sea obey him.",
+     "spoken": "They were greatly afraid, and said to one another, Who then is this, that even the wind and the sea obey him.",
+     "hero": "16_he_cares",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 75,
-     "text": "And he leaves it standing at the edge of the water for every reader after them.",
-     "spoken": "And he leaves it standing at the edge of the water for every reader after them.",
-     "hero": "a shoreline, evening",
+     "text": "Look at that. They went out afraid of the storm. They came back afraid of Him.",
+     "spoken": "Look at that. They went out afraid of the storm. They came back afraid of Him.",
+     "hero": "17_who_then_is_this",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 76,
-     "text": "Who then is this.",
-     "spoken": "Who then is this.",
-     "hero": "card, held",
+     "text": "The first fear was the fear of drowning, and any man on any sea knows it.",
+     "spoken": "The first fear was the fear of drowning, and any man on any sea knows it.",
+     "hero": "17_who_then_is_this",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.95
     },
     {
      "id": 77,
-     "text": "Maybe that is the question you are meant to carry out of this story tonight.",
-     "spoken": "Maybe that is the question you are meant to carry out of this story tonight.",
-     "hero": "a single lamp",
+     "text": "The second fear is a different thing entirely. It is what happens when you realise the person in the boat with you is not only a person.",
+     "spoken": "The second fear is a different thing entirely. It is what happens when you realise the person in the boat with you is not only a person.",
+     "hero": "17_who_then_is_this",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 78,
-     "text": "Not a lesson about storms.",
-     "spoken": "Not a lesson about storms.",
-     "hero": "card, quiet",
+     "text": "They had heard Him teach all afternoon. They thought they knew exactly who they had.",
+     "spoken": "They had heard Him teach all afternoon. They thought they knew exactly who they had.",
+     "hero": "17_who_then_is_this",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 79,
-     "text": "Not a promise that your storm will end on your schedule.",
-     "spoken": "Not a promise that your storm will end on your schedule.",
-     "hero": "the sea, still",
+     "text": "And then He spoke to the wind like a man calling a dog off the road.",
+     "spoken": "And then He spoke to the wind like a man calling a dog off the road.",
+     "hero": "17_who_then_is_this",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 80,
-     "text": "Just this. There is a man in your boat who can say peace to the wind.",
-     "spoken": "Just this. There is a man in your boat who can say peace to the wind.",
-     "hero": "the boat, warm light",
+     "text": "Mark does not tell us the answer.",
+     "spoken": "Mark does not tell us the answer.",
+     "hero": "18_open_question",
      "typed": "",
-     "gap_after": 1.8
+     "gap_after": 0.95
+    },
+    {
+     "id": 81,
+     "text": "He tells us the question, and leaves it standing at the edge of the water for every person who reads it after them.",
+     "spoken": "He tells us the question, and leaves it standing at the edge of the water for every person who reads it after them.",
+     "hero": "18_open_question",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 82,
+     "text": "Who then is this.",
+     "spoken": "Who then is this.",
+     "hero": "18_open_question",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 83,
+     "text": "That is the last verse of the story, and it is left open on purpose.",
+     "spoken": "That is the last verse of the story, and it is left open on purpose.",
+     "hero": "18_open_question",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 84,
+     "text": "Not a lesson about storms. Not a promise that your particular sea will go flat tonight.",
+     "spoken": "Not a lesson about storms. Not a promise that your particular sea will go flat tonight.",
+     "hero": "18_open_question",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 85,
+     "text": "Just this: there is a man in your boat who can say peace to the wind.",
+     "spoken": "Just this: there is a man in your boat who can say peace to the wind.",
+     "hero": "18_open_question",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 86,
+     "text": "And the men who were there that night did not go home and forget it.",
+     "spoken": "And the men who were there that night did not go home and forget it.",
+     "hero": "19_after",
+     "typed": "",
+     "gap_after": 0.95
+    },
+    {
+     "id": 87,
+     "text": "They told it, and told it again, and eventually a man named Mark wrote it down, and the detail he kept, out of all the details he could have kept, was the cushion.",
+     "spoken": "They told it, and told it again, and eventually a man named Mark wrote it down, and the detail he kept, out of all the details he could have kept, was the cushion.",
+     "hero": "19_after",
+     "typed": "",
+     "gap_after": 1.5
     }
    ]
   },
@@ -675,156 +731,140 @@
    "take": "T07_prayer",
    "lines": [
     {
-     "id": 81,
+     "id": 88,
      "text": "Let us pray.",
      "spoken": "Let us pray.",
-     "hero": "card, low light",
+     "hero": "20_prayer",
      "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 82,
-     "text": "Father, thank You that You were in the boat.",
-     "spoken": "Father, thank You that You were in the boat.",
-     "hero": "the boat, night",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 83,
-     "text": "You were not on the shore watching us drown.",
-     "spoken": "You were not on the shore watching us drown.",
-     "hero": "the empty shore",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 84,
-     "text": "You were in the stern, in the same water, in the same night.",
-     "spoken": "You were in the stern, in the same water, in the same night.",
-     "hero": "the stern, close",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 85,
-     "text": "Whatever we are facing tonight, You are not far off from it. You are in it with us.",
-     "spoken": "Whatever we are facing tonight, You are not far off from it. You are in it with us.",
-     "hero": "card, warm",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 86,
-     "text": "Forgive us for the ways our fear has sounded like accusation.",
-     "spoken": "Forgive us for the ways our fear has sounded like accusation.",
-     "hero": "card, soft",
-     "typed": "",
-     "gap_after": 0.45
-    },
-    {
-     "id": 87,
-     "text": "Forgive us for believing that Your silence meant You did not care.",
-     "spoken": "Forgive us for believing that Your silence meant You did not care.",
-     "hero": "the cushion, quiet",
-     "typed": "YOUR SILENCE DID NOT MEAN THAT",
-     "gap_after": 0.45
-    },
-    {
-     "id": 88,
-     "text": "You were not indifferent. You were at rest. Teach us the difference.",
-     "spoken": "You were not indifferent. You were at rest. Teach us the difference.",
-     "hero": "card, held",
-     "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.7
     },
     {
      "id": 89,
-     "text": "Lord Jesus, You spoke to the wind and it stopped.",
-     "spoken": "Lord Jesus, You spoke to the wind and it stopped.",
-     "hero": "the sea, listening",
+     "text": "Father, thank You that You were in the boat.",
+     "spoken": "Father, thank You that You were in the boat.",
+     "hero": "20_prayer",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 90,
-     "text": "Speak to what is rising in us tonight.",
-     "spoken": "Speak to what is rising in us tonight.",
-     "hero": "a lamp, steady",
+     "text": "You were not on the shore watching us drown. You were in the stern, in the same water, in the same night.",
+     "spoken": "You were not on the shore watching us drown. You were in the stern, in the same water, in the same night.",
+     "hero": "20_prayer",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 91,
-     "text": "Where there is noise, say peace.",
-     "spoken": "Where there is noise, say peace.",
-     "hero": "card, quiet",
+     "text": "Whatever we are facing tonight, You are not far off from it. You are in it with us.",
+     "spoken": "Whatever we are facing tonight, You are not far off from it. You are in it with us.",
+     "hero": "20_prayer",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 92,
-     "text": "Where there is chaos, say be still.",
-     "spoken": "Where there is chaos, say be still.",
-     "hero": "flat water",
+     "text": "Forgive us for the ways our fear has sounded like accusation.",
+     "spoken": "Forgive us for the ways our fear has sounded like accusation.",
+     "hero": "20_prayer",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.7
     },
     {
      "id": 93,
-     "text": "Where there is a storm we have been bailing out for years, stand up in our boat.",
-     "spoken": "Where there is a storm we have been bailing out for years, stand up in our boat.",
-     "hero": "a hand, rising",
+     "text": "Forgive us for believing that Your silence meant You did not care.",
+     "spoken": "Forgive us for believing that Your silence meant You did not care.",
+     "hero": "20_prayer",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 94,
-     "text": "And when the water is flat, give us the courage to answer Your question honestly.",
-     "spoken": "And when the water is flat, give us the courage to answer Your question honestly.",
-     "hero": "dawn on the water",
+     "text": "You were not indifferent. You were at rest. Teach us the difference.",
+     "spoken": "You were not indifferent. You were at rest. Teach us the difference.",
+     "hero": "21_prayer_hands",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 95,
-     "text": "To look at our own fear and call it what it is.",
-     "spoken": "To look at our own fear and call it what it is.",
-     "hero": "card, quiet",
+     "text": "Lord Jesus, You spoke to the wind and it stopped.",
+     "spoken": "Lord Jesus, You spoke to the wind and it stopped.",
+     "hero": "21_prayer_hands",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.7
     },
     {
      "id": 96,
-     "text": "And then to ask the question the disciples asked, and to keep asking it all our lives.",
-     "spoken": "And then to ask the question the disciples asked, and to keep asking it all our lives.",
-     "hero": "the men, looking at Him",
+     "text": "Speak to what is rising in us tonight.",
+     "spoken": "Speak to what is rising in us tonight.",
+     "hero": "21_prayer_hands",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 97,
-     "text": "Who then is this.",
-     "spoken": "Who then is this.",
-     "hero": "card, held",
+     "text": "Where there is noise, say peace. Where there is chaos, say be still.",
+     "spoken": "Where there is noise, say peace. Where there is chaos, say be still.",
+     "hero": "21_prayer_hands",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 98,
-     "text": "We want to know You, not just Your calm.",
-     "spoken": "We want to know You, not just Your calm.",
-     "hero": "card, warm",
+     "text": "Where there is a storm we have been bailing out for years, stand up in our boat.",
+     "spoken": "Where there is a storm we have been bailing out for years, stand up in our boat.",
+     "hero": "21_prayer_hands",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
      "id": 99,
+     "text": "And when the water is flat, give us the courage to answer Your question honestly.",
+     "spoken": "And when the water is flat, give us the courage to answer Your question honestly.",
+     "hero": "21_prayer_hands",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 100,
+     "text": "To look at our own fear and call it what it is.",
+     "spoken": "To look at our own fear and call it what it is.",
+     "hero": "22_peace_lake",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 101,
+     "text": "And then to ask the question the disciples asked, and to keep asking it all our lives.",
+     "spoken": "And then to ask the question the disciples asked, and to keep asking it all our lives.",
+     "hero": "22_peace_lake",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 102,
+     "text": "Who then is this.",
+     "spoken": "Who then is this.",
+     "hero": "22_peace_lake",
+     "typed": "",
+     "gap_after": 0.7
+    },
+    {
+     "id": 103,
+     "text": "We want to know You, not only Your calm.",
+     "spoken": "We want to know You, not only Your calm.",
+     "hero": "22_peace_lake",
+     "typed": "",
+     "gap_after": 0.55
+    },
+    {
+     "id": 104,
      "text": "In Jesus' name, amen.",
      "spoken": "In Jesus' name, amen.",
-     "hero": "card, held",
+     "hero": "22_peace_lake",
      "typed": "",
-     "gap_after": 1.8
+     "gap_after": 1.5
     }
    ]
   },
@@ -832,44 +872,44 @@
    "take": "T08_close",
    "lines": [
     {
-     "id": 100,
-     "text": "In peace I will both lay myself down and sleep, for you, Yahweh alone, make me live in safety.",
-     "spoken": "In peace I will both lay myself down and sleep, for you, Yahweh alone, make me live in safety.",
-     "hero": "Psalm 4:8, typeset",
-     "typed": "PSALM 4:8",
-     "gap_after": 0.45
+     "id": 105,
+     "text": "The psalm says, in peace I will both lay myself down and sleep, for You, Yahweh alone, make me live in safety.",
+     "spoken": "The psalm says, in peace I will both lay myself down and sleep, for You, Yahweh alone, make me live in safety.",
+     "hero": "23_sleep_in_peace",
+     "typed": "",
+     "gap_after": 0.95
     },
     {
-     "id": 101,
+     "id": 106,
      "text": "He slept in the storm because He trusted the Father in the storm.",
      "spoken": "He slept in the storm because He trusted the Father in the storm.",
-     "hero": "a sleeping figure, calm",
+     "hero": "23_sleep_in_peace",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
-     "id": 102,
+     "id": 107,
      "text": "Tonight, if you can, sleep.",
      "spoken": "Tonight, if you can, sleep.",
-     "hero": "a lamp, dimming",
+     "hero": "24_lamp_window",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
-     "id": 103,
+     "id": 108,
      "text": "He is still in the boat.",
      "spoken": "He is still in the boat.",
-     "hero": "the boat, warm light",
+     "hero": "24_lamp_window",
      "typed": "",
-     "gap_after": 0.45
+     "gap_after": 0.55
     },
     {
-     "id": 104,
+     "id": 109,
      "text": "Sit, listen, and encounter God. One story, one prayer at a time.",
      "spoken": "Sit, listen, and encounter God. One story, one prayer at a time.",
-     "hero": "the table, candle",
-     "typed": "ABBA'S TABLE",
-     "gap_after": 1.8
+     "hero": "24_lamp_window",
+     "typed": "",
+     "gap_after": 1.5
     }
    ]
   }
