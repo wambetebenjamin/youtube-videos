@@ -91,16 +91,16 @@ enforced in code rather than eyeballed.
 
 | Time | Chapter |
 | --- | --- |
-| 00:00 | "Let us go over to the other side" |
-| 1:10 | The storm |
-| 2:05 | "Do you not care?" |
-| 2:57 | Peace, be still |
+| 0:00 | Let us go over to the other side |
+| 1:02 | The storm |
+| 2:01 | "Do you not care?" |
+| 3:07 | Peace, be still |
 | 4:02 | "Why are you so afraid?" |
-| 4:56 | "Who then is this?" |
-| 5:40 | Prayer |
-| 6:52 | A blessing to sleep on |
+| 4:49 | "Who then is this?" |
+| 5:36 | Prayer |
+| 7:03 | A blessing to sleep on |
 
-> Times are from the **real narration** (`audio/timing.json`, 440.2 s total). If the read is
+> Times are from the **real narration** (`audio/timing.json`, 432.2 s total). If the read is
 > re-recorded, regenerate the table the same way — never hand-edit it.
 
 ## Companion Short (9:16)
