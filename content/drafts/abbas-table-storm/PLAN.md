@@ -131,6 +131,22 @@ Target −14 LUFS, ≤100 MB for the Drive upload via the `google_drive` connect
 
 - [x] 24/24 plates generated, prepped to 1920 and committed
 - [x] 109 lines of script, narration built (632.5 s), captions (277 cues)
-- [x] full render
-- [x] delivery encode at −14 LUFS
-- [x] Drive upload + public link
+- [x] full render: 18,975 frames, exit 0, 3845 s at 2 workers
+- [x] delivery encode: 632.5 s, 97 MB, −14.3 LUFS, −1.3 dBTP, decodes clean, 277 cues
+- [x] Drive upload + public link:
+      https://drive.google.com/file/d/1FWwcRzm_T_Kq3pJl-MZYxFCpfTT6o2oN/view?usp=drivesdk
+
+### Delivery record (this edition)
+
+| | |
+|---|---|
+| File | `out/videos/abbas-table-storm-long-final.mp4` |
+| Runtime | 10:32 (632.5 s) |
+| Video | 1920×1080, 30 fps, H.264, 1600 kbps |
+| Audio | AAC 128k mono, −14.3 LUFS, −1.3 dBTP |
+| Subtitles | 277 cues, mov_text, soft (not burned in) |
+| Size | 97 MB |
+
+Chapters: 0:00 The long day · 1:39 The storm · 3:30 "Do you not care?" · 4:46 Peace, be
+still · 6:09 "Why are you so afraid?" · 7:22 "Who then is this?" · 8:48 Let us pray ·
+10:05 Sit, listen, and rest
