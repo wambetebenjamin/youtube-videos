@@ -78,7 +78,7 @@ THE_WORDS_LINE = 43             # the loudest sentence in the story gets the fra
 
 VERSE_SIZE = 112                # world units; ~56 px on screen, read comfortably at 1080p
 VERSE_Y = -170
-CHAPTER_Y = 300
+CHAPTER_Y = 560
 CHAPTER_SIZE = 58
 
 

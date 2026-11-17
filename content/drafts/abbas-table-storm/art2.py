@@ -192,8 +192,14 @@ class Chapter(Item):
         a = ramp(t, self.t_in, 1.1) * self.fade(t)
         if a <= 0:
             return
+        # a soft shadow behind, so the marker survives being over a bright part of a picture
+        c.drawOval(skia.Rect.MakeLTRB(self.x - len(self.text) * self.size * 0.42,
+                                      self.y - self.size * 1.1,
+                                      self.x + len(self.text) * self.size * 0.42,
+                                      self.y + self.size * 1.4),
+                   paint((8, 7, 6), 0.34 * a, blur=self.size * 1.1))
         draw_text(c, res, self.text.upper(), self.x, self.y, self.size, "label",
-                  (238, 230, 218), 0.66 * a, 0.50, "center")
+                  (240, 233, 222), 0.80 * a, 0.50, "center")
         c.drawRect(skia.Rect.MakeLTRB(self.x - self.size * 1.5, self.y + self.size * 0.72,
                                       self.x + self.size * 1.5, self.y + self.size * 0.80),
                    paint((214, 196, 140), 0.45 * a))
