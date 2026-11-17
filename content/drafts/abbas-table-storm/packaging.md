@@ -71,6 +71,22 @@ Sit, listen, and encounter God — one story, one prayer at a time.
 
 **Pinned comment:** *"They woke Him angry. They still woke Him. That counts."*
 
+## The pictures
+
+Ten illustrations, one per story beat, drawn in on cream paper while the narration speaks them:
+the crowd on the shore, the storm, asleep on the cushion, the reaching hands, "peace, be still",
+the great calm, the question asked gently, the men looking at each other, the prayer, and the
+lamp lit beside a bed for the last verse.
+
+They are **made on screen**, not cut to: a wash of ink runs down the page and a pen sits on the
+moving edge, so the picture is visibly being drawn under the voice. That is deliberate — it keeps
+the film a thing being made rather than a slideshow, and it suits a channel meant to feel like
+someone sitting with you.
+
+Every illustration is fully drawn before the camera moves. See the README for how that is
+enforced in code rather than eyeballed.
+
+
 ## Chapters
 
 | Time | Chapter |

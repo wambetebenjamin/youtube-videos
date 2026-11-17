@@ -98,6 +98,32 @@ ffmpeg -i <master>.mp4 -i abbas-table-storm.srt \
   -c:s mov_text -movflags +faststart abbas-table-storm-final.mp4
 ```
 
+## The illustrations
+
+The film is no longer only words on paper. Ten ink-and-wash plates (generated at 768x1376, kept in
+`art/`) are cut to a 5:4 sketchbook page by `art.prepare_art()` and placed along the crossing, one
+per story beat. Each one is **drawn in while the voice is speaking it**: a ragged wash of ink runs
+down the page and a fine pen sits exactly on the moving edge, so the picture is visibly being made
+under the narration rather than simply appearing.
+
+Two rules keep this honest, and both are asserted in `build_film`, not left to inspection:
+
+1. **The camera never leaves a picture while it is still being drawn.** Every illustration's reveal
+   window is generated from the same beat list that generates the camera keys, and any beat that
+   would land inside that window is dropped. A drawing cut in half mid-stroke would read as a
+   mistake, so the shot is derived, not hand-tuned.
+2. **The camera only travels during the gaps.** Where two beats are far apart, the camera pulls out
+   over the crossing rather than drifting across bare paper — but never across a reveal.
+
+Art has no caption on the page: at this framing the page margin is cropped and the narration is
+already saying the words. The `.srt` still carries every line for viewers with sound off.
+
+Prepared pages live in `assets/prep/art/` (gitignored). To regenerate them after changing a plate:
+
+```bash
+.venv/bin/python -c "import sys; sys.path[:0]=['tools/cinematic-skill/skills/cinematic-film/scripts','content/drafts/abbas-table-storm']; from art import prepare_art; prepare_art('content/drafts/abbas-table-storm/art','content/drafts/abbas-table-storm/assets/prep')"
+```
+
 ## Next steps
 
 Published. The film was delivered to Drive at
