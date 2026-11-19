@@ -92,15 +92,15 @@ enforced in code rather than eyeballed.
 | Time | Chapter |
 | --- | --- |
 | 0:00 | The long day |
-| 1:39 | The storm |
-| 3:30 | "Do you not care?" |
-| 4:46 | Peace, be still |
-| 6:09 | "Why are you so afraid?" |
-| 7:22 | "Who then is this?" |
-| 8:48 | Let us pray |
-| 10:05 | Sit, listen, and rest |
+| 2:03 | The storm |
+| 4:16 | "Do you not care?" |
+| 5:50 | Peace, be still |
+| 7:27 | "Why are you so afraid?" |
+| 8:50 | "Who then is this?" |
+| 10:29 | Let us pray |
+| 12:00 | Sit, listen, and rest |
 
-> Times are from the **real narration** (`audio/timing.json`, 632.5 s total). If the read is
+> Times are from the **real narration** (`audio/timing.json`, 754.5 s total (12:34)). If the read is
 > re-recorded, regenerate the table the same way — never hand-edit it.
 
 ## Companion Short (9:16)

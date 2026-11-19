@@ -16,18 +16,74 @@ import math
 import numpy as np
 import skia
 
-from engine import Item, paint, ramp, ease_out_cubic
+from engine import Item, ramp, ease_out_cubic
+from engine import paint as _paint
 
-PAPER = (252, 238, 210)          # warm, slightly cream
-PAPER_EDGE = (206, 186, 150)
-INK = (43, 38, 34)
-PENCIL = (86, 78, 70)
-NIB = (58, 52, 46)
-GOLD = (158, 126, 66)
+
+def paint(rgb=(0, 0, 0), a=1.0, stroke=None, blur=None, blend=None):
+    """engine.paint, plus a blend mode.
+
+    Kept here rather than in the engine because `tools/` is not tracked: a change there would be
+    lost on the next clone, and the page's additive lift is not optional.
+    """
+    p = _paint(rgb, a, stroke=stroke, blur=blur)
+    if blend:
+        p.setBlendMode({"plus": skia.BlendMode.kPlus,
+                        "screen": skia.BlendMode.kScreen}[blend])
+    return p
+
+# A page in shadow, written by lamplight -- not a sheet of white paper.
+#
+# The film is lit like a room at dusk: deep browns, a warm lamp, a cold window. A bright cream page
+# laid into that reads as a slide dropped over the picture, however carefully it is drawn, because
+# nothing else in the frame is that bright and paper does not glow. So the page is warm and low,
+# the pen is the light, and the writing is candle-coloured ink that catches: it looks like a man in
+# the story writing by a lamp, which is the thing being asked for.
+PAPER = (30, 23, 17)             # warm board, a shade above the shadows around it
+PAPER_EDGE = (152, 126, 92)
+LIFT = (16, 9, 3)                # additive, to survive the night grade's blue multiply
+INK = (250, 236, 202)            # the writing: warm, pale, like ink catching the lamp
+PENCIL = (196, 172, 136)
+NIB = (232, 214, 178)
+GOLD = (150, 118, 62)
+RULE = (188, 160, 118)
 
 
 def _rng(seed):
     return np.random.default_rng(seed)
+
+
+def wrap_by_width(res, text, font, size, max_w):
+    """Break `text` into lines that each fit `max_w` at a fixed type size."""
+    f = res.font(font, size)
+    out = [""]
+    for w in text.split():
+        if f.measureText((out[-1] + " " + w).strip()) <= max_w or not out[-1]:
+            out[-1] = (out[-1] + " " + w).strip()
+        else:
+            out.append(w)
+    return out
+
+
+def fit_size(res, text, font, max_w, max_lines=4, start=190, floor=26):
+    """The largest type size at which `text` fills `max_w` without running past `max_lines` lines.
+
+    Handwriting that trails off in the corner of a big page looks like a mistake; the page should
+    be *used*. So instead of a fixed size, the size is chosen per line of narration.
+    """
+    size = start
+    while size > floor:
+        f = res.font(font, size)
+        probe = [""]
+        for w in text.split():
+            if f.measureText(probe[-1] + " " + w) <= max_w or not probe[-1]:
+                probe[-1] = (probe[-1] + " " + w).strip()
+            else:
+                probe.append(w)
+        if len(probe) <= max_lines and max(f.measureText(l) for l in probe) <= max_w:
+            return size, probe
+        size *= 0.965
+    return floor, probe
 
 
 class SketchPage(Item):
@@ -39,10 +95,13 @@ class SketchPage(Item):
 
     z = 20
 
-    def __init__(self, x, y, w, h, t_in, t_out=None, seed=11, rot=0.0, z=None):
+    def __init__(self, x, y, w, h, t_in, t_out=None, seed=11, rot=0.0, z=None, rules=None):
         super().__init__(t_in, t_out, z, sfx=False)
         self.x, self.y, self.w, self.h = x, y, w, h
         self.rot = rot
+        # (y of the first rule, spacing, count) -- set once the writing's type size is known, so the
+        # lines on the page and the lines of writing are the same lines.
+        self.rules = rules
         rng = _rng(seed)
         # Grain sized in FRACTIONS of the page, not world units. The page is nearly a full frame
         # wide, so a 2-unit speck is a sub-pixel smudge on screen and the paper reads as flat
@@ -69,24 +128,60 @@ class SketchPage(Item):
         c.rotate(self.rot)
         c.translate(-self.x, -self.y)
         L, T = self.x - W / 2, self.y - H / 2
+        # Light pooling on the page. A page lit by one lamp is not a uniform rectangle: it is
+        # warm and open near the lamp and falls away into the corners. Without this the sheet is
+        # flat brown card, and flat is what makes a panel look like a graphic instead of a surface.
+        sh = skia.GradientShader.MakeRadial(
+            skia.Point(self.x - W * 0.10, self.y - H * 0.05), W * 0.62,
+            # NB: in this Skia binding the FIRST colour lands at the radius and the last at the
+            # centre -- the reverse of what the argument order suggests. Both gradients here were
+            # drawing inside-out until this was checked against a test surface.
+            [skia.Color(0, 0, 0), skia.Color(44, 30, 16), skia.Color(150, 108, 60)],
+            [0.0, 0.54, 1.0], skia.TileMode.kClamp)
+        lp = skia.Paint(AntiAlias=True, Shader=sh)
+        lp.setAlphaf(min(1.0, 0.95 * a))
+        lp.setBlendMode(skia.BlendMode.kPlus)
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), lp)
+
         # shadow: the page sits ON the picture, so it needs to lift off it
         c.save(); c.translate(0, H * 0.012)
-        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint((0, 0, 0), 0.42 * a, blur=W * 0.012))
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint((0, 0, 0), 0.55 * a, blur=W * 0.030))
         c.restore()
 
         c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(PAPER, a))
-        # A strong warm glaze. The 'night' grade multiplies blue and cuts red, and plain cream under
-        # it comes out concrete-grey; this pre-compensates so the page stays the colour of paper.
-        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint((255, 206, 132), 0.30 * a))
+        # The 'night' grade (blue multiply, red cut), the vignette and the glow all land on this
+        # page after it is drawn, and together they pull cream down to a muddy olive. A dark warm
+        # wash cannot fix that -- it can only make it browner. So the page is lifted additively,
+        # in the two channels the grade leaves alone, which is what keeps it reading as paper.
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(LIFT, a, blend="plus"))
+
+        # rules, so the page reads as a notebook and the writing has somewhere to sit
+        if self.rules is not None:
+            r0, step, n = self.rules
+            for i in range(n):
+                yy = r0 + i * step
+                c.drawLine(L + W * 0.05, yy, L + W * 0.95, yy,
+                           paint(RULE, 0.18 * a, stroke=max(1.0, W * 0.0008)))
+        # a margin rule, slightly stronger than the rest
+        c.drawLine(L + W * 0.085, T + H * 0.10, L + W * 0.085, T + H * 0.94,
+                   paint((176, 112, 88), 0.30 * a, stroke=max(1.0, W * 0.0010)))
 
         # tooth
         for gx, gy, r, al in self.grain:
-            c.drawCircle(self.x + gx * W, self.y + gy * H, r * W, paint((120, 96, 66), al * a))
+            c.drawCircle(self.x + gx * W, self.y + gy * H, r * W, paint((128, 104, 76), al * a))
         # a few longer fibres, so it is paper and not noise
         for fx, fy, ln in self.fibres:
             x0, y0 = self.x + fx * W, self.y + fy * H
             c.drawLine(x0, y0, x0 + ln * W, y0 + ln * W * 0.16,
-                       paint((120, 96, 66), 0.10 * a, stroke=W * 0.0012))
+                       paint((132, 108, 78), 0.12 * a, stroke=W * 0.0012))
+
+        sv = skia.GradientShader.MakeRadial(
+            skia.Point(self.x, self.y), W * 0.78,
+            [skia.Color(0, 0, 0, 160), skia.Color(0, 0, 0, 0), skia.Color(0, 0, 0, 0)],
+            [0.0, 0.58, 1.0], skia.TileMode.kClamp)
+        vp = skia.Paint(AntiAlias=True, Shader=sv)
+        vp.setAlphaf(min(1.0, a))
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), vp)
 
         # edge: a hairline all round, heavier on the left, reads as a real sheet
         c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(PAPER_EDGE, 0.75 * a, stroke=W * 0.0015))
@@ -106,13 +201,21 @@ class Written(Item):
     z = 24
 
     def __init__(self, text, x, y, size, vo_start, vo_end, t_in=None, t_out=None,
-                 font="serif", rgb=INK, seed=3, max_chars=34, z=None):
+                 font="serif", rgb=INK, seed=3, max_chars=34, z=None, res=None, max_w=None,
+                 max_lines=5):
         super().__init__(t_in if t_in is not None else vo_start, t_out, z, sfx=False)
         self.text, self.x, self.y, self.size = text, x, y, size
         self.vo_start, self.vo_end = vo_start, vo_end
         self.font, self.rgb = font, rgb
-        self.lines = _wrap(text, max_chars)
-        self.lead = size * 1.36
+        # if the page geometry is supplied, fit the writing to the page instead of guessing
+        if res is not None and max_w is not None:
+            # One hand, one pen: the type size is FIXED and the number of lines varies instead.
+            # Fitting the size to the text made short lines huge and long lines tiny, and the ten
+            # pages stopped looking like the same notebook.
+            self.lines = wrap_by_width(res, text, font, self.size, max_w)
+        else:
+            self.lines = _wrap(text, max_chars)
+        self.lead = self.size * 1.36
         rng = _rng(seed)
         # per-line baseline wobble and per-word ink density: handwriting is not typesetting
         self.wobble = rng.uniform(-0.012, 0.012, len(self.lines))
@@ -204,7 +307,7 @@ def _nib(c, x, y, a, size):
     c.save()
     c.translate(x, y)
     c.rotate(-34)
-    s = size * 0.075
+    s = size * 0.105
     # shadow on the paper under the nib
     c.drawOval(skia.Rect.MakeLTRB(s * 1.0, -s * 0.5, s * 8.0, s * 2.8),
                paint((40, 34, 28), 0.30 * a, blur=s * 2.6))
@@ -213,11 +316,11 @@ def _nib(c, x, y, a, size):
     p.lineTo(s * 2.2, -s * 0.55)
     p.lineTo(s * 2.2, s * 0.55)
     p.close()
-    c.drawPath(p, paint((32, 28, 24), 1.0 * a))                       # nib
+    c.drawPath(p, paint((24, 20, 17), 1.0 * a))                       # nib
     c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(s * 2.0, -s * 0.85, s * 13.0, s * 0.85),
-                                     s * 0.45, s * 0.45), paint((74, 58, 44), 0.98 * a))
+                                     s * 0.45, s * 0.45), paint((62, 48, 36), 0.98 * a))
     c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(s * 2.2, -s * 0.85, s * 13.0, -s * 0.25),
-                                     s * 0.3, s * 0.3), paint((124, 100, 76), 0.9 * a))  # highlight
+                                     s * 0.3, s * 0.3), paint((150, 122, 92), 0.92 * a))  # highlight
     c.restore()
 
 

@@ -267,3 +267,46 @@ def install_full_res_loader():
         return self.imgs[slot]
 
     _Res.photo = photo
+
+
+class Outro(Item):
+    """The end card, built inside YouTube's element zones.
+
+    YouTube only allows end-screen elements in the final 5-20 s, and stamps them over the RIGHT two
+    thirds of the frame (subscribe circle, next-video thumbnail, playlist card). So the film's own
+    branding lives in the LEFT third only, clear of all of them, and everything in the bottom band
+    is left empty for the progress bar and mobile UI. The right side is deliberately a dark, quiet
+    plate: those are placeholders to be filled in Studio, not empty space to decorate.
+    """
+
+    z = 60
+
+    def __init__(self, title, handle, next_line, t_in, t_out, x=0.0, z=None):
+        super().__init__(t_in, t_out, z, sfx=False)
+        self.title, self.handle, self.next_line = title, handle, next_line
+        self.x = x
+
+    def bounds(self, res):
+        return skia.Rect.MakeLTRB(self.x - 9000, -6000, self.x + 9000, 6000)
+
+    def draw(self, c, res, t):
+        a = ramp(t, self.t_in, 1.4) * self.fade(t)
+        if a <= 0:
+            return
+        fw = 3840.0                                  # frame width at zoom 1
+        # No plate over the right two thirds. Drawn as a hard rectangle it read as a rendering
+        # fault, a dark block pasted onto the picture. The closing photograph is already quiet on
+        # that side, and leaving it alone is both better looking and more honest: the platform's
+        # elements sit over real picture, as they do on every other channel.
+        # left third: the channel's own mark, top-aligned and never under a YouTube element
+        lx = self.x - fw * 0.40
+        ty = -fw * 0.075
+        # a soft pool of shade behind the type only, so it reads over the lamp-lit wall
+        c.drawOval(skia.Rect.MakeLTRB(lx - 60, ty - 150, lx + 900, ty + 320),
+                   paint((8, 7, 6), 0.42 * a, blur=120))
+        draw_text(c, res, self.title, lx, ty, 104, "serif", (246, 241, 232), a, 0.02)
+        c.drawRect(skia.Rect.MakeLTRB(lx, ty + 62, lx + 300, ty + 70),
+                   paint((214, 196, 140), 0.85 * a))
+        draw_text(c, res, self.handle, lx, ty + 140, 46, "label", (226, 216, 198), 0.86 * a, 0.16)
+        na = a * ramp(t, self.t_in + 0.9, 1.0)
+        draw_text(c, res, self.next_line, lx, ty + 232, 44, "label", (198, 188, 172), 0.80 * na, 0.10)

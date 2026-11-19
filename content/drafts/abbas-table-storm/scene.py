@@ -13,7 +13,9 @@ no picture ever seen as a page sitting on a board.
 
 Everything comes from `script2.lines()`, so a line's words, its picture and its caption cannot drift.
 """
-from art2 import Chapter, Photo, Scripture, TitleCart, install_full_res_loader
+import pathlib
+
+from art2 import Chapter, Outro, Photo, Scripture, TitleCart, install_full_res_loader
 from sketchbook import SketchPage, Written
 from engine import BigText, Film
 from script2 import TAKES, lines
@@ -83,7 +85,16 @@ CHAPTER_Y = 560
 CHAPTER_SIZE = 58
 
 
-def build_film(doc):
+def _res_for_typing(res):
+    """Font metrics need a Res; build_film is often called before one exists."""
+    if res is not None:
+        return res
+    from engine import Res
+    prep = pathlib.Path(__file__).resolve().parent / ".." / ".." / ".." / "assets" / "prep"
+    return Res(1.0, prep=prep)
+
+
+def build_film(doc, res=None):
     L, E = doc.L, doc.E
     film = Film(doc.duration, fps=30, look="night")
     ls = lines()
@@ -149,7 +160,7 @@ def build_film(doc):
     for lid, (ref, text) in sorted(VERSES.items()):
         s = shot_of(lid)
         film.add(Scripture(ref, text, s["x"], VERSE_Y, VERSE_SIZE,
-                           L(lid) - 0.5, t_out=E(lid) + 3.8))
+                           L(lid) - 0.5, t_out=E(lid) + 1.6))
 
     # -- the four words, alone in the frame -------------------------------
     ws = shot_of(THE_WORDS_LINE)
@@ -164,7 +175,7 @@ def build_film(doc):
     # clusters, and never over a scripture typeset, a section marker or the title.
     # Ten pull-quotes, roughly even across the runtime: 0:36 1:22 2:38 4:02 5:10
     # 6:10 7:06 8:05 9:24 11:24. Long enough to watch a pen write (>=6 s of narration).
-    SKETCH_LINES = [4, 13, 28, 46, 54, 64, 74, 81, 91, 101]
+    SKETCH_LINES = [4, 13, 28, 46, 54, 64, 77, 81, 91, 101]
     busy = set(VERSES) | {THE_WORDS_LINE}
     for lid in SKETCH_LINES:
         if lid in busy:
@@ -174,10 +185,37 @@ def build_film(doc):
         # the voice and the page would open and close before it read as writing at all
         if E(lid) - L(lid) < 6.0:
             continue
+        # the opening title owns the frame until ~32 s; a page under it reads as a mistake
+        if L(lid) < 34.0:
+            continue
         s0 = shot_of(lid)
-        film.add(SketchPage(s0["x"], 0, _FRAME_W * 0.90, _FRAME_W * 0.625,
-                            L(lid) - 0.45, t_out=E(lid) + 1.5, rot=-1.4))
-        film.add(Written(ln["text"], s0["x"], -150, 84, L(lid), E(lid),
-                         t_out=E(lid) + 1.4, max_chars=32, seed=lid * 7 + 3))
+        # A sheet, not a slide. The first attempt filled nine tenths of the frame and, lit by the
+        # night grade, read as a white board laid over the film. This one is a loose page resting
+        # in the lower left of the picture with the shot still visible around it, and the writing
+        # is small enough that you lean in to read it -- which is what a notebook asks of you.
+        # A page, held in the frame: nearly the full width, a hair of the picture showing round it,
+        # tilted as if laid by hand. A smaller card pinned into the corner reads as a graphic; a
+        # page this size reads as a moment in the film, and the shot breathes back in afterwards.
+        pw = _FRAME_W * 0.60
+        px, py = s0["x"], 0
+        wr = Written(ln["text"], px, py, 52, L(lid), E(lid), t_out=E(lid) + 1.3,
+                     seed=lid * 7 + 3, res=_res_for_typing(res), max_w=pw * 0.76, max_lines=5)
+        # the sheet is cut to its content: a page is as tall as what is written on it, not a
+        # fixed rectangle with the writing stranded in the top third
+        ph = min(_FRAME_W * 0.34, max(_FRAME_W * 0.13, wr.lead * (len(wr.lines) + 1.9)))
+        # sit the writing in the middle of the page, and rule the page to it
+        n = len(wr.lines)
+        wr.y = py - (n - 1) * wr.lead * 0.5
+        rules = (wr.y + wr.lead * 0.80, wr.lead, n)
+        film.add(SketchPage(px, py, pw, ph, L(lid) - 0.45, t_out=E(lid) + 1.4,
+                            rot=-2.4, rules=rules))
+        film.add(wr)
+
+    # -- the end card ------------------------------------------------------
+    # The film's own last 20 s carry the channel mark in the left third, with the right two thirds
+    # held quiet for YouTube's end-screen elements. Nothing of ours sits where the platform will
+    # stamp a subscribe button or a next-video thumbnail.
+    film.add(Outro("Abba's Table", "@abbastable", "Next: one story, one prayer at a time.",
+                   doc.duration - 20.6, doc.duration + 2.0, x=0.0))
 
     return film
