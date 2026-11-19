@@ -91,6 +91,14 @@ has the frame back.
 
 ## The delivered file
 
+`https://drive.google.com/file/d/1B2_FU6pBrqhAEQfULaQ4DCmU0QtKXtjw/view?usp=drivesdk`
+
+1920×1080 · 30 fps · H.264 767 kbps · AAC 112 kbps stereo · 14:27 (867.4 s) · 92 MiB ·
+−15.1 LUFS / −2.5 dBTP · captions muxed (277 cues).
+
+### Previous version (superseded — narrator too fast, music inaudible)
+
+
 `https://drive.google.com/file/d/1pM5DpTUCZ4vU_fHaDNnlrVy8VuINxfan/view?usp=drivesdk`
 
 1920×1080 · 30 fps · H.264 898 kbps · AAC 112 kbps stereo · 14:27 (867.4 s) ·
