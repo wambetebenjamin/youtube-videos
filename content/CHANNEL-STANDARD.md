@@ -157,6 +157,12 @@ ffmpeg -hide_banner -i <file>.mp4 -af loudnorm=print_format=summary -f null -  #
 
 Then, and only then, upload with the `google_drive` connector and make it public.
 
+**The delivery encode is `scripts/deliver.sh`** — it derives the bitrate from the file's own
+duration so the result cannot exceed the 100 MB Drive upload ceiling, then asserts the spec and the
+size. 754 s lands at 950 kbps video + 112 kbps audio = 95 MiB. Two-pass x264, subtitles muxed in.
+Do not hand-roll the encode: a single-pass VBR at a guessed bitrate bands the dark gradients and,
+on a long cut, overshoots the ceiling after the render is already finished.
+
 ---
 
 ## 9. Things already learned the hard way
