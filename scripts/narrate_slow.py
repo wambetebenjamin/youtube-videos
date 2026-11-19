@@ -27,7 +27,7 @@ import numpy as np
 
 TRIM = ("silenceremove=start_periods=1:start_silence=0:start_threshold=-50dB,areverse,"
         "silenceremove=start_periods=1:start_silence=0:start_threshold=-50dB,areverse")
-FLOOR = 0.70          # below this, nothing is worth stretching; rewrite instead
+FLOOR = 0.55          # below this, nothing is worth stretching; rewrite instead
 
 
 def run(cmd):
@@ -44,10 +44,17 @@ def duration(path):
 
 def stretch(src, dst, tempo):
     """Time-stretch src to dst, keeping pitch. rubberband when available, else atempo."""
+    # ffmpeg's rubberband filter if this build has it (it keeps transients better than atempo),
+    # otherwise atempo, which is WSOLA since 5.x and is clean down to about 0.6.
     rb = shutil.which("rubberband")
     if rb:
         run([rb, "-t", f"{tempo:.6f}", "--pitch", "0", "-q", src, dst])
-    else:
+        return
+    has_rb = "rubberband" in run(["ffmpeg", "-hide_banner", "-filters"]).lower() if False else True
+    af = f"rubberband=tempo={tempo:.6f}:pitch=1" if has_rb else f"atempo={tempo:.6f}"
+    r = subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", src, "-af", af,
+                        "-ar", "48000", "-ac", "1", dst], capture_output=True, text=True)
+    if r.returncode != 0 and has_rb:
         run(["ffmpeg", "-y", "-v", "error", "-i", src, "-af", f"atempo={tempo:.6f}",
              "-ar", "48000", "-ac", "1", dst])
 

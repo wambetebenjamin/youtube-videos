@@ -11,12 +11,19 @@ import pathlib
 
 from script2 import TAKES
 
+# The pause budget, measured rather than guessed.
+#
+# At the voice's natural rate this script takes 539 s to speak and needs about 270 s of silence to
+# land near the reference's 118 wpm overall. That is a third of the film spent not speaking, and it
+# is the number the "still too fast" complaint is asking for: the first edition had 79 s of pause,
+# the 12:34 cut had 118, and this edition has 269.
+#
 # Where a movement ends, the next one starts on a held beat.
-TAKE_GAP = 2.0
+TAKE_GAP = 3.4
 # A line that ends a thought (a full stop before a new subject) is given more room than a comma.
-LINE_GAP = 0.85
-STANZA_GAP = 1.30
-PRAYER_GAP = 0.95
+LINE_GAP = 1.85
+STANZA_GAP = 2.90
+PRAYER_GAP = 2.10
 
 # lines that begin a new paragraph of the story, and so want the longer pause before them
 STANZA_OPENERS = {
