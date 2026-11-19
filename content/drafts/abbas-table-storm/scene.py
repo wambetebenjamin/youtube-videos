@@ -85,6 +85,19 @@ CHAPTER_Y = 560
 CHAPTER_SIZE = 58
 
 
+def verse_window(L, E, lid, words_start, words_end):
+    """When a verse card is on screen: (t_in, t_out).
+
+    Only the verse that actually shares the frame with the big four words waits for them to clear.
+    """
+    t_in = L(lid) - 0.5
+    if t_in < words_end and E(lid) + 1.6 > words_start:
+        t_in = words_end
+    # A verse held much longer than it takes to read becomes wallpaper. Cap it, and give the
+    # picture the frame back.
+    return t_in, min(E(lid) + 1.6, t_in + 9.0)
+
+
 def _res_for_typing(res):
     """Font metrics need a Res; build_film is often called before one exists."""
     if res is not None:
@@ -147,20 +160,34 @@ def build_film(doc, res=None):
     film.add(TitleCart("Peace, Be Still", "Mark 4  35—41", shots[0]["x"], -150, 300,
                        L(1) - 2.4, L(4) + 2.0))
 
+    WORDS_START = L(THE_WORDS_LINE)
+    WORDS_END = WORDS_START + 2.8            # when the big four words have cleared the frame
+
     # -- a quiet section marker for each movement -------------------------
     for take in TAKES:
         ln = next(l for l in ls if l["take"] == take["take"])
         if ln["id"] <= 6:                       # the title already carries the opening
             continue
+        m0 = L(ln["id"]) - 0.5
+        m1 = min(L(ln["id"]) + 4.6, E(ln["id"]) + 1.6)
+        # A marker is a quiet thing and must never share the frame with scripture: where a verse is
+        # still on screen, the picture carries the cut and the marker stands down.
+        if any(m0 < verse_window(L, E, lid, WORDS_START, WORDS_END)[1]
+               and verse_window(L, E, lid, WORDS_START, WORDS_END)[0] < m1 for lid in VERSES):
+            continue
         s = shot_of(ln["id"])
-        film.add(Chapter(take["title"], s["x"], CHAPTER_Y, CHAPTER_SIZE,
-                         L(ln["id"]) - 0.5, min(L(ln["id"]) + 4.6, E(ln["id"]) + 1.6)))
+        film.add(Chapter(take["title"], s["x"], CHAPTER_Y, CHAPTER_SIZE, m0, m1))
+
 
     # -- scripture, typeset over the held picture -------------------------
     for lid, (ref, text) in sorted(VERSES.items()):
         s = shot_of(lid)
-        film.add(Scripture(ref, text, s["x"], VERSE_Y, VERSE_SIZE,
-                           L(lid) - 0.5, t_out=E(lid) + 1.6))
+        # The verse gets the frame to itself. Two things were printing over it: the big four words
+        # (PEACE. BE STILL.) which end 0.9 s into this verse, and, on the next line, a section
+        # marker landing in exactly the same place. Where the four words are still on screen the
+        # verse waits for them to clear; where a marker would collide, the marker is dropped below.
+        v_in, v_out = verse_window(L, E, lid, WORDS_START, WORDS_END)
+        film.add(Scripture(ref, text, s["x"], VERSE_Y, VERSE_SIZE, v_in, t_out=v_out))
 
     # -- the four words, alone in the frame -------------------------------
     ws = shot_of(THE_WORDS_LINE)
