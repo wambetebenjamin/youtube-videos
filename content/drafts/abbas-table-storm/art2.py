@@ -62,7 +62,7 @@ class Photo(Item):
     z = 10
 
     def __init__(self, key, x, y, span, t_in, t_out=None, drift=0.06, pan=(0.0, 0.0),
-                 seed=1, fade_in=1.1, z=None, sfx=True):
+                 seed=1, fade_in=0.50, z=None, sfx=True):
         super().__init__(t_in, t_out, z, sfx)
         self.fade_in = fade_in
         self.key, self.x, self.y, self.span = key, x, y, span
