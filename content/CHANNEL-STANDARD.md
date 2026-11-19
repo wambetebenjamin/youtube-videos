@@ -51,9 +51,26 @@ narrator is *drawing out* of it — a word, a shape, a small diagram, a verse be
   line-length in the narration, not a fixed 2 seconds. If the narrator pauses, the pen pauses.
 - **The hand is visible.** Nib on the paper, moving with the stroke. A canvas that fills itself is
   a mask reveal, not drawing.
-- **It is a real surface.** Warm paper, tooth, faint ruling, slight rotation. Not a white void.
+- **It is a real surface, and it is a page in shadow — not white paper.** This is the single most
+  important line in this section. Cream paper cannot be laid into a film graded this dark: however
+  carefully the colour is measured against the grade, it reads as a bright slide dropped over the
+  picture, because nothing else in the frame is that bright and paper does not glow. Use dark warm
+  stock, put a *lamp pool* over it (a radial gradient, not a flat fill), and let the **writing** be
+  the bright thing — candle-coloured ink catching the light. Flat mid-tone card still reads as a
+  panel; light falling off across the page is what makes it a surface.
+- **Ruled to the writing.** The rules on the page and the lines of writing must be the same lines.
+  Compute the rule positions from the type size and line count, not from a fixed grid.
+- **One hand, one pen.** Fix the type size and let the *number of lines* vary. Fitting the type size
+  to the text makes short lines enormous and long lines tiny, and the pages stop reading as the
+  same notebook.
+- **Cut the sheet to its content.** A page is as tall as what is written on it. A fixed rectangle
+  with the writing stranded in the top third is a graphic, not a notebook.
 - **Legible from across a room.** Body text no smaller than ~44 px at 1080p.
-- **Short.** 8–20 seconds, then back to the gallery. A sketchbook that overstays becomes a slide.
+- **Short.** 6–14 seconds, then back to the gallery. A sketchbook that overstays becomes a slide.
+  Pick the lines by *duration*, filtering narration segments to ≥6 s **first** — the memorable
+  short punches are 2–3 s and the page opens and shuts before it reads as writing at all.
+- **Not under the title, and not on a verse line.** The opening title owns the frame until ~32 s;
+  a page beneath it reads as a mistake. Skip any line that already carries scripture type.
 
 ---
 
@@ -154,6 +171,18 @@ Then, and only then, upload with the `google_drive` connector and make it public
 - **`build_narration.py` refuses tempo outside 0.90–1.15.** Slow the read by writing, not stretching.
 - **`generate_image` stops at 10 per turn.** Batch and commit; plan 24+ plates across several turns.
 - **`tools/` is gitignored.** Anything worth keeping from it belongs in `content/` or `scripts/`.
+  If a draft needs a change to the engine itself, put a shim in the draft — do not edit `tools/`.
+- **Skia's radial gradients run backwards in this stack.** The *first* colour lands at the radius
+  and the *last* at the centre, the reverse of the argument order. A lamp pool drawn the intuitive
+  way comes out as a black hole with a bright rim. Check any gradient against a test surface before
+  trusting it on a frame.
+- **Additive lifts beat dark washes for surviving the night grade.** `paint(..., blend="plus")` in a
+  warm colour raises a surface's red channel; a dark warm fill can only make it browner.
+- **`burn_captions.py` crashes on an absolute `--out`.** Pass a path relative to the project.
+- **The outro needs the last 20 s.** YouTube's end-screen elements only appear in the final 5–20 s
+  and occupy the right two thirds. Put the channel mark in the left third and leave the right side
+  as real picture — a dark plate there looks like a rendering fault.
+- **`ffmpeg` is not on `PATH`.** Source `scripts/activate-studio.sh` before any verify script.
 
 ---
 
