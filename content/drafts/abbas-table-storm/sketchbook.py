@@ -18,8 +18,8 @@ import skia
 
 from engine import Item, paint, ramp, ease_out_cubic
 
-PAPER = (238, 230, 214)          # warm, slightly cream
-PAPER_EDGE = (214, 203, 183)
+PAPER = (252, 238, 210)          # warm, slightly cream
+PAPER_EDGE = (206, 186, 150)
 INK = (43, 38, 34)
 PENCIL = (86, 78, 70)
 NIB = (58, 52, 46)
@@ -39,16 +39,19 @@ class SketchPage(Item):
 
     z = 20
 
-    def __init__(self, x, y, w, h, t_in, t_out=None, seed=11, z=None):
+    def __init__(self, x, y, w, h, t_in, t_out=None, seed=11, rot=0.0, z=None):
         super().__init__(t_in, t_out, z, sfx=False)
         self.x, self.y, self.w, self.h = x, y, w, h
+        self.rot = rot
         rng = _rng(seed)
-        # grain: fixed points on the page, drawn small and faint; they read as paper tooth
+        # Grain sized in FRACTIONS of the page, not world units. The page is nearly a full frame
+        # wide, so a 2-unit speck is a sub-pixel smudge on screen and the paper reads as flat
+        # white. These are large enough to see as tooth.
         self.grain = [(float(rng.uniform(-0.5, 0.5)), float(rng.uniform(-0.5, 0.5)),
-                       float(rng.uniform(0.8, 2.2)), float(rng.uniform(0.03, 0.09)))
-                      for _ in range(900)]
+                       float(rng.uniform(0.0015, 0.0045)), float(rng.uniform(0.05, 0.16)))
+                      for _ in range(1400)]
         self.fibres = [(float(rng.uniform(-0.5, 0.5)), float(rng.uniform(-0.5, 0.5)),
-                        float(rng.uniform(20, 90))) for _ in range(40)]
+                        float(rng.uniform(0.01, 0.05))) for _ in range(70)]
 
     def bounds(self, res):
         r = max(self.w, self.h) * 0.75
@@ -59,22 +62,36 @@ class SketchPage(Item):
         if a <= 0:
             return
         W, H = self.w, self.h
+        # A sheet laid on the table, not a slide: it is tilted a degree and a half, and everything
+        # that follows is drawn in its own frame so the grain and edge travel with the paper.
+        c.save()
+        c.translate(self.x, self.y)
+        c.rotate(self.rot)
+        c.translate(-self.x, -self.y)
         L, T = self.x - W / 2, self.y - H / 2
-        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(PAPER, a))
+        # shadow: the page sits ON the picture, so it needs to lift off it
+        c.save(); c.translate(0, H * 0.012)
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint((0, 0, 0), 0.42 * a, blur=W * 0.012))
+        c.restore()
 
-        # grain
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(PAPER, a))
+        # A strong warm glaze. The 'night' grade multiplies blue and cuts red, and plain cream under
+        # it comes out concrete-grey; this pre-compensates so the page stays the colour of paper.
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint((255, 206, 132), 0.30 * a))
+
+        # tooth
         for gx, gy, r, al in self.grain:
-            c.drawCircle(self.x + gx * W, self.y + gy * H, r, paint(PENCIL, al * a))
+            c.drawCircle(self.x + gx * W, self.y + gy * H, r * W, paint((120, 96, 66), al * a))
         # a few longer fibres, so it is paper and not noise
         for fx, fy, ln in self.fibres:
-            x0 = self.x + fx * W
-            y0 = self.y + fy * H
-            c.drawLine(x0, y0, x0 + ln * 0.5, y0 + ln * 0.12, paint(PENCIL, 0.035 * a, stroke=1.1))
+            x0, y0 = self.x + fx * W, self.y + fy * H
+            c.drawLine(x0, y0, x0 + ln * W, y0 + ln * W * 0.16,
+                       paint((120, 96, 66), 0.10 * a, stroke=W * 0.0012))
 
-        # edge: a heavier line on the left and top reads as the page's spine and top edge
-        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(PAPER_EDGE, 0.55 * a, stroke=3.0))
-        c.drawRect(skia.Rect.MakeXYWH(L, T, 26, H), paint(PAPER_EDGE, 0.30 * a))
-        c.drawRect(skia.Rect.MakeXYWH(L, T, W, 22), paint(PAPER_EDGE, 0.18 * a))
+        # edge: a hairline all round, heavier on the left, reads as a real sheet
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W, H), paint(PAPER_EDGE, 0.75 * a, stroke=W * 0.0015))
+        c.drawRect(skia.Rect.MakeXYWH(L, T, W * 0.006, H), paint(PAPER_EDGE, 0.45 * a))
+        c.restore()
 
 
 class Written(Item):
@@ -169,7 +186,7 @@ class Written(Item):
                 c.drawString(w, 0, 0, f, paint(self.rgb, wa))
                 c.restore()
                 if frac < 0.999:
-                    nib_x, nib_y = x + widths[wi] * frac, -self.size * 0.26
+                    nib_x, nib_y = x + widths[wi] * frac, li * self.lead - self.size * 0.26
                 x += widths[wi] + space
             c.restore()
 
@@ -187,18 +204,20 @@ def _nib(c, x, y, a, size):
     c.save()
     c.translate(x, y)
     c.rotate(-34)
-    s = size * 0.030
+    s = size * 0.075
     # shadow on the paper under the nib
-    c.drawOval(skia.Rect.MakeLTRB(s * 1.5, -s * 0.7, s * 6.5, s * 2.2),
-               paint((60, 52, 46), 0.16 * a, blur=s * 2.2))
+    c.drawOval(skia.Rect.MakeLTRB(s * 1.0, -s * 0.5, s * 8.0, s * 2.8),
+               paint((40, 34, 28), 0.30 * a, blur=s * 2.6))
     p = skia.Path()
     p.moveTo(0, 0)
     p.lineTo(s * 2.2, -s * 0.55)
     p.lineTo(s * 2.2, s * 0.55)
     p.close()
-    c.drawPath(p, paint(NIB, 0.95 * a))                       # nib
-    c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(s * 2.0, -s * 0.75, s * 9.0, s * 0.75),
-                                     s * 0.4, s * 0.4), paint((196, 172, 120), 0.95 * a))  # barrel
+    c.drawPath(p, paint((32, 28, 24), 1.0 * a))                       # nib
+    c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(s * 2.0, -s * 0.85, s * 13.0, s * 0.85),
+                                     s * 0.45, s * 0.45), paint((74, 58, 44), 0.98 * a))
+    c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(s * 2.2, -s * 0.85, s * 13.0, -s * 0.25),
+                                     s * 0.3, s * 0.3), paint((124, 100, 76), 0.9 * a))  # highlight
     c.restore()
 
 

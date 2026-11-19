@@ -14,6 +14,7 @@ no picture ever seen as a page sitting on a board.
 Everything comes from `script2.lines()`, so a line's words, its picture and its caption cannot drift.
 """
 from art2 import Chapter, Photo, Scripture, TitleCart, install_full_res_loader
+from sketchbook import SketchPage, Written
 from engine import BigText, Film
 from script2 import TAKES, lines
 
@@ -155,5 +156,28 @@ def build_film(doc):
     film.add(BigText("PEACE.   BE STILL.", ws["x"], -110, 210,
                      L(THE_WORDS_LINE) + 0.10, rgb=CREAM, shadow=True, grunge=False,
                      type_on=0.85, t_out=L(THE_WORDS_LINE) + 2.9))
+
+    # -- the sketchbook ----------------------------------------------------
+    # Ten moments where the narrator is drawing the story out rather than only showing it: the
+    # pen writes the line that is being spoken, at the speed it is spoken. Chosen from the lines
+    # that carry the story's spine, spread across the runtime so the canvas recurs rather than
+    # clusters, and never over a scripture typeset, a section marker or the title.
+    # Ten pull-quotes, roughly even across the runtime: 0:36 1:22 2:38 4:02 5:10
+    # 6:10 7:06 8:05 9:24 11:24. Long enough to watch a pen write (>=6 s of narration).
+    SKETCH_LINES = [4, 13, 28, 46, 54, 64, 74, 81, 91, 101]
+    busy = set(VERSES) | {THE_WORDS_LINE}
+    for lid in SKETCH_LINES:
+        if lid in busy:
+            continue
+        ln = next(l for l in ls if l["id"] == lid)
+        # a sketch needs the narrator to take her time: under six seconds the pen would be racing
+        # the voice and the page would open and close before it read as writing at all
+        if E(lid) - L(lid) < 6.0:
+            continue
+        s0 = shot_of(lid)
+        film.add(SketchPage(s0["x"], 0, _FRAME_W * 0.90, _FRAME_W * 0.625,
+                            L(lid) - 0.45, t_out=E(lid) + 1.5, rot=-1.4))
+        film.add(Written(ln["text"], s0["x"], -150, 84, L(lid), E(lid),
+                         t_out=E(lid) + 1.4, max_chars=32, seed=lid * 7 + 3))
 
     return film

@@ -12,11 +12,11 @@ import pathlib
 from script2 import TAKES
 
 # Where a movement ends, the next one starts on a held beat.
-TAKE_GAP = 1.5
+TAKE_GAP = 2.0
 # A line that ends a thought (a full stop before a new subject) is given more room than a comma.
-LINE_GAP = 0.55
-STANZA_GAP = 0.95
-PRAYER_GAP = 0.70
+LINE_GAP = 0.85
+STANZA_GAP = 1.30
+PRAYER_GAP = 0.95
 
 # lines that begin a new paragraph of the story, and so want the longer pause before them
 STANZA_OPENERS = {
