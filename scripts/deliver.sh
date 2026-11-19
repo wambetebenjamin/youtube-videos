@@ -13,6 +13,10 @@
 # Usage: scripts/deliver.sh <master.mp4> <srt> <out.mp4> [max_mib]
 set -euo pipefail
 
+# ffmpeg/ffprobe ship in tools/bin and are not on PATH by default
+_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export PATH="$_root/tools/bin:$PATH"
+
 master="${1:?usage: deliver.sh <master.mp4> <srt> <out.mp4> [max_mib]}"
 srt="${2:?srt}"
 out="${3:?out}"
@@ -24,21 +28,22 @@ read -r vk ak < <(awk -v d="$dur" -v m="$max_mib" 'BEGIN{
   target = m * 1024 * 1024 * 8 / d / 1000;      # total kbps available
   ak = (target > 1400) ? 128 : 112;
   vk = int((target - ak) * 0.94);               # 6% headroom for container + keyframes
-  printf "%d %d", vk, ak;
+  printf "%d %d\n", vk, ak;
 }')
 echo "  duration ${dur}s -> video ${vk}k, audio ${ak}k, ceiling ${max_mib} MiB"
 
+# Both passes must use identical encoder settings or x264 refuses the second pass. Everything that
+# affects the encode goes in one place, and pass 2 only adds the output mapping.
 passlog=$(mktemp -u /tmp/x264-XXXXXX)
-ffmpeg -v error -y -i "$master" \
-  -c:v libx264 -preset slow -b:v "${vk}k" -pass 1 -passlogfile "$passlog" \
-  -vf "scale=1920:1080:flags=lanczos,format=yuv420p" -an -f null -
+vopts=(-c:v libx264 -preset slow -b:v "${vk}k" -maxrate "$((vk * 14 / 10))k" -bufsize "$((vk * 2))k"
+       -profile:v high -level 4.1 -g 60 -keyint_min 30 -sc_threshold 0
+       -vf "scale=1920:1080:flags=lanczos,format=yuv420p")
+
+ffmpeg -v error -y -i "$master" "${vopts[@]}" -pass 1 -passlogfile "$passlog" -an -f null -
 
 ffmpeg -v error -y -i "$master" -i "$srt" \
   -map 0:v:0 -map 0:a:0 -map 1:0 \
-  -c:v libx264 -preset slow -b:v "${vk}k" -maxrate "$((vk * 14 / 10))k" -bufsize "$((vk * 2))k" \
-  -pass 2 -passlogfile "$passlog" \
-  -vf "scale=1920:1080:flags=lanczos,format=yuv420p" \
-  -profile:v high -level 4.1 -g 60 -keyint_min 30 -sc_threshold 0 \
+  "${vopts[@]}" -pass 2 -passlogfile "$passlog" \
   -c:a aac -b:a "${ak}k" -ac 2 -ar 48000 \
   -c:s mov_text -metadata:s:s:0 language=eng \
   -movflags +faststart -max_muxing_queue_size 4096 \

@@ -89,6 +89,13 @@ The two surfaces alternate. The gallery shows what the story *looks* like; the s
 the narrator is drawing out of it. The sketchbook runs 6–14 seconds at a time and then the picture
 has the frame back.
 
+## The delivered file
+
+`https://drive.google.com/file/d/1pM5DpTUCZ4vU_fHaDNnlrVy8VuINxfan/view?usp=drivesdk`
+
+1920×1080 · 30 fps · H.264 898 kbps · AAC 112 kbps stereo · 12:34 (754.5 s) · 92 MiB ·
+−15.0 LUFS / −2.0 dBTP · captions muxed as a subtitle track (277 cues).
+
 ## Chapters
 
 | Time | Chapter |
