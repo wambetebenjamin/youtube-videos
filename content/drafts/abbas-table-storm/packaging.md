@@ -1,6 +1,6 @@
 # Peace, Be Still — packaging
 
-**Channel:** Abba's Table (@abbastablestories)
+**Channel:** Abba's Table (@abbastable)
 **Series:** Bible stories — episode 2
 **Text:** Mark 4:35–41 (parallel: Matthew 8:23–27)
 **Slot:** Sunday evening / any quiet slot
@@ -73,19 +73,21 @@ Sit, listen, and encounter God — one story, one prayer at a time.
 
 ## The pictures
 
-Ten illustrations, one per story beat, drawn in on cream paper while the narration speaks them:
-the crowd on the shore, the storm, asleep on the cushion, the reaching hands, "peace, be still",
-the great calm, the question asked gently, the men looking at each other, the prayer, and the
-lamp lit beside a bed for the last verse.
+**Twenty-four full-bleed illustrations**, stacked one point apart in world space and cross-faded
+where one story beat ends and the next begins. There is no border, no paper page, no mat and no drop
+shadow: a picture fills the frame edge to edge or it is not in the film. The camera never travels
+between pictures — a picture gives way at the exact instant the next starts dissolving in, so the
+frame is a photograph at every single frame of the film.
 
-They are **made on screen**, not cut to: a wash of ink runs down the page and a pen sits on the
-moving edge, so the picture is visibly being drawn under the voice. That is deliberate — it keeps
-the film a thing being made rather than a slideshow, and it suits a channel meant to feel like
-someone sitting with you.
+**Ten of those beats also get the sketchbook**: a page laid over the picture with a hand writing the
+line the narrator is speaking, word by word, at the speed she says it. If she slows down the pen
+slows down; if she pauses the pen stops. The page is dark warm stock lit by a lamp pool, and the
+writing is what catches the light — a sheet of bright paper laid into a film graded this dark reads
+as a slide, however well it is drawn.
 
-Every illustration is fully drawn before the camera moves. See the README for how that is
-enforced in code rather than eyeballed.
-
+The two surfaces alternate. The gallery shows what the story *looks* like; the sketchbook shows what
+the narrator is drawing out of it. The sketchbook runs 6–14 seconds at a time and then the picture
+has the frame back.
 
 ## Chapters
 
