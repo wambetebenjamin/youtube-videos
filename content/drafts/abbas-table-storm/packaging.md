@@ -93,7 +93,7 @@ has the frame back.
 
 `https://drive.google.com/file/d/1pM5DpTUCZ4vU_fHaDNnlrVy8VuINxfan/view?usp=drivesdk`
 
-1920×1080 · 30 fps · H.264 898 kbps · AAC 112 kbps stereo · 12:34 (754.5 s) · 92 MiB ·
+1920×1080 · 30 fps · H.264 898 kbps · AAC 112 kbps stereo · 14:27 (867.4 s) ·
 −15.0 LUFS / −2.0 dBTP · captions muxed as a subtitle track (277 cues).
 
 ## Chapters
@@ -101,15 +101,15 @@ has the frame back.
 | Time | Chapter |
 | --- | --- |
 | 0:00 | The long day |
-| 2:03 | The storm |
-| 4:16 | "Do you not care?" |
-| 5:50 | Peace, be still |
-| 7:27 | "Why are you so afraid?" |
-| 8:50 | "Who then is this?" |
-| 10:29 | Let us pray |
-| 12:00 | Sit, listen, and rest |
+| 2:23 | The storm |
+| 5:05 | "Do you not care?" |
+| 6:09 | Peace, be still |
+| 8:06 | "Why are you so afraid?" |
+| 9:56 | "Who then is this?" |
+| 11:56 | Let us pray |
+| 13:46 | Sit, listen, and rest |
 
-> Times are from the **real narration** (`audio/timing.json`, 754.5 s total (12:34)). If the read is
+> Times are from the **real narration** (`audio/timing.json`, 867.4 s total (14:27)). If the read is
 > re-recorded, regenerate the table the same way — never hand-edit it.
 
 ## Companion Short (9:16)
