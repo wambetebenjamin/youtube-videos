@@ -238,7 +238,20 @@ def main():
 
     # crowd bed at about -18 dB under the voice
     cw = crowd(total)
-    amb = cw * 0.25    # -18 dB under the voice, measured; stingers ride above this
+    # The brief's levels are relative to the voice, so they are set from the measured voice level
+    # rather than guessed once and left: 0.25 put the bed at -20.5 dB under speech. Gain is the
+    # square root of the power ratio, and the -18 figure is the target under speech, not overall.
+    # Reference the bed to the voice WHILE HE IS SPEAKING, not to the whole track. The voice is
+    # intermittent and the bed is continuous, so a whole-track reference under-delivers by ~2 dB
+    # exactly when it matters -- during a line.
+    _w = int(0.2 * SR)
+    _n = len(voice) // _w
+    _f = np.array([np.sqrt((voice[i * _w:(i + 1) * _w] ** 2).mean()) for i in range(_n)])
+    _act = _f > 10 ** (-30 / 20)
+    v_rms = float(np.sqrt(np.mean(_f[_act] ** 2)))
+    c_rms = float(np.sqrt((cw ** 2).mean()))
+    amb = cw * (v_rms / max(c_rms, 1e-9)) * 10 ** (-18 / 20)
+    bed_only = amb.copy()                      # the continuous bed, kept unmixed for measurement
     # stingers on the accents
     for acc in S.ACCENTS:
         sc = next(s for s in tl if s["id"] == acc["scene"])
@@ -250,7 +263,8 @@ def main():
         amb[i0:e] += st[: e - i0] * 0.50
 
     mus, build = bed(total)
-    music = mus * 0.108                       # -22 dB under the voice, as briefed
+    m_rms = float(np.sqrt((mus ** 2).mean()))
+    music = mus * (v_rms / max(m_rms, 1e-9)) * 10 ** (-22 / 20)
 
     mix = voice + amb + music
     peak = np.abs(mix).max()
@@ -261,7 +275,7 @@ def main():
     # stems, so each layer's level can be measured rather than trusted
     for name, x in (("voice", voice), ("amb", amb), ("music", music)):
         save(proj / "audio" / f"stem_{name}.wav", x)
-    save(proj / "audio" / "stem_bed.wav", cw * 0.25)
+    save(proj / "audio" / "stem_bed.wav", bed_only)   # crowd, before the stingers
     print("stems written")
 
 

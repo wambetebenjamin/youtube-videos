@@ -97,10 +97,16 @@ class Plate(Item):
         # The lower third is a navy panel that starts exactly at the poster's bottom edge, so it can
         # never leave a white gap as the camera pushes in and the poster grows. It picks up the
         # poster's own dark date bar, and the hairline picks up its yellow.
+        # The panel rises into place over the first quarter second of each scene. That rise is what
+        # makes a cut legible: the frames of this film differ only by type and a slow push, so
+        # without a moving element at the join two scenes can look like one held shot.
         bottom = top + draw_h
-        c.drawRect(skia.Rect.MakeLTRB(-vis_w / 2, bottom, vis_w / 2, vis_h / 2),
+        rise = 1 - ease_in_out(ramp(t, self.t_in, 0.24))
+        top_panel = bottom + rise * (vis_h / 2 - bottom)
+        c.drawRect(skia.Rect.MakeLTRB(-vis_w / 2, top_panel, vis_w / 2, vis_h / 2),
                    paint(NAVY, 1.0))
-        c.drawRect(skia.Rect.MakeLTRB(-vis_w / 2, bottom, vis_w / 2, bottom + vis_h * 0.006),
+        c.drawRect(skia.Rect.MakeLTRB(-vis_w / 2, top_panel, vis_w / 2,
+                                      top_panel + vis_h * 0.006),
                    paint(YELLOW, 1.0))
 
 
@@ -120,6 +126,11 @@ class Caption(Item):
 
     def bounds(self, res):
         return skia.Rect.MakeLTRB(-9000, -8000, 9000, 8000)
+
+    def fade(self, t):
+        # Out fast. The base Item fades over 0.6 s, which would leave the outgoing line sitting on
+        # top of the incoming scene's navy panel as a pale ghost. 0.20 s clears it before the cut.
+        return 1.0 if self.t_out is None else 1 - ramp(t, self.t_out, 0.20)
 
     def draw(self, c, res, t):
         # a short, hard arrival: four frames in, then hold. A long fade would read as a slide.
@@ -166,15 +177,68 @@ def make(timeline, total, fps=30):
     film = Film(total, fps=fps, look=look)
     # The engine requires at least one camera key even when the items frame themselves. One key,
     # held: the Plate items do the moving, and a camera key here would fight them.
+    # the end card needs to be READ, so the built-in 2.2 s fade-out would eat most of it
+    film.fade_out = 0.9
     film.cam(0.0, 0, 0, _CAM_ZOOM)
     film.cam(total, 0, 0, _CAM_ZOOM)
+    # The last plate is held through the tail. Without it the film ends on three seconds of blank
+    # paper, which reads as a dropped frame rather than as an ending.
+    last_end = timeline[-1]["end"]
     for sc in timeline:
-        film.add(Plate(sc, sc["start"], sc["end"], 1122, 1402))
+        end = total if sc is timeline[-1] else sc["end"]
+        film.add(Plate(sc, sc["start"], end, 1122, 1402))
     # captions land on the beat, held for the scene
     for sc in timeline:
         film.add(Caption(sc["caption"], sc["start"] + 0.28, sc["end"] - 0.12,
                          kicker=sc.get("kicker", "")))
+    # End card: the call to action, held over the still poster. A rally film that ends on the last
+    # spoken word gives nobody time to read the date and the fee.
+    film.add(EndCard(last_end + 0.55, total, YELLOW, NAVY))
     return film
+
+
+class EndCard(Item):
+    """The only thing on screen after the voice stops: where to be, and when."""
+
+    z = 60
+
+    def __init__(self, t_in, t_out, accent, ink):
+        super().__init__(t_in, t_out, z=None, sfx=False)
+        self.accent, self.ink = accent, ink
+        self.lines = [("YOUTH AFLAME", "label"), ("30 NOV - 5 DEC 2026", "label"),
+                      ("LITEIN SENIOR SCHOOL  |  NYABOKEKI CAMP", "label")]
+
+    def bounds(self, res):
+        return skia.Rect.MakeLTRB(-9000, -8000, 9000, 8000)
+
+    def draw(self, c, res, t):
+        vis_h = res.view.height() / 1.25
+        vis_w = res.view.width() / 1.25
+        a = ramp(t, self.t_in, 0.45)
+        if a <= 0:
+            return
+        # dim the poster so the type has somewhere to sit, then the three lines centred
+        c.drawRect(skia.Rect.MakeXYWH(-vis_w / 2, -vis_h / 2, vis_w, vis_h),
+                   paint(self.ink, 0.97 * a))   # solid: a dimmed poster reads as a printing fault
+        sizes = [0.052, 0.058, 0.019]
+        col = [self.accent, (255, 255, 255), (255, 255, 255)]
+        y = -vis_h * 0.13
+        target = vis_w * 0.86
+        for (text, _), sz, rgb in zip(self.lines, sizes, col):
+            size = vis_h * sz
+            track = 0.06 if sz > 0.05 else 0.14
+            # fit each line to the frame: the three lines differ wildly in length
+            for _ in range(40):
+                wtext = res.font("label", size).measureText(text) + track * size * (len(text) - 1)
+                if wtext <= target or size < vis_h * 0.010:
+                    break
+                size *= 0.93
+            draw_text(c, res, text, -wtext / 2, y, size, "label", rgb, a, track, "left")
+            y += size * (1.9 if sz > 0.05 else 1.8)
+        # a yellow rule under the headline, the poster's own gesture
+        ybar = -vis_h * 0.13 + vis_h * 0.052 * 0.62
+        c.drawRect(skia.Rect.MakeXYWH(-vis_w * 0.17, ybar, vis_w * 0.34, vis_h * 0.004),
+                   paint(self.accent, 0.9 * a))
 
 
 class PosterDoc:
