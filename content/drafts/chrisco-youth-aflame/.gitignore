@@ -1,0 +1,5 @@
+# Generated audio (takes are reproducible from script.py via generate_speech; the mix from audio_build.py)
+audio/
+# Renders, probes and chunks
+out/
+__pycache__/
