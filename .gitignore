@@ -48,3 +48,6 @@ content/drafts/*/__pycache__/
 .env
 .env.*
 !.env.example
+
+# Downloaded media (re-fetch from Drive; never commit renders or source video)
+google_drive/
