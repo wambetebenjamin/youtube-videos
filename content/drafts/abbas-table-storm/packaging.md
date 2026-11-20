@@ -91,6 +91,15 @@ has the frame back.
 
 ## The delivered file
 
+**v5 — the silence fix.** `https://drive.google.com/file/d/1ND09ufkQYUWBmTiuRVvUK4xq4CuiSb9K/view`
+
+1920×1080 · 30 fps · AAC 192 kbps stereo · 14:27 (867.4 s) · 100 MiB · −14.2 LUFS / −0.5 dBTP ·
+captions muxed (277 cues). Same picture stream as v4 (copied, not re-rendered) and the same
+narration; eight silences restored and the storm now stops at *"Peace. Be still."* — see
+`FEEDBACK.md` for the before/after measurements and for what is still honestly wrong.
+
+### v4 (superseded — no silence, flat soundtrack)
+
 `https://drive.google.com/file/d/1B2_FU6pBrqhAEQfULaQ4DCmU0QtKXtjw/view?usp=drivesdk`
 
 1920×1080 · 30 fps · H.264 767 kbps · AAC 112 kbps stereo · 14:27 (867.4 s) · 92 MiB ·
