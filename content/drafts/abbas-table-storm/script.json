@@ -239,7 +239,14 @@
      "spoken": "And in the middle of all of it, in the back of the boat, on the little leather cushion where the steersman usually sits, Jesus was asleep.",
      "hero": "09_asleep_on_cushion",
      "typed": "",
-     "gap_after": 3.4
+     "gap_after": 4.6,
+     "silence": {
+      "kind": "wind",
+      "gain": 0.1005
+     },
+     "_start": 301.02,
+     "_end": 302.82,
+     "gap_hold": 4.6
     }
    ]
   },
@@ -316,7 +323,14 @@
      "spoken": "Teacher, don't you care that we are dying.",
      "hero": "10_they_wake_him",
      "typed": "",
-     "gap_after": 1.85
+     "gap_after": 2.4,
+     "silence": {
+      "kind": "wind",
+      "gain": 0.1631
+     },
+     "_start": 341.54,
+     "_end": 342.67,
+     "gap_hold": 2.4
     },
     {
      "id": 39,
@@ -393,7 +407,14 @@
      "spoken": "And He rebuked the wind, and said to the sea, Peace. Be still.",
      "hero": "12_peace_be_still",
      "typed": "",
-     "gap_after": 2.9
+     "gap_after": 4.8,
+     "silence": {
+      "kind": "hush",
+      "gain": 0.082
+     },
+     "_start": 391.17,
+     "_end": 393.06,
+     "gap_hold": 4.8
     },
     {
      "id": 48,
@@ -425,7 +446,14 @@
      "spoken": "The wind dropped, and there was a great calm.",
      "hero": "13_the_calm",
      "typed": "",
-     "gap_after": 2.9
+     "gap_after": 4.0,
+     "silence": {
+      "kind": "lake",
+      "gain": 0.3445
+     },
+     "_start": 413.94,
+     "_end": 416.95,
+     "gap_hold": 4.0
     },
     {
      "id": 52,
@@ -481,7 +509,14 @@
      "spoken": "The storm had been the loudest thing any of them had ever heard, and it had stopped in the middle of a sentence.",
      "hero": "13_the_calm",
      "typed": "",
-     "gap_after": 3.4
+     "gap_after": 3.2,
+     "silence": {
+      "kind": "lake",
+      "gain": 0.386
+     },
+     "_start": 479.55,
+     "_end": 482.64,
+     "gap_hold": 3.2
     }
    ]
   },
@@ -526,7 +561,14 @@
      "spoken": "He asks about the fear, and He asks it after the water is flat.",
      "hero": "14_why_are_you_afraid",
      "typed": "",
-     "gap_after": 1.85
+     "gap_after": 3.0,
+     "silence": {
+      "kind": "lake",
+      "gain": 0.5129
+     },
+     "_start": 519.99,
+     "_end": 523.58,
+     "gap_hold": 3.0
     },
     {
      "id": 64,
@@ -683,7 +725,14 @@
      "spoken": "Who then is this.",
      "hero": "18_open_question",
      "typed": "",
-     "gap_after": 2.9
+     "gap_after": 3.4,
+     "silence": {
+      "kind": "lake",
+      "gain": 0.4097
+     },
+     "_start": 600.33,
+     "_end": 601.61,
+     "gap_hold": 3.4
     },
     {
      "id": 83,
@@ -864,7 +913,14 @@
      "spoken": "In Jesus' name, amen.",
      "hero": "22_peace_lake",
      "typed": "",
-     "gap_after": 3.4
+     "gap_after": 6.0,
+     "silence": {
+      "kind": "lake",
+      "gain": 0.3916
+     },
+     "_start": 820.44,
+     "_end": 823.01,
+     "gap_hold": 6.0
     }
    ]
   },

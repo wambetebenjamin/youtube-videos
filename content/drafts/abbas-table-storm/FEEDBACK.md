@@ -48,3 +48,43 @@ moves.
 
 Confirm the direction before any of this is built — re-cutting the narration is the expensive part,
 and there is no point paying for it if the missing thing is something else entirely.
+
+---
+
+## What has been built
+
+`out/videos/abbas-table-storm-v5-silence.mp4` — the delivered picture, untouched, with the sound
+rebuilt around eight silences. Nothing was re-recorded and not one word of the script changed.
+
+| Hinge | Silence after the line | Delivered | Now |
+| --- | --- | --- | --- |
+| *"…Jesus was asleep"* | 2.6 s → **4.6 s** | −17.2 dB | −21.0 dB |
+| *"Teacher, don't you care…"* | 1.6 s → **2.4 s** | −19.7 dB | −29.3 dB |
+| *"Peace. Be still."* | 2.9 s → **4.8 s** | −16.9 dB | −29.4 dB |
+| *"…there was a great calm"* | 2.6 s → **4.0 s** | −16.8 dB | −27.7 dB |
+| *"…stopped in the middle of a sentence"* | 1.6 s → **3.2 s** | −17.6 dB | −29.1 dB |
+| *"…after the water is flat"* | 1.6 s → **3.0 s** | −17.0 dB | −28.5 dB |
+| *"Who then is this."* | 2.6 s → **3.4 s** | −17.0 dB | −29.1 dB |
+| *"In Jesus' name, amen."* | 1.6 s → **6.0 s** | −18.2 dB | −31.0 dB |
+
+And the one that matters most, at *"Peace. Be still."* — the storm, then nothing:
+
+| 386–392 s (the storm) | 394–404 s (the calm) | drop |
+| --- | --- | --- |
+| −16.3 dB | −21.9 dB | **−5.6 dB** |
+
+In the delivered cut the same two windows differ by **1.1 dB**, i.e. not at all. That is the
+"something missing" in one number.
+
+### What is honestly still wrong
+
+The viewer will still hear an unwanted pad under the prayer, and the storm will still not be as loud
+as it should be. That is not laziness: **the delivered score and the voice are in the same stereo
+track**, so anything done to the score is done to the narrator. The silences were fixable *because*
+they contain no words.
+
+The last step needs a clean narration take — `script.json` is already set up for it, with the eight
+`gap_after` values and a `gap_hold` on each hinge so the picture holds across the silence. Then:
+fresh narration → `score.py` reaches the bed → `ambience.py` keeps the weather → mix at the levels
+above. Runtime lands near the same 14–15 minutes, because the silences add back the nine seconds and
+the read is untouched.
