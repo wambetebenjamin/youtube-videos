@@ -64,3 +64,13 @@ crowd stingers in the mix.
 
 Takes are in `audio/takes/` (voice-04, Swahili). The timeline reads their measured durations, so the
 picture and the mix cannot drift apart.
+
+## Delivered file
+
+**https://drive.google.com/file/d/19PBaME-aVx3ASoxcYiM6p4kI-A3MCZ7W/view**
+
+`chrisco-youth-aflame-rally-1080x1920.mp4` — 1:35.4, 1080×1920 (9:16), 30 fps, H.264 + AAC 192k,
+73.8 MB, −15.7 LUFS / −1.3 dBTP. Vertical because this is a phone-first rally share (WhatsApp
+status / Facebook / TikTok); the poster itself has not been screenshot-cropped, it is fitted whole.
+
+Supersedes nothing — this is the first cut of this poster.
