@@ -278,15 +278,6 @@ const ChapterCard: React.FC<{ label: string; title: string; accent: string }> = 
         >
           {label}
         </span>
-        <div
-          style={{
-            width: 72,
-            height: 2,
-            background: `linear-gradient(90deg, transparent, ${accent}, transparent)`,
-            margin: "16px auto 18px",
-            opacity: 0.9,
-          }}
-        />
         <h1
           style={{
             fontSize: 46,
@@ -307,7 +298,6 @@ const ChapterCard: React.FC<{ label: string; title: string; accent: string }> = 
 const KeyPointBar: React.FC<{ text: string; accent: string }> = ({ text, accent }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
-  const progress = spring({ frame, fps: 30, config: { damping: 16, stiffness: 120 } });
   const exit = interpolate(frame, [durationInFrames - 12, durationInFrames], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -327,14 +317,12 @@ const KeyPointBar: React.FC<{ text: string; accent: string }> = ({ text, accent 
       <div
         style={{
           background: "linear-gradient(90deg, #0f0f12 0%, #1c1c20 50%, #0f0f12 100%)",
-          borderTop: `2px solid ${accent}`,
           padding: "12px 28px",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        <div style={{ position: "absolute", top: 0, left: 0, height: 2, width: `${progress * 100}%`, background: accent }} />
         <p
           style={{
             color: "white",
@@ -350,6 +338,9 @@ const KeyPointBar: React.FC<{ text: string; accent: string }> = ({ text, accent 
     </div>
   );
 };
+
+// Removed gold line decoration per request
+
 
 // ── B-roll overlay with Ken Burns + vignette (real camp images) ──
 const BRollOverlay: React.FC<{ src: string; durationInFrames: number }> = ({ src, durationInFrames }) => {
@@ -454,15 +445,6 @@ const IntroHook: React.FC<{ accent: string }> = ({ accent }) => {
       >
         Eight silences in Mark 4 — Even if nothing has changed yet
       </p>
-      <div
-        style={{
-          marginTop: 22,
-          width: interpolate(enter, [0, 1], [0, 120]),
-          height: 2,
-          background: `linear-gradient(90deg, transparent, ${accent}, transparent)`,
-          opacity: enter as number,
-        }}
-      />
       <div style={{ marginTop: 16, fontSize: 12, letterSpacing: "0.16em", color: "rgba(255,255,255,0.55)", textTransform: "uppercase", fontWeight: 600, opacity: enter as number }}>
         MARK 4:35-41 • When the water was over their ankles
       </div>
@@ -490,7 +472,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 1500,
     label: "SILENCE ONE",
     title: "A Long Day by the Water",
-    subtitle: "All afternoon He taught from a boat • A crowd that would not leave",
+    subtitle: "All afternoon He taught from a boat A crowd that would not leave",
     ref: "Mark 4:1-2",
     verse: "Again he began to teach beside the sea. And a very large crowd gathered about him, so that he got into a boat.",
   },
@@ -500,7 +482,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 1180,
     label: "SILENCE TWO",
     title: "Let Us Go Over to the Other Side",
-    subtitle: "Not shelter. Not morning. Forward — at evening",
+    subtitle: "Not shelter Not morning Forward at evening",
     ref: "Mark 4:35",
     verse: "On that day, when evening had come, he said to them, Let us go across to the other side.",
     keyPoint: "FAITH MOVES FORWARD — EVEN AT EVENING",
@@ -511,7 +493,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 1820,
     label: "SILENCE THREE",
     title: "The Lake Is Not a Gentle Place",
-    subtitle: "A bowl of hills • A sudden, violent wind",
+    subtitle: "A bowl of hills A sudden violent wind",
     ref: "Mark 4:36-37a",
     verse: "A great windstorm arose, and the waves were breaking into the boat.",
   },
@@ -543,7 +525,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 2700,
     label: "SILENCE SIX",
     title: "Teacher, Don't You Care That We Are Dying?",
-    subtitle: "Never only a question — an accusation, still wet",
+    subtitle: "Never only a question an accusation still wet",
     ref: "Mark 4:38b",
     verse: "Teacher, do you not care that we are perishing?",
   },
@@ -552,8 +534,8 @@ const CHAPTERS: ChapterDef[] = [
     from: 14700,
     duration: 3300,
     label: "SILENCE SEVEN",
-    title: "Peace. Be Still. — Silence! Muzzled.",
-    subtitle: "A man's words to a storm — and it obeyed",
+    title: "Peace Be Still",
+    subtitle: "A mans words to a storm and it obeyed",
     ref: "Mark 4:39",
     verse: "And he awoke and rebuked the wind and said to the sea, Peace! Be still! And the wind ceased.",
     keyPoint: "HE DOES NOT SHOUT FROM WHERE HE LAY — HE STANDS UP",
@@ -564,7 +546,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 2700,
     label: "SILENCE EIGHT",
     title: "And There Was a Great Calm",
-    subtitle: "Not quiet. A great calm — the silence after nausea is holy",
+    subtitle: "Not quiet A great calm the silence after nausea is holy",
     ref: "Mark 4:39b",
     verse: "The wind ceased, and there was a great calm.",
     keyPoint: "THE SILENCE AFTER THAT KIND OF NOISE IS HOLY",
@@ -575,7 +557,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 1820,
     label: "AFTER",
     title: "Why Are You So Afraid?",
-    subtitle: "Safe first — then the question about faith",
+    subtitle: "Safe first then the question about faith",
     ref: "Mark 4:40",
     verse: "Why are you so afraid? Have you still no faith?",
     keyPoint: "THE FEAR WAS NEVER REALLY ABOUT THE WATER",
@@ -586,7 +568,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 1500,
     label: "AFTER",
     title: "Who Then Is This?",
-    subtitle: "First fear: drowning • Second fear: who is in the boat",
+    subtitle: "First fear drowning Second fear who is in the boat",
     ref: "Mark 4:41",
     verse: "Who then is this, that even the wind and the sea obey him?",
   },
@@ -596,7 +578,7 @@ const CHAPTERS: ChapterDef[] = [
     duration: 2002,
     label: "PRAYER",
     title: "He Is Still in the Boat",
-    subtitle: "Not on shore watching — in the stern with us",
+    subtitle: "Not on shore watching in the stern with us",
     ref: "Psalm 4:8",
     verse: "In peace I will both lie down and sleep; for you alone, O Lord, make me dwell in safety.",
   },
