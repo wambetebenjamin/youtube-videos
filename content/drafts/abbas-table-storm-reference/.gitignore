@@ -1,0 +1,7 @@
+# this project's generated media is not tracked: the plates alone are 22 MB, the audio 240 MB and a
+# render 2 GB+. What is tracked is the code that rebuilds all of it.
+assets/prep/
+audio/*.wav
+out/
+__pycache__/
+*.pyc

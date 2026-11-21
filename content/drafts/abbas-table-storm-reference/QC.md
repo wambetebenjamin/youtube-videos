@@ -1,0 +1,21 @@
+# QC
+
+- PASS  resolution: 1920x1080
+- PASS  frame rate: 30 fps
+- PASS  soundtrack: audio stream present
+- PASS  duration: 867.3s (film 867.3s)
+- PASS  a visual change at least every 30 s: 73 changes, longest hold 28.8s
+- PASS  pacing is not frantic: shortest picture-to-picture cut 0.6s
+- PASS  fade up from black is 1 s: fade_in 1.0 s
+- PASS  fade down to black is 2 s: fade_out 2.0 s
+- PASS  chapter lower thirds hold 5-8 s: holds [6.5, 6.5, 6.5, 6.5, 6.5, 6.5, 6.0]
+- PASS  one chapter card per story movement: 6 cards
+- PASS  chapter cards hold 3 s: holds [2.6, 2.6, 2.6, 2.6, 2.6, 2.6]
+- PASS  full-screen scripture holds 8-12 s: holds [8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2]
+- PASS  no verse fades up under a full-screen card: clashes []
+- PASS  every scripture reference used once: 9 verse overlays
+- PASS  scripture lower thirds hold 6-10 s: holds [6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3, 6.3]
+- PASS  last 5 s clear for an end screen: 5.0s clean at the tail
+- PASS  integrated loudness near -14 LUFS: -15.5 LUFS
+- PASS  bed sits under the voice: bed -37.0 dBFS vs voice -17.0 dBFS
+- FAIL  no clipping: -0.3 dBTP
