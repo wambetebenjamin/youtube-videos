@@ -1,0 +1,44 @@
+# Abbas Stories — FreeVideo MiniMax H3 Prompt Pack
+# Place these in FreeVideo ComfyUI or CLI: ./freevideo generate --prompt-file prompt.txt --out video.mp4
+# Quality: Light (preview) → High/Max (final). Preview first, keep only keepers.
+# Each hero moment is 5-8s at 1344x768 (16:9) → upscale or use as B-roll cutaway over voiceover.
+
+## 01 INTRO — Light breaking through clouds, sunrise over mountains
+Prompt: cinematic sunrise over mountain range, golden light piercing clouds, slow aerial drift, warm amber grade, volumetric rays, 35mm film, shallow depth of field --neg blurry, distorted, low-res
+First frame hint: #0a0a14 dark sky, last frame: fully lit peak
+Audio ref: optional soft ambient pad
+
+## 02 LAW 1 DESERT — Open road through desert, symbolizing unused time
+Prompt: empty desert highway stretching to horizon at golden hour, heat shimmer, lone figure silhouette contemplating, wide anamorphic lens, slow dolly forward, cinematic dust --neg people close-up, cars, text
+Quality: High
+
+## 03 PARABLE STONE — Ancient scrolls, stone tablets, olive grove
+Prompt: ancient Hebrew scroll on stone table, olive grove background out of focus, warm candle light, shallow DOF, subtle camera pan, film grain --neg modern objects, hands, text
+LoRA: optional Community LoRA for ancient texture
+
+## 04 WARNING CONTEMPLATION — Silhouette, hands, buried talent (symbolic jar)
+Prompt: close-up of hands holding empty clay jar in dark room, single ray of light from door, contemplative silhouette, slow push-in, moody shadows --neg face, bright
+First+Last frame: door slightly open → more open
+
+## 05 TAKEAWAY WILDERNESS — Wilderness/mountain journey, paths diverging
+Prompt: misty mountain trail at dawn, fork in path, hiker silhouette from behind looking forward, cinematic drone orbit, 24mm lens --neg close face, village
+
+## 06 LAW 2 SEED — Seed sprouting, water flowing time-lapse symbolic
+Prompt: macro of seed sprouting through soil in time-lapse, morning dew, light rays, shallow depth, slow growth motion, 100mm macro lens --neg hands, text, pot
+
+## 07 SEVEN KEYS HARVEST — Wheat field harvest, abundance
+Prompt: golden wheat field swaying in wind at sunset, farmer silhouette in distance, aerial slow pan, warm harvest tones, filmic --neg combine close, modern machinery
+
+## 08 CLOSING LIGHT — Door opening, new season light flooding in
+Prompt: dark interior, wooden door slowly opening to bright meadow outside, light flooding in, dust motes, symbolic new season, slow push-in --neg person exiting, text
+
+# Batch generation example (terminal/server):
+# git clone https://github.com/FlashML-org/FreeVideo.git && cd FreeVideo && ./setup.sh
+# ./freevideo plan --vram-gib 8 --ram-gib 16 --width 1344 --height 768 --seconds 5   # check plan fits
+# for p in public/raw-footage/prompts/*.txt; do ./freevideo generate --prompt-file "$p" --out "out/$(basename $p .txt).mp4"; done
+
+# Once generated, copy hero clips to public/raw-footage/ and update AbbasStories.tsx:
+# Replace BRollVisual procedural gradients with:
+#   import { OffthreadVideo, staticFile } from "remotion";
+#   <OffthreadVideo src={staticFile("raw-footage/hero-desert.mp4")} style={{objectFit:"cover"}} />
+# Keep same color grade (WarmGrade wrapper) for cohesion.

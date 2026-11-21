@@ -15,9 +15,11 @@
     "@remotion/tailwind-v4": "4.0.543",
     "@remotion/transitions": "4.0.543",
     "@remotion/zod-types": "4.0.543",
+    "chromium": "^3.0.3",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "remotion": "4.0.543",
+    "sharp": "^0.35.5",
     "tailwindcss": "4.0.0",
     "zod": "4.6.7"
   },
@@ -27,15 +29,19 @@
     "@types/web": "0.0.166",
     "eslint": "10.12.0",
     "prettier": "3.8.1",
+    "puppeteer-core": "^25.18.1",
     "typescript": "5.9.3"
   },
   "scripts": {
     "dev": "remotion studio",
     "studio": "remotion studio --ipv4 --port 3000 --no-open",
     "build": "remotion bundle",
-    "render:preview": "remotion still YouTubeVideo out/preview.png --frame=45",
+    "render:preview": "remotion still AbbasStories out/abbas-still-intro.png --frame=45",
     "render:youtube": "remotion render YouTubeVideo out/youtube-video.mp4 --codec=h264 --pixel-format=yuv420p",
     "render:reel": "remotion render VerticalReel out/vertical-reel.mp4 --codec=h264 --pixel-format=yuv420p",
+    "render:abbas": "remotion render AbbasStories out/abbas-stories.mp4 --codec=h264 --pixel-format=yuv420p",
+    "render:abbas:stills": "node scripts/generate-abbas-stills.mjs",
+    "render:abbas:preview": "node scripts/generate-abbas-stills.mjs && node scripts/mux-abbas-video.mjs",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "setup": "bash setup-video-studio.sh"

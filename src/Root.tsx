@@ -11,6 +11,11 @@ import {
   defaultYouTubeVideoProps,
   youTubeVideoSchema,
 } from "./compositions/YouTubeVideo";
+import {
+  AbbasStories,
+  abbasStoriesSchema,
+  defaultAbbasStoriesProps,
+} from "./compositions/AbbasStories";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -34,6 +39,16 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         schema={verticalReelSchema}
         defaultProps={defaultVerticalReelProps}
+      />
+      <Composition
+        id="AbbasStories"
+        component={AbbasStories}
+        durationInFrames={3600}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={abbasStoriesSchema}
+        defaultProps={defaultAbbasStoriesProps}
       />
     </>
   );
