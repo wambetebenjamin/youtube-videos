@@ -16,6 +16,11 @@ import {
   abbasStoriesSchema,
   defaultAbbasStoriesProps,
 } from "./compositions/AbbasStories";
+import {
+  PeaceBeStillV6,
+  defaultPeaceBeStillProps,
+  peaceBeStillSchema,
+} from "./compositions/PeaceBeStillV6";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -49,6 +54,16 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         schema={abbasStoriesSchema}
         defaultProps={defaultAbbasStoriesProps}
+      />
+      <Composition
+        id="PeaceBeStillV6"
+        component={PeaceBeStillV6}
+        durationInFrames={26022}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={peaceBeStillSchema}
+        defaultProps={defaultPeaceBeStillProps}
       />
     </>
   );

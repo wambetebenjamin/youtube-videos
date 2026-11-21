@@ -42,6 +42,8 @@
     "render:abbas": "remotion render AbbasStories out/abbas-stories.mp4 --codec=h264 --pixel-format=yuv420p",
     "render:abbas:stills": "node scripts/generate-abbas-stills.mjs",
     "render:abbas:preview": "node scripts/generate-abbas-stills.mjs && node scripts/mux-abbas-video.mjs",
+    "render:peace": "remotion render PeaceBeStillV6 out/peace-be-still-v6.mp4 --codec h264 --pixel-format yuv420p",
+    "render:peace:preview": "remotion still PeaceBeStillV6 out/peace-preview.png --frame=4500",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "setup": "bash setup-video-studio.sh"
