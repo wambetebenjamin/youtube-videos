@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-// Build Social Reels — authentic TikTok caption styles (NO AI captions)
-// Styles from your uploads: pill-top, centered-bold, minimal-lower, samurai-quote
-// All use simple white text + black shadow, no AI word-highlight/dots/accent tracking
+// Build Social Reels — authentic TikTok caption styles (NO AI captions) + Blueprints A/B/C
+// Styles: pill-top, centered-bold, minimal-lower, samurai-quote — white+shadow only
+// Blueprints: B1 Aesthetic POV (1-2 long holds), B2 Lyric Montage (cuts on beats+divider), B3 Dark Stoic (grain+dark)
+// See docs/reels/AGENT_PROMPT.md + BLUEPRINTS.md + scripts/reels/ for Pexels/librosa tooling
+// Stock priority: public/reels/raw/* (Pexels portrait) > public/reels/slides/* > dark card
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
@@ -116,7 +118,8 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
 }
 
 for(const reel of cfg.reels){
-  console.log(`\n=== Building ${reel.id} (${reel.variant}) — style: ${reel.captionStyle || "centered-bold"} ===`);
+  const blueprint = reel.blueprint || (reel.captionStyle==="minimal-lower" ? "B2" : reel.variant==="wisdom" ? "B3" : "B1");
+  console.log(`\n=== Building ${reel.id} (${reel.variant} | ${blueprint} | ${reel.captionStyle || "centered-bold"}) ===`);
   const musicDur = (()=>{ try{
     if(reel.musicSrc && fs.existsSync(reel.musicSrc)){
       const out=execSync(`${FP} -v error -show_entries format=duration -of default=nw=1:nk=1 "${reel.musicSrc}"`).toString().trim();
@@ -135,11 +138,14 @@ for(const reel of cfg.reels){
     console.log(`ℹ ${reel.id}: no music — rendering silent ${durSec}s`);
   }
 
+  if(reel.pexelsQueries?.length) console.log(`  ↳ pexelsQueries: ${reel.pexelsQueries.join(" | ")} — run: PEXELS_API_KEY=xxx node scripts/reels/fetch-pexels.mjs "query" --out public/reels/raw/`);
+  if(reel.lut) console.log(`  ↳ LUT: ${reel.lut} (unified grade: teal-orange/purple/desaturated-dark)`);
   const tmpDir = `out/reels/tmp-${reel.id}`;
   fs.mkdirSync(tmpDir,{recursive:true});
   const perLine = Math.floor(frames / reel.bodyLines.length);
   // Include headline as first card + bodyLines (like TikToks: hook then quotes)
   const allTexts = [reel.headline, ...reel.bodyLines];
+  // Beat-synced cuts: for B2 lyric montage, ideally align perText to beats from scripts/reels/analyze-beats.mjs (librosa fallback-phrase)
   const perText = Math.floor(frames / allTexts.length);
   for(let i=0;i<allTexts.length;i++){
     const cardPath = `${tmpDir}/card-${String(i).padStart(2,"0")}.png`;
@@ -169,4 +175,4 @@ for(const reel of cfg.reels){
   console.log(`✓ ${reel.id} → ${outPath} (${durSec.toFixed(1)}s, ${frames} frames, style: ${reel.captionStyle})`);
 }
 
-console.log("\n✓ All reels built with authentic TikTok caption styles — no AI captions");
+console.log("\n✓ All reels built — authentic captions + blueprints (B1/B2/B3); stock via Pexels when PEXELS_API_KEY set");

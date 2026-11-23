@@ -1,54 +1,99 @@
 {
-  "note": "Authentic TikTok caption styles — no AI captions. Each entry uses style from your uploads.",
-  "output": { "reelsDir": "out/reels", "youtubeDir": "out/youtube", "fps": 30, "minFrames": 1800 },
+  "note": "Authentic TikTok caption styles \u2014 no AI captions. Each entry uses style from your uploads.",
+  "output": {
+    "reelsDir": "out/reels",
+    "youtubeDir": "out/youtube",
+    "fps": 30,
+    "minFrames": 1800
+  },
   "reels": [
     {
       "id": "wisdom-01-storm",
       "variant": "wisdom",
       "hookBadge": "WISDOM",
       "headline": "The Storm Didn't Come to Drown You",
-      "bodyLines": ["The storm came to show you who calms it.", "Peace is not the absence of waves.", "It's the presence of His voice over them."],
+      "bodyLines": [
+        "The storm came to show you who calms it.",
+        "Peace is not the absence of waves.",
+        "It's the presence of His voice over them."
+      ],
       "ctaText": "Follow for wisdom",
       "accentColor": "#ffffff",
       "captionStyle": "centered-bold",
       "musicSrc": "public/reels/music/1000853416.mp3",
-      "durationFrames": 1800
+      "durationFrames": 1800,
+      "blueprint": "B3",
+      "lut": "desaturated-dark",
+      "pexelsQueries": [
+        "vertical night city skyline river reflection 4k",
+        "dark textured black grain vertical"
+      ]
     },
     {
       "id": "wisdom-02-still",
       "variant": "wisdom",
       "hookBadge": "WISDOM",
-      "headline": "Be Still — He Is Already Working",
-      "bodyLines": ["Stillness is not weakness — it's trust.", "The same wind that shakes you obeys Him."],
+      "headline": "Be Still \u2014 He Is Already Working",
+      "bodyLines": [
+        "Stillness is not weakness \u2014 it's trust.",
+        "The same wind that shakes you obeys Him."
+      ],
       "ctaText": "Save this wisdom",
       "accentColor": "#ffffff",
       "captionStyle": "samurai-quote",
       "musicSrc": "public/reels/music/e29c971c7fd7d79c83f7bdb2603e6883.mp3",
-      "durationFrames": 1800
+      "durationFrames": 1800,
+      "blueprint": "B3",
+      "lut": "desaturated-dark",
+      "pexelsQueries": [
+        "samurai silhouette slow motion vertical",
+        "night street rain vertical"
+      ]
     },
     {
       "id": "motivation-01-becoming",
       "variant": "motivation",
       "hookBadge": "",
-      "headline": "You Are Not Late — You Are Becoming",
-      "bodyLines": ["Comparison steals speed.", "Your chapter 3 is not their chapter 10.", "Stay the course — consistency beats intensity."],
+      "headline": "You Are Not Late \u2014 You Are Becoming",
+      "bodyLines": [
+        "Comparison steals speed.",
+        "Your chapter 3 is not their chapter 10.",
+        "Stay the course \u2014 consistency beats intensity."
+      ],
       "ctaText": "Share this",
       "accentColor": "#ffffff",
       "captionStyle": "minimal-lower",
       "musicSrc": "public/reels/music/1000853360.mp3",
-      "durationFrames": 1800
+      "durationFrames": 1800,
+      "blueprint": "B2",
+      "lut": "teal-orange-dusk",
+      "pexelsQueries": [
+        "twilight beach dirt bikes vertical",
+        "roller skating sunset vertical",
+        "blue Ferris wheel night vertical",
+        "misty road walking back view vertical"
+      ]
     },
     {
       "id": "motivation-02-rise",
       "variant": "motivation",
       "hookBadge": "MOTIVATION",
-      "headline": "Get Up — Grace Meets Effort",
-      "bodyLines": ["You won't feel ready. Move anyway.", "Small obedience opens big doors."],
+      "headline": "Get Up \u2014 Grace Meets Effort",
+      "bodyLines": [
+        "You won't feel ready. Move anyway.",
+        "Small obedience opens big doors."
+      ],
       "ctaText": "Follow for motivation",
       "accentColor": "#ffffff",
       "captionStyle": "centered-bold",
       "musicSrc": "public/reels/music/1000853359.mp3",
-      "durationFrames": 1800
+      "durationFrames": 1800,
+      "blueprint": "B1",
+      "lut": "purple-twilight",
+      "pexelsQueries": [
+        "sunset beach waves walking pov vertical 4k",
+        "airplane dusk clouds vertical"
+      ]
     }
   ]
 }
