@@ -31,7 +31,7 @@ export const socialReelSchema = z.object({
     src: z.string(),
     caption: z.string().optional(),
   })).optional(),
-  captionStyle: z.enum(["pill-top", "centered-bold", "minimal-lower", "samurai-quote"]).default("centered-bold"),
+  captionStyle: z.enum(["pill-top", "centered-bold", "minimal-lower", "samurai-quote", "handwritten-ink"]).default("handwritten-ink"),
 });
 
 export type SocialReelProps = z.infer<typeof socialReelSchema>;
@@ -66,6 +66,59 @@ export const defaultMotivationProps: SocialReelProps = {
   accentColor: "#38bdf8",
   slides: [],
   captionStyle: "centered-bold",
+};
+
+
+// Helper: wrap text into lines (same as builder)
+function wrapLines(text:string, maxChars=26){
+  const words=text.split(" ");
+  const lines:string[]=[];
+  let cur="";
+  for(const w of words){
+    if((cur+" "+w).trim().length > maxChars && cur){
+      lines.push(cur.trim());
+      cur=w;
+    } else cur=(cur+" "+w).trim();
+  }
+  if(cur) lines.push(cur);
+  return lines;
+}
+
+// Handwritten Ink — tall narrow organic handwritten (Shadows Into Light / Caveat / Amatic SC / Indie Flower)
+// Prompt Keywords: tall narrow handwritten ink font, organic casual fine-liner script, imperfect hand-lettered typography, thin dark charcoal ink
+// Layer-by-layer animation: 1.0s line1, 1.8s line2, 2.6s line3, 3.5s footer — ink-bleed fade + 10px upward drift, paper-grain Multiply blend
+const HandwrittenInk: React.FC<{ text: string; localFrame: number; fps: number }> = ({ text, localFrame, fps }) => {
+  const clean = text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ").replace(/\s+/g," ").trim();
+  const lines = wrapLines(clean, 26);
+  return (
+    <div style={{ position:"absolute", top:"44%", left:40, right:40, transform:"translateY(-50%)", textAlign:"center" }}>
+      {lines.map((line, i) => {
+        const delay = 30 + i*24; // 1.0s, 1.8s, 2.6s ...
+        const prog = spring({ frame: Math.max(0, localFrame - delay), fps, config:{ damping:18, stiffness:120 }});
+        const opacity = prog;
+        const y = interpolate(prog, [0,1], [10, 0]);
+        const blur = interpolate(prog, [0,1], [2, 0]);
+        return (
+          <div key={i} style={{ opacity, transform: `translateY(${y}px)`, filter: `blur(${blur}px)`, willChange:"transform,opacity" }}>
+            <p style={{
+              color: "white",
+              fontSize: 58,
+              fontWeight: 500,
+              lineHeight: 1.15,
+              fontFamily: `"Caveat", "Shadows Into Light", "Amatic SC", "Indie Flower", cursive`,
+              textShadow: "0 1px 10px rgba(0,0,0,0.85), 0 0 1px rgba(0,0,0,1)",
+              letterSpacing: "0.02em",
+              margin: "8px 0",
+              // ink-bleed subtle: slightly heavier on entrance via textShadow
+            }}>
+              {line}
+            </p>
+          </div>
+        );
+      })}
+      {/* paper grain hint — faint texture overlay handled in parent via Multiply */}
+    </div>
+  );
 };
 
 // Authentic TikTok caption styles — replicating real videos, no AI effects
@@ -172,27 +225,48 @@ const CaptionStyles = {
       </p>
     </div>
   ),
+
+  // Style 5: Handwritten Ink — tall narrow organic handwritten ink script (Shadows Into Light / Caveat)
+  handwrittenInk: (text: string, progress: number, localFrame?: number, fps?: number) => {
+    // fallback for non-staggered use — delegates to HandwrittenInk component style
+    return (
+      <div style={{ position:"absolute", top:"44%", left:40, right:40, transform:"translateY(-50%)", textAlign:"center", opacity: progress }}>
+        <p style={{ color:"white", fontSize:58, fontWeight:500, lineHeight:1.15, fontFamily:`"Caveat", "Shadows Into Light", "Amatic SC", "Indie Flower", cursive`, textShadow:"0 1px 10px rgba(0,0,0,0.85)", letterSpacing:"0.02em" }}>{text}</p>
+      </div>
+    );
+  },
 };
 
 const SlideDeck: React.FC<{ slides: { src: string }[]; variant: string }> = ({ slides, variant }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   if (!slides?.length) {
-    // No AI slides — use simple cinematic gradient (no people)
-    const progress = frame / durationInFrames;
+    // Warm cream textured paper fallback — watercolor hint
+    const t = frame / durationInFrames;
     const bg = variant === "wisdom"
-      ? `linear-gradient(180deg, #0f1419 0%, #1a2332 50%, #0a0e14 100%)`
-      : `linear-gradient(180deg, #0a1419 0%, #1a2a32 50%, #0a1014 100%)`;
-    return <AbsoluteFill style={{ background: bg }} />;
+      ? `linear-gradient(180deg, #fdf6e3 0%, #f5e6c8 50%, #ede0b8 100%)`
+      : `linear-gradient(180deg, #fdf6e3 0%, #e9dcc3 100%)`;
+    return (
+      <AbsoluteFill style={{ background: bg }}>
+        {/* paper grain — multiply texture */}
+        <AbsoluteFill style={{ opacity:0.08, background: `repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 3px)` }} />
+        <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(0,0,0,0.06))` }} />
+      </AbsoluteFill>
+    );
   }
   const perSlide = Math.floor(durationInFrames / slides.length);
   const active = Math.min(slides.length - 1, Math.floor(frame / perSlide));
   const local = frame % perSlide;
-  const zoom = interpolate(local, [0, perSlide], [1.0, 1.06], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const zoom = interpolate(local, [0, perSlide], [1.0, 1.08], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const ambientPan = interpolate(local, [0, perSlide], [-8, 8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const driftY = interpolate(local, [0, perSlide], [-6, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: "#070a12" }}>
-      <img src={slides[active]?.src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transform: `scale(${zoom})`, filter: "contrast(1.02) saturate(0.96)" }} />
-      <AbsoluteFill style={{ background: "rgba(0,0,0,0.35)" }} />
+      <img src={slides[active]?.src} alt="" style={{ width: "108%", height: "108%", objectFit: "cover", transform: `scale(${zoom}) translate(${ambientPan}px, ${driftY}px)`, filter: "contrast(1.04) saturate(0.96) brightness(0.96)" }} />
+      <AbsoluteFill style={{ background: "rgba(0,0,0,0.30)" }} />
+      {/* subtle vignette + paper grain multiply for ink absorption */}
+      <AbsoluteFill style={{ background: `radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.38))` }} />
+      <AbsoluteFill style={{ opacity:0.06, background: `repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 2px)`, mixBlendMode:"multiply" as any }} />
     </AbsoluteFill>
   );
 };
@@ -215,6 +289,7 @@ export const SocialReel: React.FC<SocialReelProps> = ({
 
   const linesPerSec = bodyLines.length ? Math.floor(durationInFrames / bodyLines.length) : durationInFrames;
   const activeLine = Math.min(bodyLines.length - 1, Math.floor(frame / linesPerSec));
+  const localFrame = frame % linesPerSec;
   // NO TITLE / NO DASHES — only bodyLines, stripped
   const rawText = bodyLines[activeLine] ?? "";
   const currentText = rawText.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ").replace(/\s+/g," ").trim();
@@ -226,6 +301,7 @@ export const SocialReel: React.FC<SocialReelProps> = ({
       case "pill-top": return CaptionStyles.pillTop(currentText, captionProgress);
       case "minimal-lower": return CaptionStyles.minimalLower(currentText, captionProgress);
       case "samurai-quote": return CaptionStyles.samuraiQuote(currentText, captionProgress);
+      case "handwritten-ink": return <HandwrittenInk text={currentText} localFrame={localFrame} fps={fps} />;
       case "centered-bold":
       default: return CaptionStyles.centeredBold(currentText, captionProgress);
     }

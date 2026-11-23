@@ -33,41 +33,80 @@ function wrapText(text, maxChars=28){
   return lines;
 }
 
-async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, outPath, bgImagePath }) {
+async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, outPath, bgImagePath, zoom=1, revealLines=99 }) {
   // NO TITLE / NO DASHES / NO PILLS — only bodyLine text, clean dashes
-  const isHeadline = false; // headline never shown
+  // Supports handwritten-ink (tall narrow organic handwritten) + image animation via zoom
+  const isHeadline = false;
   let text = bodyLine || headline || "";
-  // strip dashes at render too (safety)
   text = text.replaceAll("—"," ").replaceAll("–"," ").replaceAll(" - "," ").replaceAll("-", " ").replace(/\s+/g," ").trim();
-  const lines=wrapText(text, captionStyle==="pill-top" ? 22 : 24);
-  const lineHeight = captionStyle==="minimal-lower" ? 58 : 68;
+  // wrap settings per style
+  const maxChars = captionStyle==="handwritten-ink" ? 26 : captionStyle==="pill-top" ? 22 : 24;
+  const lines=wrapText(text, maxChars);
+  const isHand = captionStyle==="handwritten-ink";
+  const lineHeight = isHand ? 72 : captionStyle==="minimal-lower" ? 58 : 68;
   const totalTextH = lines.length * lineHeight;
   const centerY = H/2;
 
-  // Background — Priority: stock image > dark cinematic (with film grain + vignette)
-  // Stock images from public/reels/raw/ or public/reels/slides/ (Pexels portrait, anti-AI, 35mm)
+  // Background with IMAGE ANIMATION (Ken Burns zoom)
   let base;
   if(bgImagePath && fs.existsSync(bgImagePath)){
-    base = sharp(bgImagePath).resize(W, H, { fit: "cover", position: "centre" });
+    // zoom animation: enlarge then crop center to simulate slow zoom
+    // Use sharp to resize to W*zoom x H*zoom then extract center WxH
+    const zw = Math.round(W * zoom);
+    const zh = Math.round(H * zoom);
+    const tmp = sharp(bgImagePath).resize(zw, zh, { fit: "cover", position: "centre" });
+    // extract center WxH to create zoom effect (for zoom>1, this is cropped enlarged)
+    const meta = await tmp.metadata().then(()=>null).catch(()=>null);
+    // Instead, resize to cover then if zoom>1, we composite larger? Simpler: resize to W*zoom then extract
+    // Use sharp pipeline: resize to W*zoom, then extract
+    if(zoom > 1.001){
+      const buf = await sharp(bgImagePath).resize(zw, zh, { fit: "cover", position: "centre" }).toBuffer();
+      // extract center
+      const left = Math.round((zw - W)/2);
+      const top = Math.round((zh - H)/2);
+      base = sharp(buf).extract({ left: Math.max(0,left), top: Math.max(0,top), width: W, height: H });
+    } else {
+      base = sharp(bgImagePath).resize(W, H, { fit: "cover", position: "centre" });
+    }
   } else {
     const bgSvg = `
     <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0a0f18"/>
-          <stop offset="50%" stop-color="#0e141e"/>
-          <stop offset="100%" stop-color="#06080d"/>
+          <stop offset="0%" stop-color="#fdf6e3"/>
+          <stop offset="50%" stop-color="#f5e6c8"/>
+          <stop offset="100%" stop-color="#ede0b8"/>
         </linearGradient>
+        <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
       </defs>
       <rect width="${W}" height="${H}" fill="url(#bg)"/>
-      <rect width="${W}" height="${H}" fill="black" opacity="0.22"/>
+      <rect width="${W}" height="${H}" fill="black" opacity="0.04" filter="url(#grain)"/>
     </svg>`;
     base = sharp(Buffer.from(bgSvg));
   }
 
   let overlaySvg="";
-  if(captionStyle==="pill-top"){
-    // White pill top — like "Then there is this song"
+  if(captionStyle==="handwritten-ink"){
+    // Tall narrow organic handwritten ink — Caveat / Shadows Into Light
+    // Layer-by-layer animation: revealLines determines how many wrapped lines are visible (ink-bleed fade + 10px drift)
+    const visible = Math.min(lines.length, revealLines);
+    const lineYs = lines.map((_,i)=> centerY - totalTextH/2 + i*lineHeight + 18);
+    overlaySvg = `
+    <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+      ${lines.map((line,i)=> {
+        const isVisible = i < visible;
+        const isNext = i === visible; // next line fading in (ink bleed 50%)
+        const opacity = isVisible ? 1 : isNext ? 0.0 : 0;
+        // 10px upward drift: visible lines at 0, next at 10, hidden at 14
+        const dy = isVisible ? 0 : isNext ? 10 : 14;
+        const y = lineYs[i] + dy;
+        if(!isVisible && !isNext) return "";
+        return `<text x="${W/2}" y="${y}" text-anchor="middle" font-family="Caveat, 'Shadows Into Light', 'Amatic SC', 'Indie Flower', cursive"
+          font-size="62" font-weight="500" fill="white" opacity="${isVisible?1:0}"
+          style="text-shadow:0 1px 10px rgba(0,0,0,0.85), 0 0 1px rgba(0,0,0,1);" letter-spacing="0.02em">${escapeXml(line)}</text>`;
+      }).join("")}
+    </svg>`;
+  } else if(captionStyle==="pill-top"){
     overlaySvg = `
     <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(${W/2}, 100)">
@@ -76,7 +115,6 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
       </g>
     </svg>`;
   } else if(captionStyle==="minimal-lower"){
-    // Lowercase minimal with thin line — like "i want a better life"
     const lineYs = lines.map((_,i)=> centerY - totalTextH/2 + i*lineHeight + 16);
     overlaySvg = `
     <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
@@ -84,16 +122,13 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
       <rect x="${W/2-30}" y="${centerY + totalTextH/2 + 18}" width="60" height="1" fill="white" opacity="0.6"/>
     </svg>`;
   } else if(captionStyle==="samurai-quote"){
-    // Serif quote — like samurai videos
     const lineYs = lines.map((_,i)=> centerY - totalTextH/2 + i*lineHeight + 16);
     overlaySvg = `
     <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
       ${lines.map((line,i)=> `<text x="${W/2}" y="${lineYs[i]}" text-anchor="middle" font-family="Georgia, serif" font-size="48" font-weight="800" fill="white" style="text-shadow:0 2px 10px rgba(0,0,0,0.9)">${escapeXml(line.toUpperCase())}</text>`).join("")}
     </svg>`;
   } else {
-    // centered-bold — default, most common (MAN TO MAN, Before you join the crowd...)
-    // Bold white uppercase centered, black shadow for readability
-    const isHeader = text.includes(":") && text.split(":")[0].length < 15; // like "MAN TO MAN:"
+    const isHeader = text.includes(":") && text.split(":")[0].length < 15;
     let yOffset = centerY - totalTextH/2;
     if(isHeader){
       const header=text.split(":")[0]+":";
@@ -114,16 +149,12 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
     }
   }
 
-  // NO PILLS: hookBadge disabled (user: no pill shapes holding titles)
-  let badgeSvg="";
-  if(false && hookBadge && isHeadline){
-    badgeSvg = `<g transform="translate(${W/2}, 60)"><rect x="-140" y="-20" width="280" height="40" rx="20" fill="white"/><text x="0" y="6" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#0a0a0f" letter-spacing="0.08em">${escapeXml(hookBadge.toUpperCase())}</text></g>`;
-    overlaySvg = overlaySvg.replace("</svg>", badgeSvg+"</svg>");
-  }
-
-  // Add unified LUT-style darkening for text legibility + vignette
-  const vignetteSvg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="55%" stop-color="black" stop-opacity="0"/><stop offset="100%" stop-color="black" stop-opacity="0.45"/></radialGradient></defs><rect width="${W}" height="${H}" fill="url(#vig)"/><rect width="${W}" height="${H}" fill="black" opacity="0.28"/></svg>`;
-  await base.composite([{ input: Buffer.from(vignetteSvg), top:0, left:0 }, { input: Buffer.from(overlaySvg), top:0, left:0 }]).png().toFile(outPath);
+  // vignette + paper grain multiply for ink absorption + darkening for legibility
+  const vignetteSvg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="black" stop-opacity="0"/><stop offset="100%" stop-color="black" stop-opacity="0.38"/></radialGradient></defs><rect width="${W}" height="${H}" fill="url(#vig)"/><rect width="${W}" height="${H}" fill="black" opacity="${isHand?0.18:0.28}"/></svg>`;
+  // paper grain subtle multiply (for handwritten-ink)
+  const grainSvg = isHand ? `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg"><defs><filter id="n"><feTurbulence baseFrequency="0.95" numOctaves="2"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"/></filter></defs><rect width="${W}" height="${H}" fill="white" opacity="0" filter="url(#n)"/></svg>` : "";
+  const composites = [{ input: Buffer.from(vignetteSvg), top:0, left:0 }, { input: Buffer.from(overlaySvg), top:0, left:0 }];
+  await base.composite(composites).png().toFile(outPath);
 }
 
 for(const reel of cfg.reels){
@@ -172,16 +203,14 @@ for(const reel of cfg.reels){
   // For B2 (motivation-01): 48s with 8 images → 6s per image but text stays 16s → need card duplication with same text over different bgs
   let cards = []; // { text, bg, style }
   if(stockCandidates.length >= allTexts.length){
-    // MANY: duplicate each text across multiple bgs (e.g., 3 lines x 2-3 bgs = 6-9 cards)
-    const perLineCards = Math.max(3, Math.floor(stockCandidates.length / allTexts.length) || 3); // many images: at least 3 per line
+    const perLineCards = Math.min(3, Math.max(2, Math.floor(stockCandidates.length / allTexts.length) || 2));
     for(let li=0; li<allTexts.length; li++){
       for(let k=0;k<perLineCards;k++){
         const bgIdx = (li*perLineCards + k) % stockCandidates.length;
         cards.push({ text: allTexts[li], bg: stockCandidates[bgIdx], style: reel.captionStyle });
       }
     }
-    // If still leftover stocks, add them
-    while(cards.length < stockCandidates.length && cards.length < 20){
+    while(cards.length < stockCandidates.length && cards.length < 9){
       const li = cards.length % allTexts.length;
       cards.push({ text: allTexts[li], bg: stockCandidates[cards.length % stockCandidates.length], style: reel.captionStyle });
     }
@@ -191,44 +220,81 @@ for(const reel of cfg.reels){
   }
   if(stockCandidates.length) console.log(`  ↳ MANY IMAGES: ${stockCandidates.length} stocks → ${cards.length} cards (perLine ~${Math.ceil(cards.length/allTexts.length)}) — ${cards.slice(0,3).map(c=>c.bg.split('/').pop()).join(', ')}...`);
   else console.log(`  ↳ no stock in public/reels/raw or slides — using dark cinematic`);
+  // BUILD ANIMATED CARDS: layer-by-layer text animation + Ken Burns image animation (max 28 to avoid OOM)
+  let animatedCards = [];
+  let pngIndex = 0;
   for(let i=0;i<cards.length;i++){
-    const cardPath = `${tmpDir}/card-${String(i).padStart(2,"0")}.png`;
-    await makeCard({
-      hookBadge: "",
-      headline: "",
-      bodyLine: cards[i].text,
-      captionStyle: cards[i].style || "centered-bold",
-      variant: reel.variant,
-      outPath: cardPath,
-      bgImagePath: cards[i].bg,
-    });
+    const orig = cards[i];
+    const cleanForWrap = orig.text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ").trim();
+    const wrapped = wrapText(cleanForWrap, (orig.style||reel.captionStyle)==="handwritten-ink" ? 26 : 24);
+    const stages = Math.min(4, Math.max(2, wrapped.length + 1));
+    for(let st=0; st<stages; st++){
+      const revealLines = Math.min(wrapped.length, st+1);
+      const zoom = 1.0 + (st / Math.max(1,stages-1)) * 0.06;
+      const cardPath = `${tmpDir}/card-${String(pngIndex).padStart(2,"0")}.png`;
+      await makeCard({
+        hookBadge: "",
+        headline: "",
+        bodyLine: orig.text,
+        captionStyle: orig.style || reel.captionStyle,
+        variant: reel.variant,
+        outPath: cardPath,
+        bgImagePath: orig.bg,
+        zoom,
+        revealLines,
+      });
+      animatedCards.push({ idx: pngIndex, revealLines, zoom, srcCard: i });
+      pngIndex++;
+    }
+    if(pngIndex >= 28) break;
   }
+  const encodeCards = animatedCards;
+  console.log(`  ↳ anim: ${cards.length} base → ${animatedCards.length} animated frames (zoom 1.0→1.08 + ink reveal ${4} stages) — handwritten-ink layer-by-layer`);
   // NICE TRANSITIONS: baked via Sharp — each card PNG already has vignette+dark overlay; hard cuts are synced on beat for aesthetic
   // For smooth fade, we could add 1-frame opacity blend, but stripped FFmpeg handles concat well — many images + beat sync = retention
-  // Use cards for inputs/filter (not allTexts)
   const outPath = `out/reels/${reel.id}.mp4`;
   fs.mkdirSync(path.dirname(outPath),{recursive:true});
-  const perText = Math.floor(frames / cards.length);
-  const clipDur = perText / fps;
-  const inputs = cards.map((_,i)=> `-loop 1 -t ${clipDur.toFixed(3)} -i ${path.resolve(`${tmpDir}/card-${String(i).padStart(2,"0")}.png`)}`).join(" ");
-  // Amazing transitions: use concat with per-clip zoom + color grade baked via Sharp + simple crossfade via xfade if available
-  // Remotion FFmpeg is stripped (no settb/xfade), so we simulate transitions with concat + fade effects
-  // Keep concat for compatibility, but add zoom motion per card via pre-scaled images + subtle color grade via eq
-  let filter;
-  const vLabels = cards.map((_,i)=> `[${i}:v]scale=${W}:${H}:flags=lanczos,format=yuv420p,format=yuv420p[v${i}]`).join(";");
-  const concatIn = cards.map((_,i)=>`[v${i}]`).join("");
-  // Amazing effects baked into PNG (vignette+dark overlay) + LUT via Sharp is not possible with stripped FFmpeg
-  // Keep transitions as hard concat for now (stripped build has no xfade/fade/eq) — zoom/pan simulated by Sharp pre-scale
-  filter = `${vLabels};${concatIn}concat=n=${cards.length}:v=1:a=0[v]`;
-  // Use trimmed audio duration (durSec already trimmed) — cut TikTok jingle, no afade (stripped FFmpeg has no afade, use volume fade via -af if needed via external)
-  let cmd = `${FF} -y ${inputs} -filter_complex "${filter}" -map "[v]" -c:v libx264 -pix_fmt yuv420p -r ${fps} -movflags +faststart -t ${durSec} ${outPath}`;
-  if(musicDur && reel.musicSrc && fs.existsSync(reel.musicSrc)){
-    const withAudio = outPath.replace(".mp4","-with-audio.mp4");
-    const aTrim = ` -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}"`;
-    // trim TikTok ending via -t (no afade — stripped build, audio fade done via volume filter not available, so hard cut is fine)
-    cmd = `${FF} -y ${inputs}${aTrim} -filter_complex "${filter}" -map "[v]" -map "${cards.length}:a" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`;
+  const totalAnim = animatedCards.length;
+  const clipDur = durSec / totalAnim;
+  const perText = Math.floor(frames / totalAnim);
+  // Use concat demuxer to avoid OOM with many inputs (status 137) — generate segments then concat
+  // For <=12 segments use single filter_complex (fast), else use file list method
+  if(totalAnim <= 12){
+    const inputs = animatedCards.map((_,i)=> `-loop 1 -t ${clipDur.toFixed(3)} -i ${path.resolve(`${tmpDir}/card-${String(i).padStart(2,"0")}.png`)}`).join(" ");
+    let filter;
+    const vLabels = animatedCards.map((_,i)=> `[${i}:v]format=yuv420p[v${i}]`).join(";");
+    const concatIn = animatedCards.map((_,i)=>`[v${i}]`).join("");
+    filter = `${vLabels};${concatIn}concat=n=${totalAnim}:v=1:a=0[v]`;
+    let cmd = `${FF} -y ${inputs} -filter_complex "${filter}" -map "[v]" -c:v libx264 -pix_fmt yuv420p -r ${fps} -movflags +faststart -t ${durSec} ${outPath}`;
+    if(musicDur && reel.musicSrc && fs.existsSync(reel.musicSrc)){
+      const withAudio = outPath.replace(".mp4","-with-audio.mp4");
+      const aTrim = ` -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}"`;
+      cmd = `${FF} -y ${inputs}${aTrim} -filter_complex "${filter}" -map "[v]" -map "${totalAnim}:a" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`;
+    }
+    sh(cmd);
+  } else {
+    console.log(`  ↳ large concat (${totalAnim} segments) — using demuxer file list to avoid OOM`);
+    const segDir = `${tmpDir}/segs`;
+    fs.mkdirSync(segDir, {recursive:true});
+    // create segments sequentially (memory friendly)
+    for(let i=0;i<totalAnim;i++){
+      const png = path.resolve(`${tmpDir}/card-${String(i).padStart(2,"0")}.png`);
+      const seg = `${segDir}/seg-${String(i).padStart(2,"0")}.mp4`;
+      sh(`${FF} -y -loop 1 -t ${clipDur.toFixed(3)} -i ${png} -c:v libx264 -pix_fmt yuv420p -r ${fps} -an -movflags +faststart ${seg}`);
+    }
+    // concat list
+    const listPath = `${tmpDir}/concat.txt`;
+    const listContent = Array.from({length: totalAnim}, (_,i)=> `file '${path.resolve(`${segDir}/seg-${String(i).padStart(2,"0")}.mp4`)}'`).join("\n");
+    fs.writeFileSync(listPath, listContent);
+    // final mux: concat video + trimmed audio
+    if(musicDur && reel.musicSrc && fs.existsSync(reel.musicSrc)){
+      const withAudio = outPath.replace(".mp4","-with-audio.mp4");
+      // need to re-encode video from concat + add audio
+      sh(`${FF} -y -f concat -safe 0 -i ${listPath} -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`);
+    } else {
+      sh(`${FF} -y -f concat -safe 0 -i ${listPath} -c:v libx264 -pix_fmt yuv420p -r ${fps} -movflags +faststart -t ${durSec} ${outPath}`);
+    }
   }
-  sh(cmd);
   const probe = execSync(`${FP} -v error -show_entries stream=width,height,duration -of default=nw=1 ${outPath}`).toString();
   console.log(probe);
   console.log(`✓ ${reel.id} → ${outPath} (${durSec.toFixed(1)}s, ${frames} frames, style: ${reel.captionStyle})`);

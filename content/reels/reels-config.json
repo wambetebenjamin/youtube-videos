@@ -19,14 +19,15 @@
       ],
       "ctaText": "Follow for wisdom",
       "accentColor": "#ffffff",
-      "captionStyle": "centered-bold",
+      "captionStyle": "handwritten-ink",
       "musicSrc": "public/reels/music/1000853416.mp3",
       "durationFrames": 1800,
       "blueprint": "B3",
       "lut": "desaturated-dark",
       "pexelsQueries": [
-        "vertical night city skyline river reflection 4k",
-        "dark textured black grain vertical"
+        "storm clouds sea vertical 4k",
+        "lighthouse storm waves vertical",
+        "calm ocean after storm vertical"
       ]
     },
     {
@@ -40,14 +41,15 @@
       ],
       "ctaText": "Save this wisdom",
       "accentColor": "#ffffff",
-      "captionStyle": "samurai-quote",
+      "captionStyle": "handwritten-ink",
       "musicSrc": "public/reels/music/e29c971c7fd7d79c83f7bdb2603e6883.mp3",
       "durationFrames": 1800,
       "blueprint": "B3",
       "lut": "desaturated-dark",
       "pexelsQueries": [
-        "samurai silhouette slow motion vertical",
-        "night street rain vertical"
+        "still lake mirror reflection vertical 4k",
+        "zen meditation calm vertical",
+        "misty forest stillness vertical"
       ]
     },
     {
@@ -62,16 +64,16 @@
       ],
       "ctaText": "Share this",
       "accentColor": "#ffffff",
-      "captionStyle": "minimal-lower",
+      "captionStyle": "handwritten-ink",
       "musicSrc": "public/reels/music/1000853360.mp3",
       "durationFrames": 1800,
       "blueprint": "B2",
       "lut": "teal-orange-dusk",
       "pexelsQueries": [
-        "twilight beach dirt bikes vertical",
-        "roller skating sunset vertical",
-        "blue Ferris wheel night vertical",
-        "misty road walking back view vertical"
+        "person running alone trail vertical 4k",
+        "open book journal chapters vertical",
+        "consistent habit calendar vertical",
+        "misty road walking forward vertical"
       ]
     },
     {
@@ -85,14 +87,15 @@
       ],
       "ctaText": "Follow for motivation",
       "accentColor": "#ffffff",
-      "captionStyle": "centered-bold",
+      "captionStyle": "handwritten-ink",
       "musicSrc": "public/reels/music/1000853359.mp3",
       "durationFrames": 1800,
       "blueprint": "B1",
       "lut": "purple-twilight",
       "pexelsQueries": [
-        "sunset beach waves walking pov vertical 4k",
-        "airplane dusk clouds vertical"
+        "airplane window sunset clouds vertical 4k",
+        "person stepping doorway light vertical",
+        "hands reaching sunrise vertical"
       ]
     }
   ]
