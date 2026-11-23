@@ -33,30 +33,37 @@ function wrapText(text, maxChars=28){
   return lines;
 }
 
-async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, outPath }) {
-  // Use headline for first frame, bodyLine for others — replicate TikTok: top text is hook, center is quote
-  const isHeadline = !bodyLine || bodyLine === headline;
-  const text = isHeadline ? headline : bodyLine;
+async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, outPath, bgImagePath }) {
+  // NO TITLE / NO DASHES / NO PILLS — only bodyLine text, clean dashes
+  const isHeadline = false; // headline never shown
+  let text = bodyLine || headline || "";
+  // strip dashes at render too (safety)
+  text = text.replaceAll("—"," ").replaceAll("–"," ").replaceAll(" - "," ").replaceAll("-", " ").replace(/\s+/g," ").trim();
   const lines=wrapText(text, captionStyle==="pill-top" ? 22 : 24);
   const lineHeight = captionStyle==="minimal-lower" ? 58 : 68;
   const totalTextH = lines.length * lineHeight;
   const centerY = H/2;
 
-  // Background — simple dark cinematic (no AI gradients, no accent glows)
-  // Matches your TikToks: dark navy/black with subtle vignette
-  const bgSvg = `
-  <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0a0f18"/>
-        <stop offset="50%" stop-color="#0e141e"/>
-        <stop offset="100%" stop-color="#06080d"/>
-      </linearGradient>
-    </defs>
-    <rect width="${W}" height="${H}" fill="url(#bg)"/>
-    <rect width="${W}" height="${H}" fill="black" opacity="0.22"/>
-  </svg>`;
-  const base = sharp(Buffer.from(bgSvg));
+  // Background — Priority: stock image > dark cinematic (with film grain + vignette)
+  // Stock images from public/reels/raw/ or public/reels/slides/ (Pexels portrait, anti-AI, 35mm)
+  let base;
+  if(bgImagePath && fs.existsSync(bgImagePath)){
+    base = sharp(bgImagePath).resize(W, H, { fit: "cover", position: "centre" });
+  } else {
+    const bgSvg = `
+    <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a0f18"/>
+          <stop offset="50%" stop-color="#0e141e"/>
+          <stop offset="100%" stop-color="#06080d"/>
+        </linearGradient>
+      </defs>
+      <rect width="${W}" height="${H}" fill="url(#bg)"/>
+      <rect width="${W}" height="${H}" fill="black" opacity="0.22"/>
+    </svg>`;
+    base = sharp(Buffer.from(bgSvg));
+  }
 
   let overlaySvg="";
   if(captionStyle==="pill-top"){
@@ -107,14 +114,16 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
     }
   }
 
-  // Hook badge — only on first frame, simple white pill (not accent-colored AI badge)
+  // NO PILLS: hookBadge disabled (user: no pill shapes holding titles)
   let badgeSvg="";
-  if(hookBadge && isHeadline){
+  if(false && hookBadge && isHeadline){
     badgeSvg = `<g transform="translate(${W/2}, 60)"><rect x="-140" y="-20" width="280" height="40" rx="20" fill="white"/><text x="0" y="6" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#0a0a0f" letter-spacing="0.08em">${escapeXml(hookBadge.toUpperCase())}</text></g>`;
     overlaySvg = overlaySvg.replace("</svg>", badgeSvg+"</svg>");
   }
 
-  await base.composite([{ input: Buffer.from(overlaySvg), top:0, left:0 }]).png().toFile(outPath);
+  // Add unified LUT-style darkening for text legibility + vignette
+  const vignetteSvg = `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="55%" stop-color="black" stop-opacity="0"/><stop offset="100%" stop-color="black" stop-opacity="0.45"/></radialGradient></defs><rect width="${W}" height="${H}" fill="url(#vig)"/><rect width="${W}" height="${H}" fill="black" opacity="0.28"/></svg>`;
+  await base.composite([{ input: Buffer.from(vignetteSvg), top:0, left:0 }, { input: Buffer.from(overlaySvg), top:0, left:0 }]).png().toFile(outPath);
 }
 
 for(const reel of cfg.reels){
@@ -143,19 +152,32 @@ for(const reel of cfg.reels){
   const tmpDir = `out/reels/tmp-${reel.id}`;
   fs.mkdirSync(tmpDir,{recursive:true});
   const perLine = Math.floor(frames / reel.bodyLines.length);
-  // Include headline as first card + bodyLines (like TikToks: hook then quotes)
-  const allTexts = [reel.headline, ...reel.bodyLines];
+  // NO TITLE: only bodyLines as captions (per user: stop displaying title)
+  const allTexts = reel.bodyLines && reel.bodyLines.length ? reel.bodyLines : [reel.headline];
   // Beat-synced cuts: for B2 lyric montage, ideally align perText to beats from scripts/reels/analyze-beats.mjs (librosa fallback-phrase)
   const perText = Math.floor(frames / allTexts.length);
+  // Resolve stock images for this reel (public/reels/raw/* or slides/*) — cycle per card for montage
+  const stockCandidates = (()=>{
+    const dirs=["public/reels/raw","public/reels/slides"];
+    const files=[];
+    for(const d of dirs){ try{ if(fs.existsSync(d)) files.push(...fs.readdirSync(d).filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f)).map(f=>`${d}/${f}`)); }catch{} }
+    // prefer reel-specific by id prefix, else any portrait
+    const byReel=files.filter(f=>f.includes(reel.id));
+    return (byReel.length?byReel:files);
+  })();
+  if(stockCandidates.length) console.log(`  ↳ stock: ${stockCandidates.slice(0,4).join(", ")} (cycling ${stockCandidates.length} across ${allTexts.length} cards)`);
+  else console.log(`  ↳ no stock in public/reels/raw or slides — using dark cinematic + vignette (fetch with scripts/reels/fetch-pexels.mjs or add images)`);
   for(let i=0;i<allTexts.length;i++){
     const cardPath = `${tmpDir}/card-${String(i).padStart(2,"0")}.png`;
+    const bgForCard = stockCandidates.length ? stockCandidates[i % stockCandidates.length] : null;
     await makeCard({
-      hookBadge: i===0 ? reel.hookBadge : "",
-      headline: reel.headline,
+      hookBadge: "",
+      headline: "",
       bodyLine: allTexts[i],
       captionStyle: reel.captionStyle || "centered-bold",
       variant: reel.variant,
       outPath: cardPath,
+      bgImagePath: bgForCard,
     });
   }
   const outPath = `out/reels/${reel.id}.mp4`;

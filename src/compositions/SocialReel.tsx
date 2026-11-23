@@ -84,7 +84,7 @@ const CaptionStyles = {
       boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
     }}>
       <span style={{ color: "#0a0a0f", fontSize: 24, fontWeight: 600, fontFamily: "sans-serif", whiteSpace: "nowrap" }}>
-        {text}
+        {text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ")}
       </span>
     </div>
   ),
@@ -110,7 +110,7 @@ const CaptionStyles = {
         letterSpacing: "-0.01em",
         textTransform: "uppercase" as const,
       }}>
-        {text}
+        {text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ")}
       </p>
     </div>
   ),
@@ -168,7 +168,7 @@ const CaptionStyles = {
         fontStyle: "normal" as const,
         textTransform: "uppercase" as const,
       }}>
-        {text}
+        {text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ")}
       </p>
     </div>
   ),
@@ -215,9 +215,12 @@ export const SocialReel: React.FC<SocialReelProps> = ({
 
   const linesPerSec = bodyLines.length ? Math.floor(durationInFrames / bodyLines.length) : durationInFrames;
   const activeLine = Math.min(bodyLines.length - 1, Math.floor(frame / linesPerSec));
-  const currentText = bodyLines[activeLine] ?? headline;
+  // NO TITLE / NO DASHES — only bodyLines, stripped
+  const rawText = bodyLines[activeLine] ?? "";
+  const currentText = rawText.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ").replace(/\s+/g," ").trim();
 
-  // Get the authentic caption style renderer
+  // Get the authentic caption style renderer — also cycle bg images if provided
+  const bgImage = (slides && slides.length) ? slides[activeLine % slides.length]?.src : null;
   const renderCaption = () => {
     switch (captionStyle) {
       case "pill-top": return CaptionStyles.pillTop(currentText, captionProgress);
@@ -232,23 +235,7 @@ export const SocialReel: React.FC<SocialReelProps> = ({
     <AbsoluteFill className="bg-slate-950 font-sans antialiased">
       <SlideDeck slides={slides} variant={variant} />
 
-      {/* Hook badge — authentic pill style only if needed, otherwise headline is the hook */}
-      {hookBadge && frame < 90 && (
-        <div style={{
-          opacity: interpolate(frame, [0, 15], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-          position: "absolute",
-          top: 60,
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: "white",
-          borderRadius: 999,
-          padding: "10px 24px",
-        }}>
-          <span style={{ color: "#0a0a0f", fontSize: 18, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const }}>
-            {hookBadge}
-          </span>
-        </div>
-      )}
+      {/* NO PILLS / NO TITLES — hookBadge disabled per user; titles not shown */}
 
       {/* Main caption — authentic style from TikToks, no AI effects */}
       {renderCaption()}

@@ -10,7 +10,7 @@
     {
       "id": "wisdom-01-storm",
       "variant": "wisdom",
-      "hookBadge": "WISDOM",
+      "hookBadge": "",
       "headline": "The Storm Didn't Come to Drown You",
       "bodyLines": [
         "The storm came to show you who calms it.",
@@ -32,10 +32,10 @@
     {
       "id": "wisdom-02-still",
       "variant": "wisdom",
-      "hookBadge": "WISDOM",
-      "headline": "Be Still \u2014 He Is Already Working",
+      "hookBadge": "",
+      "headline": "Be Still He Is Already Working",
       "bodyLines": [
-        "Stillness is not weakness \u2014 it's trust.",
+        "Stillness is not weakness it's trust.",
         "The same wind that shakes you obeys Him."
       ],
       "ctaText": "Save this wisdom",
@@ -54,11 +54,11 @@
       "id": "motivation-01-becoming",
       "variant": "motivation",
       "hookBadge": "",
-      "headline": "You Are Not Late \u2014 You Are Becoming",
+      "headline": "You Are Not Late You Are Becoming",
       "bodyLines": [
         "Comparison steals speed.",
         "Your chapter 3 is not their chapter 10.",
-        "Stay the course \u2014 consistency beats intensity."
+        "Stay the course consistency beats intensity."
       ],
       "ctaText": "Share this",
       "accentColor": "#ffffff",
@@ -77,8 +77,8 @@
     {
       "id": "motivation-02-rise",
       "variant": "motivation",
-      "hookBadge": "MOTIVATION",
-      "headline": "Get Up \u2014 Grace Meets Effort",
+      "hookBadge": "",
+      "headline": "Get Up Grace Meets Effort",
       "bodyLines": [
         "You won't feel ready. Move anyway.",
         "Small obedience opens big doors."
