@@ -8,8 +8,16 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 import { execSync } from "child_process";
-const FF = "./node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg";
-const FP = "./node_modules/@remotion/compositor-linux-x64-gnu/ffprobe";
+const FF_REMOTION = "./node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg";
+const FP = "./node_modules/@remotion/compositor-linux-x64-gnu/ffprobe"; // ffprobe still remotion (works)
+import { execSync as _execSync } from "child_process";
+// Use full ffmpeg with afade filter if available (imageio-ffmpeg), fallback to remotion stripped
+let FF = FF_REMOTION;
+try{
+  const imgFfmpeg = _execSync("python3 -c \"import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())\" 2>/dev/null",{encoding:"utf8"}).trim();
+  if(imgFfmpeg && imgFfmpeg.length>5) FF = imgFfmpeg;
+}catch{}
+if(FF !== FF_REMOTION) console.log(`ℹ Using full ffmpeg with afade: ${FF}`);
 const fps = 30;
 const W = 1080, H = 1920;
 const cfg = JSON.parse(fs.readFileSync("content/reels/reels-config.json","utf8"));
@@ -50,10 +58,19 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
   // Background with CINEMATIC IMAGE ANIMATION (Ken Burns zoom + pan + drift)
   let base;
   if(bgImagePath && fs.existsSync(bgImagePath)){
+    // If video file, extract a frame at 1s to create cinematic still (with motion blur we simulate zoom+pan)
+    let effectiveBg = bgImagePath;
+    if(/\.(mp4|mov)$/i.test(bgImagePath)){
+      // Use ffmpeg to extract single frame as temp png then sharp it
+      const tmpFrame = `${outPath}.frame.png`;
+      try{ _execSync(`${FF} -y -ss 1 -i "${bgImagePath}" -vframes 1 -vf "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920" "${tmpFrame}" 2>&1`,{stdio:"pipe"}); if(fs.existsSync(tmpFrame)) effectiveBg = tmpFrame; }catch(e){ /* fallback to original */ }
+    }
     const zw = Math.round(W * zoom);
     const zh = Math.round(H * zoom);
     if(zoom > 1.001){
-      const buf = await sharp(bgImagePath).resize(zw, zh, { fit: "cover", position: "centre" }).toBuffer();
+      // use effectiveBg instead of bgImagePath for resize
+      const srcForResize = effectiveBg;
+      const buf = await sharp(srcForResize).resize(zw, zh, { fit: "cover", position: "centre" }).toBuffer();
       // cinematic pan: offset from center by panX/panY
       const left = Math.round((zw - W)/2 + panX);
       const top = Math.round((zh - H)/2 + panY);
@@ -61,7 +78,7 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
       const clampedTop = Math.max(0, Math.min(zh - H, top));
       base = sharp(buf).extract({ left: clampedLeft, top: clampedTop, width: W, height: H });
     } else {
-      base = sharp(bgImagePath).resize(W, H, { fit: "cover", position: "centre" });
+      base = sharp(srcForResize).resize(W, H, { fit: "cover", position: "centre" });
     }
   } else {
     const bgSvg = `
@@ -193,7 +210,7 @@ for(const reel of cfg.reels){
   const stockCandidates = (()=>{
     const dirs=["public/reels/raw","public/reels/slides"];
     const files=[];
-    for(const d of dirs){ try{ if(fs.existsSync(d)) files.push(...fs.readdirSync(d).filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f)).map(f=>`${d}/${f}`)); }catch{} }
+    for(const d of dirs){ try{ if(fs.existsSync(d)) files.push(...fs.readdirSync(d).filter(f=>/\.(jpg|jpeg|png|webp|mp4|mov)$/i.test(f)).map(f=>`${d}/${f}`)); }catch{} }
     const byReel=files.filter(f=>f.includes(reel.id));
     const pool = (byReel.length?byReel:files);
     // shuffle pool for variety but keep deterministic per reel (so same image not always first)
@@ -220,7 +237,9 @@ for(const reel of cfg.reels){
     // Normal: one card per line
     for(let i=0;i<allTexts.length;i++) cards.push({ text: allTexts[i], bg: stockCandidates.length ? stockCandidates[i % stockCandidates.length] : null, style: reel.captionStyle });
   }
-  if(stockCandidates.length) console.log(`  ↳ MANY IMAGES: ${stockCandidates.length} stocks → ${cards.length} cards (perLine ~${Math.ceil(cards.length/allTexts.length)}) — ${cards.slice(0,3).map(c=>c.bg.split('/').pop()).join(', ')}...`);
+  const videoCount = stockCandidates.filter(f=>/\.(mp4|mov)$/i.test(f)).length;
+  const imageCount = stockCandidates.length - videoCount;
+  if(stockCandidates.length) console.log(`  ↳ MANY IMAGES: ${stockCandidates.length} stocks (${imageCount} images + ${videoCount} videos) → ${cards.length} cards (perLine ~${Math.ceil(cards.length/allTexts.length)}) — ${cards.slice(0,3).map(c=>c.bg.split('/').pop()).join(', ')}...`);
   else console.log(`  ↳ no stock in public/reels/raw or slides — using dark cinematic`);
   // BUILD ANIMATED CARDS: layer-by-layer text animation + Ken Burns image animation (max 28 to avoid OOM)
   let animatedCards = [];
@@ -290,7 +309,9 @@ for(const reel of cfg.reels){
     if(musicDur && reel.musicSrc && fs.existsSync(reel.musicSrc)){
       const withAudio = outPath.replace(".mp4","-with-audio.mp4");
       const aTrim = ` -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}"`;
-      cmd = `${FF} -y ${inputs}${aTrim} -filter_complex "${filter}" -map "[v]" -map "${totalAnim}:a" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`;
+      const fadeStart = Math.max(0, durSec - 2).toFixed(3);
+      // smooth fade out last 2s (no abrupt cut) — uses full ffmpeg afade
+      cmd = `${FF} -y ${inputs}${aTrim} -filter_complex "${filter};[${totalAnim}:a]afade=t=out:st=${fadeStart}:d=2:curve=tri[aout]" -map "[v]" -map "[aout]" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`;
     }
     sh(cmd);
   } else {
@@ -311,7 +332,8 @@ for(const reel of cfg.reels){
     if(musicDur && reel.musicSrc && fs.existsSync(reel.musicSrc)){
       const withAudio = outPath.replace(".mp4","-with-audio.mp4");
       // need to re-encode video from concat + add audio
-      sh(`${FF} -y -f concat -safe 0 -i ${listPath} -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`);
+      const fadeStart2 = Math.max(0, durSec - 2).toFixed(3);
+      sh(`${FF} -y -f concat -safe 0 -i ${listPath} -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}" -c:v libx264 -pix_fmt yuv420p -r ${fps} -af "afade=t=out:st=${fadeStart2}:d=2:curve=tri" -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`);
     } else {
       sh(`${FF} -y -f concat -safe 0 -i ${listPath} -c:v libx264 -pix_fmt yuv420p -r ${fps} -movflags +faststart -t ${durSec} ${outPath}`);
     }
