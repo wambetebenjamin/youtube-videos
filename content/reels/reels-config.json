@@ -1,62 +1,54 @@
 {
-  "note": "Git-organised reels — use TikTok audio extracted to public/reels/music/. Each reel depicts current track length (full song later if licensed). No people-mids; AI slides or new stock only.",
+  "note": "Authentic TikTok caption styles — no AI captions. Each entry uses style from your uploads.",
   "output": { "reelsDir": "out/reels", "youtubeDir": "out/youtube", "fps": 30, "minFrames": 1800 },
-  "structure": {
-    "youtube": "public/youtube/raw/ + public/raw-footage/ → out/youtube/ (1920x1080)",
-    "reels": "public/reels/{raw,slides,music}/ → out/reels/ (1080x1920) — kept distinct in git"
-  },
   "reels": [
     {
       "id": "wisdom-01-storm",
       "variant": "wisdom",
-      "hookBadge": "WISDOM — 60S",
+      "hookBadge": "WISDOM",
       "headline": "The Storm Didn't Come to Drown You",
-      "bodyLines": ["The storm came to show you who calms it.", "Peace is not the absence of waves.", "It's the presence of His voice over them.", "Keep rowing — He is in the boat."],
-      "ctaText": "Follow for daily wisdom →",
-      "accentColor": "#D4AF37",
+      "bodyLines": ["The storm came to show you who calms it.", "Peace is not the absence of waves.", "It's the presence of His voice over them."],
+      "ctaText": "Follow for wisdom",
+      "accentColor": "#ffffff",
+      "captionStyle": "centered-bold",
       "musicSrc": "public/reels/music/1000853416.mp3",
-      "musicNote": "TikTok 1000853416 (215s) — longest track, will loop/cut to 60s+",
-      "durationFrames": 1800,
-      "slides": []
+      "durationFrames": 1800
     },
     {
       "id": "wisdom-02-still",
       "variant": "wisdom",
       "hookBadge": "WISDOM",
       "headline": "Be Still — He Is Already Working",
-      "bodyLines": ["You don't have to strive to be kept.", "Stillness is not weakness — it's trust.", "The same wind that shakes you obeys Him."],
-      "ctaText": "Save this wisdom →",
-      "accentColor": "#D4AF37",
+      "bodyLines": ["Stillness is not weakness — it's trust.", "The same wind that shakes you obeys Him."],
+      "ctaText": "Save this wisdom",
+      "accentColor": "#ffffff",
+      "captionStyle": "samurai-quote",
       "musicSrc": "public/reels/music/e29c971c7fd7d79c83f7bdb2603e6883.mp3",
-      "musicNote": "TikTok e29c971c (125s)",
-      "durationFrames": 1800,
-      "slides": []
+      "durationFrames": 1800
     },
     {
       "id": "motivation-01-becoming",
       "variant": "motivation",
-      "hookBadge": "MOTIVATION — 60S",
+      "hookBadge": "",
       "headline": "You Are Not Late — You Are Becoming",
-      "bodyLines": ["Comparison steals speed.", "Your chapter 3 is not their chapter 10.", "Stay the course — consistency beats intensity.", "Your time is not late. It's being formed."],
-      "ctaText": "Save + share →",
-      "accentColor": "#38bdf8",
+      "bodyLines": ["Comparison steals speed.", "Your chapter 3 is not their chapter 10.", "Stay the course — consistency beats intensity."],
+      "ctaText": "Share this",
+      "accentColor": "#ffffff",
+      "captionStyle": "minimal-lower",
       "musicSrc": "public/reels/music/1000853360.mp3",
-      "musicNote": "TikTok 1000853360 (48s) — depict 48s now, full song later",
-      "durationFrames": 1800,
-      "slides": []
+      "durationFrames": 1800
     },
     {
       "id": "motivation-02-rise",
       "variant": "motivation",
       "hookBadge": "MOTIVATION",
       "headline": "Get Up — Grace Meets Effort",
-      "bodyLines": ["You won't feel ready. Move anyway.", "Small obedience opens big doors.", "Rise — heaven is watching your yes."],
-      "ctaText": "Share with someone →",
-      "accentColor": "#38bdf8",
+      "bodyLines": ["You won't feel ready. Move anyway.", "Small obedience opens big doors."],
+      "ctaText": "Follow for motivation",
+      "accentColor": "#ffffff",
+      "captionStyle": "centered-bold",
       "musicSrc": "public/reels/music/1000853359.mp3",
-      "musicNote": "TikTok 1000853359 (24s) — depict 24s now",
-      "durationFrames": 1800,
-      "slides": []
+      "durationFrames": 1800
     }
   ]
 }
