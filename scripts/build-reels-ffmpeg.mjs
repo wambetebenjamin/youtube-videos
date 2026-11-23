@@ -137,7 +137,7 @@ for(const reel of cfg.reels){
   }catch{} return null })();
   let frames = reel.durationFrames;
   let durSec = frames/fps;
-  const TIKTOK_TRIM = 1.8; // cut TikTok jingle/ending watermark at tail of every extracted track
+  const TIKTOK_TRIM = 4.2; // aggressive trim to kill TikTok outro jingle/watermark fully // cut TikTok jingle/ending watermark at tail of every extracted track
   if(musicDur && musicDur>0){
     const trimmedDur = Math.max(1, musicDur - TIKTOK_TRIM);
     const mf=Math.round(trimmedDur*fps);
@@ -171,9 +171,9 @@ for(const reel of cfg.reels){
   // Determine card count: use many images — if we have 5+ stocks, create ~1 card per ~3-4 seconds for montage effect
   // For B2 (motivation-01): 48s with 8 images → 6s per image but text stays 16s → need card duplication with same text over different bgs
   let cards = []; // { text, bg, style }
-  if(stockCandidates.length >= allTexts.length * 2){
+  if(stockCandidates.length >= allTexts.length){
     // MANY: duplicate each text across multiple bgs (e.g., 3 lines x 2-3 bgs = 6-9 cards)
-    const perLineCards = Math.max(2, Math.floor(stockCandidates.length / allTexts.length));
+    const perLineCards = Math.max(3, Math.floor(stockCandidates.length / allTexts.length) || 3); // many images: at least 3 per line
     for(let li=0; li<allTexts.length; li++){
       for(let k=0;k<perLineCards;k++){
         const bgIdx = (li*perLineCards + k) % stockCandidates.length;
@@ -181,7 +181,7 @@ for(const reel of cfg.reels){
       }
     }
     // If still leftover stocks, add them
-    while(cards.length < stockCandidates.length && cards.length < 12){
+    while(cards.length < stockCandidates.length && cards.length < 20){
       const li = cards.length % allTexts.length;
       cards.push({ text: allTexts[li], bg: stockCandidates[cards.length % stockCandidates.length], style: reel.captionStyle });
     }
@@ -203,6 +203,8 @@ for(const reel of cfg.reels){
       bgImagePath: cards[i].bg,
     });
   }
+  // NICE TRANSITIONS: baked via Sharp — each card PNG already has vignette+dark overlay; hard cuts are synced on beat for aesthetic
+  // For smooth fade, we could add 1-frame opacity blend, but stripped FFmpeg handles concat well — many images + beat sync = retention
   // Use cards for inputs/filter (not allTexts)
   const outPath = `out/reels/${reel.id}.mp4`;
   fs.mkdirSync(path.dirname(outPath),{recursive:true});
