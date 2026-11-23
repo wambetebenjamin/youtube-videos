@@ -6,14 +6,26 @@ jobs:
     permissions: { contents: write }
     steps:
       - uses: actions/checkout@v4
-        with: { ref: arena/d58bab72-youtube-videos }
+        with:
+          ref: arena/d58bab72-youtube-videos
+
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm ci && pip install imageio-ffmpeg
-      - env: { PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }} }
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm ci && pip install imageio-ffmpeg
+
+      - name: Fetch Pixabay portrait videos (content/music intact)
+        env:
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
         run: node scripts/fetch-pixabay-videos.mjs --out public/reels/raw/
-      - run: node scripts/build-reels-VIDEO-bg.mjs
-      - run: |
+
+      - name: Build reels (true motion + 2s fading audio)
+        run: node scripts/build-reels-VIDEO-bg.mjs
+
+      - name: Commit new stock & reels
+        run: |
           git config user.name arena-bot
           git config user.email arena@bot
           git add public/reels/raw/pixabay-*.mp4 out/reels-video/*.mp4
