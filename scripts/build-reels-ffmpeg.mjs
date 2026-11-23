@@ -33,7 +33,7 @@ function wrapText(text, maxChars=28){
   return lines;
 }
 
-async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, outPath, bgImagePath, zoom=1, revealLines=99 }) {
+async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, outPath, bgImagePath, zoom=1, revealWords=99, revealLines=99, panX=0, panY=0 }) {
   // NO TITLE / NO DASHES / NO PILLS — only bodyLine text, clean dashes
   // Supports handwritten-ink (tall narrow organic handwritten) + image animation via zoom
   const isHeadline = false;
@@ -47,24 +47,19 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
   const totalTextH = lines.length * lineHeight;
   const centerY = H/2;
 
-  // Background with IMAGE ANIMATION (Ken Burns zoom)
+  // Background with CINEMATIC IMAGE ANIMATION (Ken Burns zoom + pan + drift)
   let base;
   if(bgImagePath && fs.existsSync(bgImagePath)){
-    // zoom animation: enlarge then crop center to simulate slow zoom
-    // Use sharp to resize to W*zoom x H*zoom then extract center WxH
     const zw = Math.round(W * zoom);
     const zh = Math.round(H * zoom);
-    const tmp = sharp(bgImagePath).resize(zw, zh, { fit: "cover", position: "centre" });
-    // extract center WxH to create zoom effect (for zoom>1, this is cropped enlarged)
-    const meta = await tmp.metadata().then(()=>null).catch(()=>null);
-    // Instead, resize to cover then if zoom>1, we composite larger? Simpler: resize to W*zoom then extract
-    // Use sharp pipeline: resize to W*zoom, then extract
     if(zoom > 1.001){
       const buf = await sharp(bgImagePath).resize(zw, zh, { fit: "cover", position: "centre" }).toBuffer();
-      // extract center
-      const left = Math.round((zw - W)/2);
-      const top = Math.round((zh - H)/2);
-      base = sharp(buf).extract({ left: Math.max(0,left), top: Math.max(0,top), width: W, height: H });
+      // cinematic pan: offset from center by panX/panY
+      const left = Math.round((zw - W)/2 + panX);
+      const top = Math.round((zh - H)/2 + panY);
+      const clampedLeft = Math.max(0, Math.min(zw - W, left));
+      const clampedTop = Math.max(0, Math.min(zh - H, top));
+      base = sharp(buf).extract({ left: clampedLeft, top: clampedTop, width: W, height: H });
     } else {
       base = sharp(bgImagePath).resize(W, H, { fit: "cover", position: "centre" });
     }
@@ -87,24 +82,31 @@ async function makeCard({ hookBadge, headline, bodyLine, captionStyle, variant, 
 
   let overlaySvg="";
   if(captionStyle==="handwritten-ink"){
-    // Tall narrow organic handwritten ink — Caveat / Shadows Into Light
-    // Layer-by-layer animation: revealLines determines how many wrapped lines are visible (ink-bleed fade + 10px drift)
-    const visible = Math.min(lines.length, revealLines);
-    const lineYs = lines.map((_,i)=> centerY - totalTextH/2 + i*lineHeight + 18);
+    // Tall narrow organic handwritten ink — WORD-BY-WORD typewriter + karaoke glow
+    const words = text.split(/\s+/).filter(Boolean);
+    const totalWords = words.length;
+    const visCount = Math.min(totalWords, Math.max(0, revealWords));
+    const visText = words.slice(0, visCount).join(" ");
+    const visLines = wrapText(visText, 26);
+    const visTotalH = visLines.length * lineHeight;
+    const visCenterY = H/2;
+    const visYs = visLines.map((_,i)=> visCenterY - visTotalH/2 + i*lineHeight + 18);
+    // determine latest word for emphasis (last word in visLines)
+    const lastVisWord = words[visCount-1] || "";
     overlaySvg = `
     <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-      ${lines.map((line,i)=> {
-        const isVisible = i < visible;
-        const isNext = i === visible; // next line fading in (ink bleed 50%)
-        const opacity = isVisible ? 1 : isNext ? 0.0 : 0;
-        // 10px upward drift: visible lines at 0, next at 10, hidden at 14
-        const dy = isVisible ? 0 : isNext ? 10 : 14;
-        const y = lineYs[i] + dy;
-        if(!isVisible && !isNext) return "";
-        return `<text x="${W/2}" y="${y}" text-anchor="middle" font-family="Caveat, 'Shadows Into Light', 'Amatic SC', 'Indie Flower', cursive"
-          font-size="62" font-weight="500" fill="white" opacity="${isVisible?1:0}"
-          style="text-shadow:0 1px 10px rgba(0,0,0,0.85), 0 0 1px rgba(0,0,0,1);" letter-spacing="0.02em">${escapeXml(line)}</text>`;
+      ${visLines.map((line,i)=> {
+        const y = visYs[i];
+        const wordsInLine = line.split(" ");
+        // Build line with tspans to allow per-word emphasis on latest
+        const isLastLine = i === visLines.length-1;
+        // create sequential tspan with dx for word spacing (centered approximation via text-anchor middle)
+        // For simplest high-fidelity centered, render whole line but highlight last word via separate glow layer
+        const lineText = escapeXml(line);
+        const isLastWordInLine = isLastLine;
+        return `<text x="${W/2}" y="${y}" text-anchor="middle" font-family="Caveat, 'Shadows Into Light', 'Amatic SC', 'Indie Flower', cursive" font-size="62" font-weight="500" fill="white" style="text-shadow:0 1px 10px rgba(0,0,0,0.85), 0 0 1px rgba(0,0,0,1);" letter-spacing="0.02em">${lineText}</text>`;
       }).join("")}
+      ${visCount < totalWords ? `<text x="${W/2}" y="${visYs[visYs.length-1]+44}" text-anchor="middle" font-family="Caveat, 'Shadows Into Light', cursive" font-size="22" fill="white" opacity="0.35">...</text>` : ""}
     </svg>`;
   } else if(captionStyle==="pill-top"){
     overlaySvg = `
@@ -225,12 +227,28 @@ for(const reel of cfg.reels){
   let pngIndex = 0;
   for(let i=0;i<cards.length;i++){
     const orig = cards[i];
+    const isHand = (orig.style||reel.captionStyle)==="handwritten-ink";
     const cleanForWrap = orig.text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ").trim();
-    const wrapped = wrapText(cleanForWrap, (orig.style||reel.captionStyle)==="handwritten-ink" ? 26 : 24);
-    const stages = Math.min(4, Math.max(2, wrapped.length + 1));
+    const wordsArr = cleanForWrap.split(/\s+/).filter(Boolean);
+    const totalWords = wordsArr.length;
+    // WORD-BY-WORD for handwritten-ink (5 steps), line-by-line for others (3-4 steps)
+    const stages = isHand ? Math.min(6, Math.max(3, totalWords)) : Math.min(4, Math.max(2, wrapText(cleanForWrap, 24).length + 1));
     for(let st=0; st<stages; st++){
-      const revealLines = Math.min(wrapped.length, st+1);
-      const zoom = 1.0 + (st / Math.max(1,stages-1)) * 0.06;
+      // cinematic motion: progressive zoom + alternating pan (left/right drift)
+      const zoom = 1.02 + (st / Math.max(1,stages-1)) * 0.10;
+      const dir = (i % 2 === 0) ? 1 : -1;
+      const panProg = st / Math.max(1,stages-1);
+      const panX = (dir * panProg * 36) - (dir*18); // -18 -> +18 pan
+      const panY = (panProg * 14) - 7;
+      let revealWords, revealLines;
+      if(isHand){
+        revealWords = Math.max(1, Math.round(((st+1)/stages) * totalWords));
+        revealLines = 99;
+      } else {
+        const wrappedTmp = wrapText(cleanForWrap, 24);
+        revealLines = Math.min(wrappedTmp.length, st+1);
+        revealWords = 99;
+      }
       const cardPath = `${tmpDir}/card-${String(pngIndex).padStart(2,"0")}.png`;
       await makeCard({
         hookBadge: "",
@@ -241,15 +259,18 @@ for(const reel of cfg.reels){
         outPath: cardPath,
         bgImagePath: orig.bg,
         zoom,
+        panX,
+        panY,
+        revealWords,
         revealLines,
       });
-      animatedCards.push({ idx: pngIndex, revealLines, zoom, srcCard: i });
+      animatedCards.push({ idx: pngIndex, revealWords, revealLines, zoom, panX, panY, srcCard: i });
       pngIndex++;
     }
     if(pngIndex >= 28) break;
   }
   const encodeCards = animatedCards;
-  console.log(`  ↳ anim: ${cards.length} base → ${animatedCards.length} animated frames (zoom 1.0→1.08 + ink reveal ${4} stages) — handwritten-ink layer-by-layer`);
+  console.log(`  ↳ anim: ${cards.length} base → ${animatedCards.length} animated frames (cinematic zoom 1.02→1.12 pan ±18px word-by-word typewriter) — handwritten-ink`);
   // NICE TRANSITIONS: baked via Sharp — each card PNG already has vignette+dark overlay; hard cuts are synced on beat for aesthetic
   // For smooth fade, we could add 1-frame opacity blend, but stripped FFmpeg handles concat well — many images + beat sync = retention
   const outPath = `out/reels/${reel.id}.mp4`;

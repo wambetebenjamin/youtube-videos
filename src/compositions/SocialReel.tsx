@@ -84,20 +84,26 @@ function wrapLines(text:string, maxChars=26){
   return lines;
 }
 
-// Handwritten Ink — tall narrow organic handwritten (Shadows Into Light / Caveat / Amatic SC / Indie Flower)
-// Prompt Keywords: tall narrow handwritten ink font, organic casual fine-liner script, imperfect hand-lettered typography, thin dark charcoal ink
-// Layer-by-layer animation: 1.0s line1, 1.8s line2, 2.6s line3, 3.5s footer — ink-bleed fade + 10px upward drift, paper-grain Multiply blend
+// Handwritten Ink — WORD-BY-WORD typewriter with karaoke glow + emphasis
+// Prompt Keywords: tall narrow handwritten ink font, organic casual fine-liner script
 const HandwrittenInk: React.FC<{ text: string; localFrame: number; fps: number }> = ({ text, localFrame, fps }) => {
   const clean = text.replaceAll("—"," ").replaceAll("–"," ").replaceAll("-", " ").replace(/\s+/g," ").trim();
-  const lines = wrapLines(clean, 26);
+  const words = clean.split(" ").filter(Boolean);
+  const WORD_DELAY = 8;
+  const curWordIdx = Math.floor(Math.max(0, localFrame - 18) / WORD_DELAY);
+  const visibleWords = Math.min(words.length, Math.max(0, curWordIdx + 1));
+  const visibleText = words.slice(0, visibleWords).join(" ");
+  const lines = wrapLines(visibleText, 26);
+  // emphasis glow reserved for future keyword Pop (disabled for now to preserve spacing)
   return (
     <div style={{ position:"absolute", top:"44%", left:40, right:40, transform:"translateY(-50%)", textAlign:"center" }}>
       {lines.map((line, i) => {
-        const delay = 30 + i*24; // 1.0s, 1.8s, 2.6s ...
-        const prog = spring({ frame: Math.max(0, localFrame - delay), fps, config:{ damping:18, stiffness:120 }});
-        const opacity = prog;
+        const lineDelay = 18 + i*6;
+        const prog = spring({ frame: Math.max(0, localFrame - lineDelay), fps, config:{ damping:18, stiffness:120 }});
         const y = interpolate(prog, [0,1], [10, 0]);
+        const opacity = prog;
         const blur = interpolate(prog, [0,1], [2, 0]);
+        const wordsInLine = line.split(" ");
         return (
           <div key={i} style={{ opacity, transform: `translateY(${y}px)`, filter: `blur(${blur}px)`, willChange:"transform,opacity" }}>
             <p style={{
@@ -109,17 +115,16 @@ const HandwrittenInk: React.FC<{ text: string; localFrame: number; fps: number }
               textShadow: "0 1px 10px rgba(0,0,0,0.85), 0 0 1px rgba(0,0,0,1)",
               letterSpacing: "0.02em",
               margin: "8px 0",
-              // ink-bleed subtle: slightly heavier on entrance via textShadow
             }}>
-              {line}
+              {wordsInLine.join(" ")}
             </p>
           </div>
         );
       })}
-      {/* paper grain hint — faint texture overlay handled in parent via Multiply */}
     </div>
   );
 };
+
 
 // Authentic TikTok caption styles — replicating real videos, no AI effects
 const CaptionStyles = {
@@ -257,12 +262,15 @@ const SlideDeck: React.FC<{ slides: { src: string }[]; variant: string }> = ({ s
   const perSlide = Math.floor(durationInFrames / slides.length);
   const active = Math.min(slides.length - 1, Math.floor(frame / perSlide));
   const local = frame % perSlide;
-  const zoom = interpolate(local, [0, perSlide], [1.0, 1.08], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const ambientPan = interpolate(local, [0, perSlide], [-8, 8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const driftY = interpolate(local, [0, perSlide], [-6, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const dir = active % 2 === 0 ? 1 : -1;
+  const zoom = interpolate(local, [0, perSlide], [1.04, 1.12], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const panProgress = interpolate(local, [0, perSlide], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const ambientPan = (dir * panProgress * 28) - (dir*14);
+  const driftY = interpolate(local, [0, perSlide], [-10, 8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const tilt = interpolate(local, [0, perSlide], [-0.6*dir, 0.6*dir], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: "#070a12" }}>
-      <img src={slides[active]?.src} alt="" style={{ width: "108%", height: "108%", objectFit: "cover", transform: `scale(${zoom}) translate(${ambientPan}px, ${driftY}px)`, filter: "contrast(1.04) saturate(0.96) brightness(0.96)" }} />
+      <img src={slides[active]?.src} alt="" style={{ width: "112%", height: "112%", objectFit: "cover", transform: `scale(${zoom}) translate(${ambientPan}px, ${driftY}px) rotate(${tilt}deg)`, filter: "contrast(1.08) saturate(1.02) brightness(0.98)" }} />
       <AbsoluteFill style={{ background: "rgba(0,0,0,0.30)" }} />
       {/* subtle vignette + paper grain multiply for ink absorption */}
       <AbsoluteFill style={{ background: `radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.38))` }} />
