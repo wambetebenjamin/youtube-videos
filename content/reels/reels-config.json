@@ -1,0 +1,43 @@
+{
+  "note": "Social Reels — separated from YouTube. Each reel ≥60s (1800 frames @30fps). If licensed track shorter, we render to track length and log need-full-song. AI slides / new stock only — no people-mids from uploaded TikToks.",
+  "output": {
+    "reelsDir": "out/reels",
+    "youtubeDir": "out/youtube",
+    "fps": 30,
+    "minFrames": 1800
+  },
+  "drive": {
+    "reelsFolderName": "Social Media Reels — Wisdom + Motivation (9:16)",
+    "youtubeFolderId": "1dCzAYOqa6dihXSaJO2KFaTRVfHYuzcH2"
+  },
+  "tracks": {
+    "wisdom_example": "public/reels/music/wisdom-bed.mp3",
+    "motivation_example": "public/reels/music/motivation-bed.mp3"
+  },
+  "reels": [
+    {
+      "id": "wisdom-01-storm",
+      "variant": "wisdom",
+      "hookBadge": "WISDOM — 60S",
+      "headline": "The Storm Didn't Come to Drown You",
+      "bodyLines": ["The storm came to show you who calms it.", "Peace is not the absence of waves.", "It's the presence of His voice over them.", "Keep rowing — He is in the boat."],
+      "ctaText": "Follow for daily wisdom →",
+      "accentColor": "#D4AF37",
+      "musicSrc": "public/reels/music/wisdom-bed.mp3",
+      "durationFrames": 1800,
+      "slides": []
+    },
+    {
+      "id": "motivation-01-becoming",
+      "variant": "motivation",
+      "hookBadge": "MOTIVATION — 60S",
+      "headline": "You Are Not Late — You Are Becoming",
+      "bodyLines": ["Comparison steals speed.", "Your chapter 3 is not their chapter 10.", "Stay the course — consistency beats intensity.", "Your time is not late. It's being formed."],
+      "ctaText": "Save + share →",
+      "accentColor": "#38bdf8",
+      "musicSrc": "public/reels/music/motivation-bed.mp3",
+      "durationFrames": 1800,
+      "slides": []
+    }
+  ]
+}

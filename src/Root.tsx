@@ -21,10 +21,17 @@ import {
   defaultPeaceBeStillProps,
   peaceBeStillSchema,
 } from "./compositions/PeaceBeStillV6";
+import {
+  SocialReel,
+  socialReelSchema,
+  defaultWisdomProps,
+  defaultMotivationProps,
+} from "./compositions/SocialReel";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* ——— YOUTUBE — 1920x1080, out/youtube/ ——— */}
       <Composition
         id="YouTubeVideo"
         component={YouTubeVideo}
@@ -35,6 +42,30 @@ export const RemotionRoot: React.FC = () => {
         schema={youTubeVideoSchema}
         defaultProps={defaultYouTubeVideoProps}
       />
+      {/* ——— SOCIAL REELS — 1080x1920, out/reels/, ≥60s, wisdom & motivation ———
+           DISTINCT from YouTube: vertical, AI slides, music-length aware,
+           no people-mids stock, separate folder so exports never mix. */}
+      <Composition
+        id="SocialReelWisdom"
+        component={SocialReel}
+        durationInFrames={1800}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={socialReelSchema}
+        defaultProps={defaultWisdomProps}
+      />
+      <Composition
+        id="SocialReelMotivation"
+        component={SocialReel}
+        durationInFrames={1800}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={socialReelSchema}
+        defaultProps={defaultMotivationProps}
+      />
+      {/* Legacy VerticalReel kept for compat — use SocialReel for new work */}
       <Composition
         id="VerticalReel"
         component={VerticalReel}

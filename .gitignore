@@ -20,3 +20,17 @@ skills-lock.json
 .env
 .env.*
 !.env.example
+
+# Social reels reference (uploaded TikToks) — not source
+reels-reference/
+*.blend
+*.blend1
+public/reels/slides/hdri/
+public/reels/music/*
+!public/reels/music/.gitkeep
+
+# Separate outputs — already out/* ignored, but keep subfolders explicit
+references/blender-mcp/mcp-for-blender/
+references/blender-mcp/blender-mcp-enhanced/
+references/blender-mcp/polyhavenassets/
+references/blender-mcp/Public-API/
