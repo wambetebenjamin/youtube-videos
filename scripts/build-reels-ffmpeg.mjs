@@ -137,12 +137,14 @@ for(const reel of cfg.reels){
   }catch{} return null })();
   let frames = reel.durationFrames;
   let durSec = frames/fps;
+  const TIKTOK_TRIM = 1.8; // cut TikTok jingle/ending watermark at tail of every extracted track
   if(musicDur && musicDur>0){
-    const mf=Math.round(musicDur*fps);
+    const trimmedDur = Math.max(1, musicDur - TIKTOK_TRIM);
+    const mf=Math.round(trimmedDur*fps);
     if(mf < 1800) {
-      console.warn(`⚠ ${reel.id}: music ${musicDur.toFixed(2)}s — rendering to track length ${mf} frames`);
-      frames=mf; durSec=musicDur;
-    } else { frames=mf; durSec=musicDur; console.log(`ℹ ${reel.id}: using music ${musicDur.toFixed(2)}s`); }
+      console.warn(`⚠ ${reel.id}: music ${musicDur.toFixed(2)}s → trimmed ${trimmedDur.toFixed(2)}s (-${TIKTOK_TRIM}s TikTok ending) — rendering ${mf} frames`);
+      frames=mf; durSec=trimmedDur;
+    } else { frames=mf; durSec=trimmedDur; console.log(`ℹ ${reel.id}: music ${musicDur.toFixed(2)}s → ${trimmedDur.toFixed(2)}s (trimmed TikTok ending)`); }
   } else {
     console.log(`ℹ ${reel.id}: no music — rendering silent ${durSec}s`);
   }
@@ -151,45 +153,78 @@ for(const reel of cfg.reels){
   if(reel.lut) console.log(`  ↳ LUT: ${reel.lut} (unified grade: teal-orange/purple/desaturated-dark)`);
   const tmpDir = `out/reels/tmp-${reel.id}`;
   fs.mkdirSync(tmpDir,{recursive:true});
-  const perLine = Math.floor(frames / reel.bodyLines.length);
-  // NO TITLE: only bodyLines as captions (per user: stop displaying title)
+  // NO TITLE: only bodyLines as captions
   const allTexts = reel.bodyLines && reel.bodyLines.length ? reel.bodyLines : [reel.headline];
-  // Beat-synced cuts: for B2 lyric montage, ideally align perText to beats from scripts/reels/analyze-beats.mjs (librosa fallback-phrase)
-  const perText = Math.floor(frames / allTexts.length);
-  // Resolve stock images for this reel (public/reels/raw/* or slides/*) — cycle per card for montage
+  // MANY IMAGES: use real video-like motion — each bodyLine gets multiple stock images for montage (B2 needs 6-8 clips, B1/B3 2-4)
+  // Build card list: for each bodyLine, allocate multiple cards if we have many stocks (beat-synced cuts)
   const stockCandidates = (()=>{
     const dirs=["public/reels/raw","public/reels/slides"];
     const files=[];
     for(const d of dirs){ try{ if(fs.existsSync(d)) files.push(...fs.readdirSync(d).filter(f=>/\.(jpg|jpeg|png|webp)$/i.test(f)).map(f=>`${d}/${f}`)); }catch{} }
-    // prefer reel-specific by id prefix, else any portrait
     const byReel=files.filter(f=>f.includes(reel.id));
-    return (byReel.length?byReel:files);
+    const pool = (byReel.length?byReel:files);
+    // shuffle pool for variety but keep deterministic per reel (so same image not always first)
+    // simple deterministic shuffle by reel id hash
+    if(pool.length>1){ const seed=[...reel.id].reduce((a,c)=>a+c.charCodeAt(0),0); pool.sort((a,b)=> (a.charCodeAt(0)*seed)%7 - (b.charCodeAt(0)*seed)%7); }
+    return pool;
   })();
-  if(stockCandidates.length) console.log(`  ↳ stock: ${stockCandidates.slice(0,4).join(", ")} (cycling ${stockCandidates.length} across ${allTexts.length} cards)`);
-  else console.log(`  ↳ no stock in public/reels/raw or slides — using dark cinematic + vignette (fetch with scripts/reels/fetch-pexels.mjs or add images)`);
-  for(let i=0;i<allTexts.length;i++){
+  // Determine card count: use many images — if we have 5+ stocks, create ~1 card per ~3-4 seconds for montage effect
+  // For B2 (motivation-01): 48s with 8 images → 6s per image but text stays 16s → need card duplication with same text over different bgs
+  let cards = []; // { text, bg, style }
+  if(stockCandidates.length >= allTexts.length * 2){
+    // MANY: duplicate each text across multiple bgs (e.g., 3 lines x 2-3 bgs = 6-9 cards)
+    const perLineCards = Math.max(2, Math.floor(stockCandidates.length / allTexts.length));
+    for(let li=0; li<allTexts.length; li++){
+      for(let k=0;k<perLineCards;k++){
+        const bgIdx = (li*perLineCards + k) % stockCandidates.length;
+        cards.push({ text: allTexts[li], bg: stockCandidates[bgIdx], style: reel.captionStyle });
+      }
+    }
+    // If still leftover stocks, add them
+    while(cards.length < stockCandidates.length && cards.length < 12){
+      const li = cards.length % allTexts.length;
+      cards.push({ text: allTexts[li], bg: stockCandidates[cards.length % stockCandidates.length], style: reel.captionStyle });
+    }
+  } else {
+    // Normal: one card per line
+    for(let i=0;i<allTexts.length;i++) cards.push({ text: allTexts[i], bg: stockCandidates.length ? stockCandidates[i % stockCandidates.length] : null, style: reel.captionStyle });
+  }
+  if(stockCandidates.length) console.log(`  ↳ MANY IMAGES: ${stockCandidates.length} stocks → ${cards.length} cards (perLine ~${Math.ceil(cards.length/allTexts.length)}) — ${cards.slice(0,3).map(c=>c.bg.split('/').pop()).join(', ')}...`);
+  else console.log(`  ↳ no stock in public/reels/raw or slides — using dark cinematic`);
+  for(let i=0;i<cards.length;i++){
     const cardPath = `${tmpDir}/card-${String(i).padStart(2,"0")}.png`;
-    const bgForCard = stockCandidates.length ? stockCandidates[i % stockCandidates.length] : null;
     await makeCard({
       hookBadge: "",
       headline: "",
-      bodyLine: allTexts[i],
-      captionStyle: reel.captionStyle || "centered-bold",
+      bodyLine: cards[i].text,
+      captionStyle: cards[i].style || "centered-bold",
       variant: reel.variant,
       outPath: cardPath,
-      bgImagePath: bgForCard,
+      bgImagePath: cards[i].bg,
     });
   }
+  // Use cards for inputs/filter (not allTexts)
   const outPath = `out/reels/${reel.id}.mp4`;
   fs.mkdirSync(path.dirname(outPath),{recursive:true});
-  const inputs = allTexts.map((_,i)=> `-loop 1 -t ${(perText/fps).toFixed(3)} -i ${path.resolve(`${tmpDir}/card-${String(i).padStart(2,"0")}.png`)}`).join(" ");
-  const vLabels = allTexts.map((_,i)=> `[${i}:v]scale=${W}:${H}:flags=lanczos,format=yuv420p[v${i}]`).join(";");
-  const concatInputs = allTexts.map((_,i)=> `[v${i}]`).join("");
-  const filter = `${vLabels};${concatInputs}concat=n=${allTexts.length}:v=1:a=0[v]`;
+  const perText = Math.floor(frames / cards.length);
+  const clipDur = perText / fps;
+  const inputs = cards.map((_,i)=> `-loop 1 -t ${clipDur.toFixed(3)} -i ${path.resolve(`${tmpDir}/card-${String(i).padStart(2,"0")}.png`)}`).join(" ");
+  // Amazing transitions: use concat with per-clip zoom + color grade baked via Sharp + simple crossfade via xfade if available
+  // Remotion FFmpeg is stripped (no settb/xfade), so we simulate transitions with concat + fade effects
+  // Keep concat for compatibility, but add zoom motion per card via pre-scaled images + subtle color grade via eq
+  let filter;
+  const vLabels = cards.map((_,i)=> `[${i}:v]scale=${W}:${H}:flags=lanczos,format=yuv420p,format=yuv420p[v${i}]`).join(";");
+  const concatIn = cards.map((_,i)=>`[v${i}]`).join("");
+  // Amazing effects baked into PNG (vignette+dark overlay) + LUT via Sharp is not possible with stripped FFmpeg
+  // Keep transitions as hard concat for now (stripped build has no xfade/fade/eq) — zoom/pan simulated by Sharp pre-scale
+  filter = `${vLabels};${concatIn}concat=n=${cards.length}:v=1:a=0[v]`;
+  // Use trimmed audio duration (durSec already trimmed) — cut TikTok jingle, no afade (stripped FFmpeg has no afade, use volume fade via -af if needed via external)
   let cmd = `${FF} -y ${inputs} -filter_complex "${filter}" -map "[v]" -c:v libx264 -pix_fmt yuv420p -r ${fps} -movflags +faststart -t ${durSec} ${outPath}`;
   if(musicDur && reel.musicSrc && fs.existsSync(reel.musicSrc)){
     const withAudio = outPath.replace(".mp4","-with-audio.mp4");
-    cmd = `${FF} -y ${inputs} -i ${reel.musicSrc} -filter_complex "${filter}" -map "[v]" -map ${allTexts.length}:a -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`;
+    const aTrim = ` -ss 0 -t ${durSec.toFixed(3)} -i "${reel.musicSrc}"`;
+    // trim TikTok ending via -t (no afade — stripped build, audio fade done via volume filter not available, so hard cut is fine)
+    cmd = `${FF} -y ${inputs}${aTrim} -filter_complex "${filter}" -map "[v]" -map "${cards.length}:a" -c:v libx264 -pix_fmt yuv420p -r ${fps} -c:a aac -b:a 192k -shortest -movflags +faststart -t ${durSec} ${withAudio} && mv ${withAudio} ${outPath}`;
   }
   sh(cmd);
   const probe = execSync(`${FP} -v error -show_entries stream=width,height,duration -of default=nw=1 ${outPath}`).toString();
