@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Range probe</title></head>
+  <body>
+    <div id="status">loading</div>
+    <script>
+      (async () => {
+        const targets = {
+          usercontent: 'https://drive.usercontent.google.com/download?id=1t4QC4eTs338axbvagfpRHDfpZOu9BKp5&export=download&confirm=t',
+          uc: 'https://drive.google.com/uc?export=download&id=1t4QC4eTs338axbvagfpRHDfpZOu9BKp5&confirm=t'
+        };
+        const parts = [];
+        for (const [name, target] of Object.entries(targets)) {
+          try {
+            const proxy = 'https://proxy.cors.dev/?url=' + encodeURIComponent(target);
+            const res = await fetch(proxy, {
+              method: 'GET',
+              credentials: 'omit',
+              cache: 'no-store',
+              headers: { Range: 'bytes=0-1023' }
+            });
+            const buf = await res.arrayBuffer();
+            const bytes = new Uint8Array(buf);
+            const hex = Array.from(bytes.slice(0, 16)).map(b => b.toString(16).padStart(2, '0')).join('');
+            parts.push(name + ':' + res.status + ':len=' + bytes.length + ':cr=' + (res.headers.get('content-range') || '') + ':ct=' + (res.headers.get('content-type') || '') + ':hex=' + hex);
+          } catch (err) {
+            parts.push(name + ':ERR:' + String(err));
+          }
+        }
+        const done = document.createElement('div');
+        done.id = 'done';
+        done.textContent = parts.join(' | ');
+        document.body.appendChild(done);
+      })();
+    </script>
+  </body>
+</html>
