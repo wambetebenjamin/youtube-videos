@@ -1,0 +1,144 @@
+import React from "react";
+import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import type { CalloutEvent, CalloutType } from "../data/editPlan";
+import {
+  BooksDoodle,
+  CrossDoodle,
+  CrownDoodle,
+  LightbulbDoodle,
+  QuestionDoodle,
+  ScreenDoodle,
+  StarDoodle,
+  TrophyDoodle,
+  type DoodleProps,
+} from "./FlatDoodles";
+
+type CalloutConfig = {
+  label: string;
+  color: string;
+  ink: string;
+  icons: Array<React.FC<DoodleProps>>;
+  compact?: boolean;
+};
+
+const CONFIGS: Record<CalloutType, CalloutConfig> = {
+  parentsQuestions: {
+    label: "PARENTS  WATCHING FROM HOME",
+    color: "#3FE0FF",
+    ink: "#08111F",
+    icons: [QuestionDoodle, ScreenDoodle, QuestionDoodle],
+  },
+  courage: {
+    label: "COURAGE  SOCIAL CAPITAL  SPIRITUAL COVERING",
+    color: "#FFD84D",
+    ink: "#08111F",
+    icons: [LightbulbDoodle, CrownDoodle, StarDoodle],
+  },
+  pursue: {
+    label: "PURSUE",
+    color: "#FF8A3D",
+    ink: "#08111F",
+    icons: [BooksDoodle],
+    compact: true,
+  },
+  overtake: {
+    label: "OVERTAKE",
+    color: "#3FE0FF",
+    ink: "#08111F",
+    icons: [LightbulbDoodle, StarDoodle],
+    compact: true,
+  },
+  recoverAll: {
+    label: "RECOVER ALL",
+    color: "#FFD84D",
+    ink: "#08111F",
+    icons: [TrophyDoodle, CrossDoodle],
+    compact: true,
+  },
+  hannahSamuel: {
+    label: "HANNAH AND SAMUEL",
+    color: "#FFB35C",
+    ink: "#231205",
+    icons: [StarDoodle],
+    compact: true,
+  },
+};
+
+export type ContextCalloutsProps = {
+  callouts: CalloutEvent[];
+};
+
+export const ContextCallouts: React.FC<ContextCalloutsProps> = ({ callouts }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const time = frame / fps;
+  const active = callouts.find((event) => time >= event.start && time < event.end);
+  if (!active) {
+    return null;
+  }
+
+  const config = CONFIGS[active.type];
+  const localFrame = Math.max(0, frame - Math.round(active.start * fps));
+  const enter = spring({
+    frame: localFrame,
+    fps,
+    config: { damping: 14, stiffness: 210, mass: 0.7 },
+  });
+  const opacity = interpolate(
+    time,
+    [active.start, active.start + 0.15, active.end - 0.18, active.end],
+    [0, 1, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  const translateY = interpolate(enter, [0, 1], [-28, 0]);
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 250,
+        left: 54,
+        right: 54,
+        display: "flex",
+        justifyContent: "center",
+        pointerEvents: "none",
+        opacity: opacity * enter,
+        transform: `translateY(${translateY}px)`,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 10,
+          maxWidth: 970,
+          padding: config.compact ? "18px 34px" : "20px 30px",
+          borderRadius: 26,
+          backgroundColor: config.color,
+          border: "3px solid rgba(8,17,31,0.18)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          {config.icons.map((Icon, index) => (
+            <Icon key={index} color={config.ink} size={config.compact ? 54 : 48} />
+          ))}
+        </div>
+        <div
+          style={{
+            color: config.ink,
+            fontFamily: "Montserrat, Arial, sans-serif",
+            fontWeight: 900,
+            fontSize: config.compact ? 62 : 38,
+            lineHeight: 1.05,
+            letterSpacing: config.compact ? "-0.03em" : "0.01em",
+            textAlign: "center",
+            textTransform: "uppercase",
+          }}
+        >
+          {config.label}
+        </div>
+      </div>
+    </div>
+  );
+};

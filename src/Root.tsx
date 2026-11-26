@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
 import "./index.css";
+import { YouthCampReel } from "./compositions/YouthCampReel";
 import {
   VerticalReel,
   defaultVerticalReelProps,
@@ -11,6 +12,7 @@ import {
   defaultYouTubeVideoProps,
   youTubeVideoSchema,
 } from "./compositions/YouTubeVideo";
+import { editPlan } from "./data/editPlan";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -34,6 +36,14 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         schema={verticalReelSchema}
         defaultProps={defaultVerticalReelProps}
+      />
+      <Composition
+        id="YouthCampReel"
+        component={YouthCampReel}
+        durationInFrames={Math.ceil(editPlan.durationSeconds * editPlan.fps)}
+        fps={editPlan.fps}
+        width={editPlan.width}
+        height={editPlan.height}
       />
     </>
   );

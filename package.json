@@ -8,6 +8,7 @@
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^5.3.0",
     "@remotion/captions": "4.0.543",
     "@remotion/cli": "4.0.543",
     "@remotion/google-fonts": "4.0.543",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.543",
+    "@sparticuz/chromium": "^158.0.0",
     "@types/react": "19.3.0",
     "@types/web": "0.0.166",
     "eslint": "10.12.0",
@@ -36,9 +38,11 @@
     "render:preview": "remotion still YouTubeVideo out/preview.png --frame=45",
     "render:youtube": "remotion render YouTubeVideo out/youtube-video.mp4 --codec=h264 --pixel-format=yuv420p",
     "render:reel": "remotion render VerticalReel out/vertical-reel.mp4 --codec=h264 --pixel-format=yuv420p",
+    "render:youth-camp": "remotion render YouthCampReel out/youth-camp-reel.mp4 --codec=h264 --pixel-format=yuv420p",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
-    "setup": "bash setup-video-studio.sh"
+    "setup": "bash setup-video-studio.sh",
+    "setup:local-render": "bash scripts/setup-local-render.sh"
   },
   "allowScripts": {
     "esbuild": false

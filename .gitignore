@@ -24,3 +24,4 @@ skills-lock.json
 # Local processing/workspace staging (never commit large media or session data)
 .cache/
 google_drive/
+public/edit/
