@@ -1,0 +1,21 @@
+<!doctype html>
+<html><body><div id="done">loading</div><script>
+(async () => {
+  const tests = [
+    ['example', 'https://corsproxy.io/?url=' + encodeURIComponent('https://example.com')],
+    ['preview-no-token', 'https://corsproxy.io/?url=' + encodeURIComponent('https://3000-ic4w1u53qqsbk88uj3sd7.e2b.app/health')],
+    ['preview-dummy', 'https://corsproxy.io/?url=' + encodeURIComponent('https://3000-ic4w1u53qqsbk88uj3sd7.e2b.app/health') + '&reqHeaders=' + encodeURIComponent('e2b-traffic-access-token:arena-egress-dummy-token')],
+    ['preview-sandbox-id', 'https://corsproxy.io/?url=' + encodeURIComponent('https://3000-ic4w1u53qqsbk88uj3sd7.e2b.app/health') + '&reqHeaders=' + encodeURIComponent('e2b-traffic-access-token:ic4w1u53qqsbk88uj3sd7')],
+    ['cors-dev-plain', 'https://proxy.cors.dev/https://example.com']
+  ];
+  const out = [];
+  for (const [name, url] of tests) {
+    try {
+      const res = await fetch(url, {method:'GET', mode:'cors', credentials:'omit', cache:'no-store'});
+      const text = await res.text();
+      out.push(name + ':' + res.status + ':' + text.slice(0, 100).replace(/\s+/g, ' '));
+    } catch (e) { out.push(name + ':ERR:' + String(e)); }
+  }
+  document.getElementById('done').textContent = out.join(' | ');
+})();
+</script></body></html>
