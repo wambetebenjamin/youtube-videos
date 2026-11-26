@@ -1,0 +1,80 @@
+[Script Info]
+Title: Abba 20min Doodle Explainer
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 1
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Times New Roman,52,&H00303030,&H002E2E8B,&H00F5F1E8,&H00000000,0,0,0,0,100,100,0,0,1,3,2,2,160,160,120,1
+Style: Rust,Times New Roman,54,&H002E2E8B,&H00F5F1E8,&H00F5F1E8,&H00000000,1,0,0,0,100,100,0,0,1,3,2,2,160,160,120,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,00:00:00.00,00:00:07.00,Default,,0,0,0,,{\k25}What {\k25}if {\k25}I {\k25}told {\k25}you {\k25}that {\k25}some {\k25}of {\k25}the {\k25}greatest
+Dialogue: 0,00:00:07.00,00:00:14.00,Default,,0,0,0,,{\k25}heroes {\k25}in {\k25}the {\k25}Bible {\k25}reached {\k25}a {\k25}point {\k25}where {\k25}they {\k25}felt
+Dialogue: 0,00:00:14.00,00:00:21.00,Default,,0,0,0,,{\k25}completely {\k25}crushed {\k25}by {\k25}discouragement? {\k25}It {\k25}is {\k25}true. {\k25}Even {\k25}David, {\k25}a
+Dialogue: 0,00:00:21.00,00:00:28.00,Default,,0,0,0,,{\k25}man {\k25}after {\k25}God's {\k25}own {\k25}heart, {\k25}sat {\k25}in {\k25}the {\k25}dark {\k25}and
+Dialogue: 0,00:00:28.00,00:00:35.00,Default,,0,0,0,,{\k25}wondered {\k25}if {\k25}God {\k25}had {\k25}forgotten {\k25}him. {\k25}We {\k25}often {\k25}think {\k25}that
+Dialogue: 0,00:00:35.00,00:00:42.00,Default,,0,0,0,,{\k25}if {\k25}we {\k25}have {\k25}real {\k25}faith, {\k25}we {\k25}should {\k25}never {\k25}feel {\k25}heavy,
+Dialogue: 0,00:00:42.00,00:00:49.00,Default,,0,0,0,,{\k25}anxious, {\k25}or {\k25}exhausted. {\k25}And {\k25}here {\k25}is {\k25}the {\k25}uncomfortable {\k25}part. {\k25}Most
+Dialogue: 0,00:00:49.00,00:00:56.00,Default,,0,0,0,,{\k25}of {\k25}us, {\k25}even {\k25}faithful {\k25}believers {\k25}who {\k25}pray {\k25}and {\k25}read {\k25}our
+Dialogue: 0,00:00:56.00,00:01:03.00,Default,,0,0,0,,{\k25}Bibles, {\k25}quietly {\k25}carry {\k25}a {\k25}secret {\k25}heaviness {\k25}we {\k25}are {\k25}too {\k25}ashamed
+Dialogue: 0,00:01:03.00,00:01:10.00,Default,,0,0,0,,{\k25}to {\k25}admit. {\k25}Not {\k25}because {\k25}we {\k25}do {\k25}not {\k25}love {\k25}God. {\k25}But
+Dialogue: 0,00:01:10.00,00:01:17.00,Default,,0,0,0,,{\k25}because {\k25}life {\k25}has {\k25}a {\k25}way {\k25}of {\k25}draining {\k25}our {\k25}strength {\k25}until
+Dialogue: 0,00:01:17.00,00:01:24.00,Default,,0,0,0,,{\k25}our {\k25}souls {\k25}feel {\k25}completely {\k25}empty. {\k25}So {\k25}today, {\k25}we {\k25}are {\k25}going
+Dialogue: 0,00:01:24.00,00:01:31.00,Default,,0,0,0,,{\k25}to {\k25}walk {\k25}through {\k25}seven {\k25}biblical {\k25}anchors {\k25}for {\k25}the {\k25}discouraged {\k25}soul,
+Dialogue: 0,00:01:31.00,00:01:38.00,Default,,0,0,0,,{\k25}inspired {\k25}by {\k25}Psalm {\k25}42:5. {\k25}Stay {\k25}until {\k25}the {\k25}end, {\k25}because {\k25}the
+Dialogue: 0,00:01:38.00,00:01:45.00,Default,,0,0,0,,{\k25}final {\k25}truth {\k25}can {\k25}permanently {\k25}change {\k25}how {\k25}you {\k25}handle {\k25}your {\k25}darkest
+Dialogue: 0,00:01:45.00,00:01:52.00,Default,,0,0,0,,{\k25}days, {\k25}and {\k25}we {\k25}will {\k25}close {\k25}with {\k25}a {\k25}prayer {\k25}you {\k25}can
+Dialogue: 0,00:01:52.00,00:02:00.00,Default,,0,0,0,,{\k25}pray {\k25}over {\k25}your {\k25}heart {\k25}today. {\k25}Let {\k25}us {\k25}dive {\k25}in.
+Dialogue: 0,00:02:00.00,00:02:06.00,Default,,0,0,0,,{\k25}Number {\k25}one. {\k25}Talk {\k25}to {\k25}your {\k25}soul, {\k25}do {\k25}not {\k25}just {\k25}listen
+Dialogue: 0,00:02:06.00,00:02:12.00,Default,,0,0,0,,{\k25}to {\k25}it. {\k25}Psalm {\k25}42:5 {\k25}Why, {\k25}my {\k25}soul, {\k25}are {\k25}you {\k25}downcast?
+Dialogue: 0,00:02:12.00,00:02:18.00,Default,,0,0,0,,{\k25}Why {\k25}so {\k25}disturbed {\k25}within {\k25}me? {\k25}Put {\k25}your {\k25}hope {\k25}in {\k25}God,
+Dialogue: 0,00:02:18.00,00:02:25.00,Default,,0,0,0,,{\k25}for {\k25}I {\k25}will {\k25}yet {\k25}praise {\k25}him, {\k25}my {\k25}Savior {\k25}and {\k25}my
+Dialogue: 0,00:02:25.00,00:02:31.00,Default,,0,0,0,,{\k25}God. {\k25}Notice {\k25}what {\k25}the {\k25}psalmist {\k25}is {\k25}doing {\k25}here. {\k25}He {\k25}is
+Dialogue: 0,00:02:31.00,00:02:37.00,Default,,0,0,0,,{\k25}not {\k25}pretending {\k25}his {\k25}pain {\k25}does {\k25}not {\k25}exist. {\k25}He {\k25}did {\k25}not
+Dialogue: 0,00:02:37.00,00:02:43.00,Default,,0,0,0,,{\k25}say, {\k25}I {\k25}feel {\k25}great {\k25}today. {\k25}He {\k25}did {\k25}not {\k25}say, {\k25}My
+Dialogue: 0,00:02:43.00,00:02:50.00,Default,,0,0,0,,{\k25}problems {\k25}are {\k25}small. {\k25}He {\k25}stopped {\k25}listening {\k25}to {\k25}his {\k25}feelings {\k25}and
+Dialogue: 0,00:02:50.00,00:02:56.00,Default,,0,0,0,,{\k25}started {\k25}speaking {\k25}truth {\k25}to {\k25}his {\k25}own {\k25}soul. {\k25}Most {\k25}of {\k25}our
+Dialogue: 0,00:02:56.00,00:03:02.00,Default,,0,0,0,,{\k25}misery {\k25}comes {\k25}from {\k25}the {\k25}fact {\k25}that {\k25}we {\k25}listen {\k25}to {\k25}ourselves
+Dialogue: 0,00:03:02.00,00:03:08.00,Default,,0,0,0,,{\k25}instead {\k25}of {\k25}talking {\k25}to {\k25}ourselves. {\k25}When {\k25}you {\k25}wake {\k25}up {\k25}at
+Dialogue: 0,00:03:08.00,00:03:15.00,Default,,0,0,0,,{\k25}three {\k25}in {\k25}the {\k25}morning, {\k25}your {\k25}emotions {\k25}start {\k25}preaching {\k25}a {\k25}sermon
+Dialogue: 0,00:03:15.00,00:03:21.00,Default,,0,0,0,,{\k25}of {\k25}fear. {\k25}They {\k25}tell {\k25}you {\k25}that {\k25}nothing {\k25}will {\k25}ever {\k25}change.
+Dialogue: 0,00:03:21.00,00:03:27.00,Default,,0,0,0,,{\k25}They {\k25}tell {\k25}you {\k25}that {\k25}you {\k25}are {\k25}alone. {\k25}They {\k25}tell {\k25}you
+Dialogue: 0,00:03:27.00,00:03:33.00,Default,,0,0,0,,{\k25}that {\k25}your {\k25}best {\k25}days {\k25}are {\k25}behind {\k25}you. {\k25}And {\k25}if {\k25}you
+Dialogue: 0,00:03:33.00,00:03:40.00,Default,,0,0,0,,{\k25}just {\k25}sit {\k25}there {\k25}and {\k25}listen, {\k25}your {\k25}heart {\k25}will {\k25}sink. {\k25}David
+Dialogue: 0,00:03:40.00,00:03:46.00,Default,,0,0,0,,{\k25}caught {\k25}himself {\k25}spiraling, {\k25}stepped {\k25}outside {\k25}of {\k25}his {\k25}emotions, {\k25}and {\k25}interrogated
+Dialogue: 0,00:03:46.00,00:03:52.00,Default,,0,0,0,,{\k25}his {\k25}own {\k25}despair. {\k25}He {\k25}asked, {\k25}Why {\k25}are {\k25}you {\k25}so {\k25}downcast?
+Dialogue: 0,00:03:52.00,00:03:58.00,Default,,0,0,0,,{\k25}And {\k25}then {\k25}he {\k25}commanded {\k25}his {\k25}soul: {\k25}Put {\k25}your {\k25}hope {\k25}in
+Dialogue: 0,00:03:58.00,00:04:05.00,Default,,0,0,0,,{\k25}God. {\k25}Your {\k25}feelings {\k25}are {\k25}real, {\k25}but {\k25}they {\k25}are {\k25}terrible {\k25}leaders.
+Dialogue: 0,00:04:05.00,00:04:11.00,Default,,0,0,0,,{\k25}So {\k25}ask {\k25}yourself {\k25}honestly: {\k25}what {\k25}voice {\k25}has {\k25}been {\k25}preaching {\k25}to
+Dialogue: 0,00:04:11.00,00:04:17.00,Default,,0,0,0,,{\k25}your {\k25}soul {\k25}this {\k25}week? {\k25}Have {\k25}you {\k25}been {\k25}rehearsing {\k25}your {\k25}fears,
+Dialogue: 0,00:04:17.00,00:04:23.00,Default,,0,0,0,,{\k25}or {\k25}have {\k25}you {\k25}been {\k25}reminding {\k25}your {\k25}soul {\k25}of {\k25}who {\k25}God
+Dialogue: 0,00:04:23.00,00:04:30.00,Default,,0,0,0,,{\k25}is?
+Dialogue: 0,00:04:30.00,00:04:36.00,Default,,0,0,0,,{\k25}Number {\k25}two. {\k25}God {\k25}does {\k25}not {\k25}abandon {\k25}you {\k25}in {\k25}the {\k25}valley.
+Dialogue: 0,00:04:36.00,00:04:42.00,Default,,0,0,0,,{\k25}Isaiah {\k25}41:10 {\k25}So {\k25}do {\k25}not {\k25}fear, {\k25}for {\k25}I {\k25}am {\k25}with
+Dialogue: 0,00:04:42.00,00:04:48.00,Default,,0,0,0,,{\k25}you; {\k25}do {\k25}not {\k25}be {\k25}dismayed, {\k25}for {\k25}I {\k25}am {\k25}your {\k25}God.
+Dialogue: 0,00:04:48.00,00:04:54.00,Default,,0,0,0,,{\k25}I {\k25}will {\k25}strengthen {\k25}you {\k25}and {\k25}help {\k25}you; {\k25}I {\k25}will {\k25}uphold
+Dialogue: 0,00:04:54.00,00:05:00.00,Default,,0,0,0,,{\k25}you {\k25}with {\k25}my {\k25}righteous {\k25}right {\k25}hand. {\k25}When {\k25}discouragement {\k25}hits, {\k25}the
+Dialogue: 0,00:05:00.00,00:05:06.00,Default,,0,0,0,,{\k25}first {\k25}lie {\k25}the {\k25}enemy {\k25}whispers {\k25}is {\k25}that {\k25}God {\k25}has {\k25}left
+Dialogue: 0,00:05:06.00,00:05:12.00,Default,,0,0,0,,{\k25}the {\k25}room. {\k25}We {\k25}assume {\k25}that {\k25}if {\k25}God {\k25}were {\k25}truly {\k25}with
+Dialogue: 0,00:05:12.00,00:05:18.00,Default,,0,0,0,,{\k25}us, {\k25}the {\k25}storm {\k25}would {\k25}stop {\k25}immediately. {\k25}Notice {\k25}what {\k25}God {\k25}promises
+Dialogue: 0,00:05:18.00,00:05:24.00,Default,,0,0,0,,{\k25}in {\k25}Isaiah {\k25}41. {\k25}He {\k25}did {\k25}not {\k25}promise {\k25}that {\k25}the {\k25}waters
+Dialogue: 0,00:05:24.00,00:05:30.00,Default,,0,0,0,,{\k25}would {\k25}never {\k25}rise. {\k25}He {\k25}did {\k25}not {\k25}promise {\k25}that {\k25}the {\k25}fire
+Dialogue: 0,00:05:30.00,00:05:36.00,Default,,0,0,0,,{\k25}would {\k25}never {\k25}burn. {\k25}He {\k25}promised {\k25}His {\k25}presence {\k25}right {\k25}in {\k25}the
+Dialogue: 0,00:05:36.00,00:05:42.00,Default,,0,0,0,,{\k25}middle {\k25}of {\k25}the {\k25}storm. {\k25}I {\k25}am {\k25}with {\k25}you. {\k25}Think {\k25}about
+Dialogue: 0,00:05:42.00,00:05:48.00,Default,,0,0,0,,{\k25}how {\k25}our {\k25}culture {\k25}defines {\k25}blessing. {\k25}Our {\k25}culture {\k25}says {\k25}God {\k25}is
+Dialogue: 0,00:05:48.00,00:05:54.00,Default,,0,0,0,,{\k25}with {\k25}you {\k25}when {\k25}everything {\k25}is {\k25}easy, {\k25}when {\k25}your {\k25}bank {\k25}account
+Dialogue: 0,00:05:54.00,00:06:00.00,Default,,0,0,0,,{\k25}is {\k25}full, {\k25}and {\k25}when {\k25}every {\k25}door {\k25}swings {\k25}wide {\k25}open. {\k25}So
+Dialogue: 0,00:06:00.00,00:06:06.00,Default,,0,0,0,,{\k25}the {\k25}moment {\k25}a {\k25}door {\k25}closes {\k25}or {\k25}a {\k25}season {\k25}gets {\k25}hard,
+Dialogue: 0,00:06:06.00,00:06:12.00,Default,,0,0,0,,{\k25}we {\k25}panic {\k25}and {\k25}think {\k25}God {\k25}is {\k25}angry {\k25}with {\k25}us. {\k25}God
+Dialogue: 0,00:06:12.00,00:06:18.00,Default,,0,0,0,,{\k25}is {\k25}not {\k25}a {\k25}fair-weather {\k25}friend. {\k25}His {\k25}strength {\k25}is {\k25}specifically {\k25}designed
+Dialogue: 0,00:06:18.00,00:06:24.00,Default,,0,0,0,,{\k25}for {\k25}the {\k25}moments {\k25}when {\k25}yours {\k25}runs {\k25}out. {\k25}When {\k25}He {\k25}says,
+Dialogue: 0,00:06:24.00,00:06:30.00,Default,,0,0,0,,{\k25}I {\k25}will {\k25}uphold {\k25}you {\k25}with {\k25}my {\k25}righteous {\k25}right {\k25}hand, {\k25}He
+Dialogue: 0,00:06:30.00,00:06:36.00,Default,,0,0,0,,{\k25}is {\k25}picturing {\k25}a {\k25}father {\k25}gripping {\k25}his {\k25}child's {\k25}hand {\k25}on {\k25}a
+Dialogue: 0,00:06:36.00,00:06:42.00,Default,,0,0,0,,{\k25}slippery {\k25}path {\k25}so {\k25}they {\k25}cannot {\k25}fall. {\k25}Here {\k25}is {\k25}a {\k25}challenge
+Dialogue: 0,00:06:42.00,00:06:48.00,Default,,0,0,0,,{\k25}for {\k25}today: {\k25}stop {\k25}measuring {\k25}God's {\k25}presence {\k25}by {\k25}your {\k25}comfort {\k25}level.
+Dialogue: 0,00:06:48.00,00:06:54.00,Default,,0,0,0,,{\k25}Say {\k25}out {\k25}loud {\k25}right {\k25}now, {\k25}Even {\k25}when {\k25}I {\k25}cannot {\k25}feel
+Dialogue: 0,00:06:54.00,00:07:00.00,Default,,0,0,0,,{\k25}Him, {\k25}God {\k25}is {\k25}holding {\k25}me.
