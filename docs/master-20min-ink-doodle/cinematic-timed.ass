@@ -1,0 +1,30 @@
+[Script Info]
+Title: Cinematic Explainer Psalm42
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Times New Roman,68,&H002E2E8B,&H00FFFFFF,&H00F5F1E8,&H00000000,1,0,0,0,100,100,0,0,1,4,2,5,2,100,100,150,1
+Style: Body,DejaVu Serif,42,&H00303030,&H002E2E8B,&H00F5F1E8,&H00000000,0,0,0,0,100,100,0,0,1,3,1,2,2,120,120,60,1
+Style: Rust,DejaVu Serif,46,&H002E2E8B,&H00FFFFFF,&H00F5F1E8,&H00000000,1,0,0,0,100,100,0,0,1,4,1,2,2,120,120,60,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,00:00:00.00,00:00:11.00,Body,,0,0,0,,{\k147}Some {\k147}of {\k147}the {\k147}greatest {\k147}heroes {\k147}felt {\k147}completely {\k147}crushed
+Dialogue: 0,00:00:11.00,00:00:23.00,Body,,0,0,0,,{\k147}Even {\k147}David {\k147}wondered {\k147}if {\k147}God {\k147}had {\k147}forgotten {\k147}him
+Dialogue: 0,00:00:23.00,00:00:35.00,Body,,0,0,0,,{\k147}We {\k147}think {\k147}real {\k147}faith {\k147}means {\k147}never {\k147}feeling {\k147}heavy
+Dialogue: 0,00:00:35.00,00:00:47.00,Body,,0,0,0,,{\k235}Faithful {\k235}believers {\k235}carry {\k235}secret {\k235}heaviness
+Dialogue: 0,00:00:47.00,00:00:58.00,Body,,0,0,0,,{\k196}Life {\k196}drains {\k196}our {\k196}strength {\k196}until {\k196}empty
+Dialogue: 0,00:00:58.00,00:01:15.00,Title,,0,0,0,,{\k165}Talk {\k165}To {\k165}Your {\k165}Soul, {\k165}Do {\k165}Not {\k165}Just {\k165}Listen {\k165}To {\k165}It
+Dialogue: 0,00:01:15.00,00:01:31.00,Body,,0,0,0,,{\k207}Stop {\k207}listening, {\k207}start {\k207}speaking {\k207}truth {\k207}to {\k207}your {\k207}soul
+Dialogue: 0,00:01:31.00,00:01:48.00,Body,,0,0,0,,{\k331}At {\k331}3am {\k331}emotions {\k331}preach {\k331}fear
+Dialogue: 0,00:01:48.00,00:02:04.00,Body,,0,0,0,,{\k236}David {\k236}interrogated {\k236}his {\k236}despair: {\k236}Why {\k236}so {\k236}downcast?
+Dialogue: 0,00:02:04.00,00:02:21.00,Body,,0,0,0,,{\k276}Feelings {\k276}are {\k276}real {\k276}but {\k276}terrible {\k276}leaders
+Dialogue: 0,00:02:21.00,00:02:38.00,Body,,0,0,0,,{\k241}First {\k241}lie: {\k241}God {\k241}has {\k241}left {\k241}the {\k241}room
+Dialogue: 0,00:02:38.00,00:02:55.00,Body,,0,0,0,,{\k241}He {\k241}did {\k241}not {\k241}promise {\k241}waters {\k241}never {\k241}rise
+Dialogue: 0,00:02:55.00,00:03:12.00,Body,,0,0,0,,{\k241}He {\k241}promised {\k241}presence: {\k241}I {\k241}am {\k241}with {\k241}you
+Dialogue: 0,00:03:12.00,00:03:28.00,Body,,0,0,0,,{\k241}Culture {\k241}says {\k241}blessing {\k241}is {\k241}easy {\k241}bank {\k241}account
+Dialogue: 0,00:03:28.00,00:03:45.00,Body,,0,0,0,,{\k169}Even {\k169}when {\k169}I {\k169}cannot {\k169}feel {\k169}Him, {\k169}God {\k169}is {\k169}holding {\k169}me
