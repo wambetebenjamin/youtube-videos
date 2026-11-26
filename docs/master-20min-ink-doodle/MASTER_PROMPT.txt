@@ -1,0 +1,13 @@
+Create a 20-minute 16:9 widescreen animated explainer video in a minimalist hand-drawn ink doodle style on a warm, textured off-white parchment paper background. Feature simple black-and-white line-art characters with large round expressive heads acting out the emotions of the narration, paired with synchronized word-by-word kinetic typewriter text in a classic dark serif font, highlighting key emotional and spiritual words in dark rust-red. Use a calm, empathetic, authoritative male voiceover with slow, deliberate pacing and a subtle ambient piano underscore.
+
+Structure the 20-minute video around the theme of overcoming discouragement and finding hope in God, inspired by Psalm 42:5 ("Why, my soul, are you downcast? Why so disturbed within me? Put your hope in God, for I will yet praise him, my Savior and my God"):
+
+1. Opening Hook (2 minutes): Open with a relatable question about silent discouragement and spiritual exhaustion. Acknowledge that even faithful believers feel heavy-hearted, introduce a 7-part biblical framework for anchoring the soul in God, and promise a closing prayer for strength.
+
+2. 7 Core Reflections (2.5 minutes each): For each of the 7 points, follow this exact sequence:
+   - Display a centered double-lined circle with the point number and a short title on blank parchment.
+   - Display the full anchor Scripture verse (Psalm 42:5, Isaiah 41:10, 2 Corinthians 4:16-18, Lamentations 3:22-23, Psalm 34:18, Matthew 11:28, and Romans 15:13) in centered black serif text.
+   - Cut every 4 seconds between expressive doodle illustrations (e.g., a character sitting heavy-headed at a desk, walking through a storm, looking up at light, kneeling in prayer) while the text types out beside them.
+   - Explain what the verse does not mean versus what it truly promises, contrast God's faithfulness against fleeting worldly comfort, and conclude each point with a direct, honest self-reflection question or small daily step of faith.
+
+3. Closing & Prayer (30 seconds): Summarize the core message of talking to your soul rather than listening to your despair, and conclude with a heartfelt prayer spoken over the viewer's peace and strength.
