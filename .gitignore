@@ -3,6 +3,8 @@ node_modules/
 dist/
 build/
 .remotion/
+__pycache__/
+*.pyc
 
 # Rendered video & preview outputs (keep folder placeholder)
 out/*
