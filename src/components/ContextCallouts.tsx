@@ -1,67 +1,31 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import type { CalloutEvent, CalloutType } from "../data/editPlan";
+import type { CalloutEvent, DoodleName } from "../data/editPlan";
 import {
+  ArrowDoodle,
   BooksDoodle,
   CrossDoodle,
   CrownDoodle,
   LightbulbDoodle,
   QuestionDoodle,
   ScreenDoodle,
+  SparkleDoodle,
   StarDoodle,
   TrophyDoodle,
   type DoodleProps,
 } from "./FlatDoodles";
 
-type CalloutConfig = {
-  label: string;
-  color: string;
-  ink: string;
-  icons: Array<React.FC<DoodleProps>>;
-  compact?: boolean;
-};
-
-const CONFIGS: Record<CalloutType, CalloutConfig> = {
-  parentsQuestions: {
-    label: "PARENTS  WATCHING FROM HOME",
-    color: "#3FE0FF",
-    ink: "#08111F",
-    icons: [QuestionDoodle, ScreenDoodle, QuestionDoodle],
-  },
-  courage: {
-    label: "COURAGE  SOCIAL CAPITAL  SPIRITUAL COVERING",
-    color: "#FFD84D",
-    ink: "#08111F",
-    icons: [LightbulbDoodle, CrownDoodle, StarDoodle],
-  },
-  pursue: {
-    label: "PURSUE",
-    color: "#FF8A3D",
-    ink: "#08111F",
-    icons: [BooksDoodle],
-    compact: true,
-  },
-  overtake: {
-    label: "OVERTAKE",
-    color: "#3FE0FF",
-    ink: "#08111F",
-    icons: [LightbulbDoodle, StarDoodle],
-    compact: true,
-  },
-  recoverAll: {
-    label: "RECOVER ALL",
-    color: "#FFD84D",
-    ink: "#08111F",
-    icons: [TrophyDoodle, CrossDoodle],
-    compact: true,
-  },
-  hannahSamuel: {
-    label: "HANNAH AND SAMUEL",
-    color: "#FFB35C",
-    ink: "#231205",
-    icons: [StarDoodle],
-    compact: true,
-  },
+const DOODLES: Record<DoodleName, React.FC<DoodleProps>> = {
+  arrow: ArrowDoodle,
+  sparkle: SparkleDoodle,
+  star: StarDoodle,
+  crown: CrownDoodle,
+  question: QuestionDoodle,
+  screen: ScreenDoodle,
+  lightbulb: LightbulbDoodle,
+  books: BooksDoodle,
+  trophy: TrophyDoodle,
+  cross: CrossDoodle,
 };
 
 export type ContextCalloutsProps = {
@@ -77,7 +41,6 @@ export const ContextCallouts: React.FC<ContextCalloutsProps> = ({ callouts }) =>
     return null;
   }
 
-  const config = CONFIGS[active.type];
   const localFrame = Math.max(0, frame - Math.round(active.start * fps));
   const enter = spring({
     frame: localFrame,
@@ -91,6 +54,7 @@ export const ContextCallouts: React.FC<ContextCalloutsProps> = ({ callouts }) =>
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
   const translateY = interpolate(enter, [0, 1], [-28, 0]);
+  const iconSize = active.compact ? 54 : 48;
 
   return (
     <div
@@ -113,30 +77,31 @@ export const ContextCallouts: React.FC<ContextCalloutsProps> = ({ callouts }) =>
           alignItems: "center",
           gap: 10,
           maxWidth: 970,
-          padding: config.compact ? "18px 34px" : "20px 30px",
+          padding: active.compact ? "18px 34px" : "20px 30px",
           borderRadius: 26,
-          backgroundColor: config.color,
+          backgroundColor: active.color,
           border: "3px solid rgba(8,17,31,0.18)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          {config.icons.map((Icon, index) => (
-            <Icon key={index} color={config.ink} size={config.compact ? 54 : 48} />
-          ))}
+          {active.icons.map((name, index) => {
+            const Icon = DOODLES[name];
+            return <Icon key={`${name}-${index}`} color={active.ink} size={iconSize} />;
+          })}
         </div>
         <div
           style={{
-            color: config.ink,
+            color: active.ink,
             fontFamily: "Montserrat, Arial, sans-serif",
             fontWeight: 900,
-            fontSize: config.compact ? 62 : 38,
+            fontSize: active.compact ? 62 : 38,
             lineHeight: 1.05,
-            letterSpacing: config.compact ? "-0.03em" : "0.01em",
+            letterSpacing: active.compact ? "-0.03em" : "0.01em",
             textAlign: "center",
             textTransform: "uppercase",
           }}
         >
-          {config.label}
+          {active.label}
         </div>
       </div>
     </div>

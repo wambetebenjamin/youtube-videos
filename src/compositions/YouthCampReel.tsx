@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   interpolate,
   OffthreadVideo,
   staticFile,
@@ -42,6 +43,8 @@ export const YouthCampReel: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#050816", overflow: "hidden" }}>
+      <Audio src={staticFile(editPlan.audioSrc)} />
+
       <OffthreadVideo
         src={staticFile(editPlan.videoSrc)}
         muted

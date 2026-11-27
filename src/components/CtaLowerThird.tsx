@@ -46,15 +46,15 @@ export const CtaLowerThird: React.FC<CtaLowerThirdProps> = ({
         transform: `translateY(${slide}px)`,
       }}
     >
-      <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 18 }}>
+      <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ transform: `translateX(${-arrowPulse}px) rotate(8deg)` }}>
-          <ArrowDoodle color="#FFD84D" size={92} />
+          <ArrowDoodle color="#FFD84D" size={70} />
         </div>
 
         <div
           style={{
-            minWidth: 760,
-            padding: "30px 38px 34px 38px",
+            minWidth: 720,
+            padding: "26px 30px 30px 30px",
             borderRadius: 30,
             backgroundColor: "#0B1020",
             border: "4px solid #FFD84D",
@@ -66,22 +66,24 @@ export const CtaLowerThird: React.FC<CtaLowerThirdProps> = ({
               color: "#FFFFFF",
               fontFamily: "Montserrat, Arial, sans-serif",
               fontWeight: 900,
-              fontSize: 66,
+              fontSize: 54,
               lineHeight: 1.02,
               letterSpacing: "-0.035em",
               textTransform: "uppercase",
+              whiteSpace: "nowrap",
             }}
           >
             {headline}
           </div>
           <div
             style={{
-              marginTop: 14,
+              marginTop: 12,
               color: "#FFD84D",
               fontFamily: "Montserrat, Arial, sans-serif",
               fontWeight: 800,
-              fontSize: 34,
+              fontSize: 29,
               letterSpacing: "0.01em",
+              whiteSpace: "nowrap",
             }}
           >
             {dates}
@@ -89,7 +91,7 @@ export const CtaLowerThird: React.FC<CtaLowerThirdProps> = ({
         </div>
 
         <div style={{ transform: `translateX(${arrowPulse}px) scaleX(-1) rotate(8deg)` }}>
-          <ArrowDoodle color="#FFD84D" size={92} />
+          <ArrowDoodle color="#FFD84D" size={70} />
         </div>
 
         <div style={{ position: "absolute", left: -42, top: -34 }}>

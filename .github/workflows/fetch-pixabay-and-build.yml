@@ -1,0 +1,36 @@
+name: Fetch Pixabay & Build Reels
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/d58bab72-youtube-videos
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Install deps
+        run: npm ci || npm install; pip install imageio-ffmpeg; sudo apt-get update -qq && sudo apt-get install -y ffmpeg -qq
+      - name: Fetch Pixabay portrait videos
+        env:
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+        run: node scripts/fetch-pixabay-videos.mjs --out public/reels/raw/ || true; ls -lh public/reels/raw/pixabay-*.mp4 || echo "check"
+      - name: Build reels (true motion + 2s fading)
+        run: node scripts/build-reels-VIDEO-bg.mjs
+      - name: Commit (ignore large-file error)
+        continue-on-error: true
+        run: |
+          git config user.name arena-bot; git config user.email arena@bot
+          git add public/reels/raw/pixabay-*.mp4 out/reels-video/*.mp4 || true
+          git commit -m "feat: Pixabay portrait stock (content/music intact, fading 2s)" || true
+          git push origin HEAD:arena/d58bab72-youtube-videos || echo "push skipped (large file, see artifacts)"
+      - name: Upload reels as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reels-video-pixabay
+          path: out/reels-video/*.mp4
+          retention-days: 7
