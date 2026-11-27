@@ -1,7 +1,0 @@
-name: Test Symlink Workflow
-on: push
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo SYMLINK_WORKFLOW_OK
