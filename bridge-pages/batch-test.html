@@ -1,0 +1,45 @@
+<!doctype html>
+<html><body><div id="done">loading</div><script>
+window.JOBS = {"label":"short2-test","source":"1t4QC4eTs338axbvagfpRHDfpZOu9BKp5","parts":[{"i":0,"start":0,"end":1048575,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort2%2Ftest-0000.bin&signature=v1_8FhN9FlB33mj%2BNJUP6ikzOIzAbYL2tQQaAvi8AfV0gk&username=user"},{"i":1,"start":1048576,"end":2097151,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort2%2Ftest-0001.bin&signature=v1_G6l6O1GD4choxf%2BgAxcVnde%2B6hk7RQWZpemgl2IZePU&username=user"},{"i":2,"start":2097152,"end":3145727,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort2%2Ftest-0002.bin&signature=v1_aQvieGcY4s%2FfyldAPMwnOBfCQuphB0o4%2Fu4HnicPVGE&username=user"},{"i":3,"start":3145728,"end":4194303,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort2%2Ftest-0003.bin&signature=v1_pocwRix%2BGjGYZUliR6hrA2Cv30M7SsoHktoGuIYOMO0&username=user"}]};
+(async () => {
+  const jobs = window.JOBS;
+  const source = jobs.source;
+  const target = 'https://drive.usercontent.google.com/download?id=' + source + '&export=download&confirm=t';
+  const proxy = 'https://proxy.cors.dev/?url=' + encodeURIComponent(target);
+  const results = [];
+  const errors = [];
+  let cursor = 0;
+  const concurrency = Math.min(4, jobs.parts.length);
+  async function worker() {
+    while (cursor < jobs.parts.length) {
+      const j = jobs.parts[cursor++];
+      let lastErr;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const res = await fetch(proxy, {
+            method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-store',
+            headers: { Range: 'bytes=' + j.start + '-' + j.end }
+          });
+          if (res.status !== 206) throw new Error('range ' + res.status);
+          const buf = await res.arrayBuffer();
+          const bytes = new Uint8Array(buf);
+          if (bytes.length !== j.end - j.start + 1) throw new Error('short ' + bytes.length);
+          const form = new FormData();
+          form.append('file', new Blob([bytes], { type: 'application/octet-stream' }), 'part.bin');
+          const up = await fetch(j.uploadUrl, {
+            method: 'POST', mode: 'cors', credentials: 'omit', body: form
+          });
+          if (!up.ok) throw new Error('upload ' + up.status + ' ' + (await up.text()).slice(0,100));
+          results.push({ i: j.i, size: bytes.length });
+          lastErr = null;
+          break;
+        } catch (err) { lastErr = err; }
+      }
+      if (lastErr) errors.push({ i: j.i, error: String(lastErr) });
+    }
+  }
+  await Promise.all(Array.from({ length: concurrency }, worker));
+  results.sort((a,b) => a.i - b.i);
+  document.getElementById('done').textContent = JSON.stringify({ ok: errors.length === 0, label: jobs.label, count: results.length, errors: errors.slice(0,10) });
+})();
+</script></body></html>
