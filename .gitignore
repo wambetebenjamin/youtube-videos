@@ -31,3 +31,4 @@ public/edit/
 # External reference repositories (local clones, not committed)
 reference-repos/*
 !reference-repos/README.md
+!reference-repos/SPARSE-PATTERNS.txt
