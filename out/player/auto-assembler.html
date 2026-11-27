@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Psalm 42 — Auto Assembler • Resume & Render</title>
+<style>
+  :root{--parchment:#F6F1E7;--ink:#1a1a1a;--rust:#8b2e1e;--gold:#c9a86a}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--parchment);color:var(--ink)}
+  header{padding:28px 20px 16px;max-width:980px;margin:auto}
+  h1{margin:0 0 6px;font-size:1.6rem}
+  .sub{opacity:.7;font-size:.95rem}
+  .badge{display:inline-block;background:#111;color:#F6F1E7;padding:6px 10px;border-radius:999px;font-size:.8rem;margin-top:10px}
+  .wrap{max-width:980px;margin:auto;padding:0 20px 40px}
+  .player-box{background:#000;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25);position:relative}
+  video{width:100%;height:auto;display:block;aspect-ratio:16/9;background:#000}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;padding:14px;background:#0f0f0f}
+  button{appearance:none;border:0;padding:10px 14px;border-radius:999px;font-weight:600;cursor:pointer}
+  .primary{background:var(--gold);color:#111}
+  .ghost{background:#222;color:#eee;border:1px solid #333}
+  .ghost:disabled{opacity:.4;cursor:not-allowed}
+  .bar{height:6px;background:#222;position:relative;overflow:hidden}
+  .bar>i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);transition:width .3s}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid #e9e0cc;border-radius:14px;padding:14px}
+  .card h3{margin:0 0 8px;font-size:1rem}
+  .mono{font-family:ui-monospace,SF Mono,Menlo,monospace;font-size:.8rem;word-break:break-all;background:#faf6ee;padding:8px;border-radius:8px;border:1px solid #e9e0cc}
+  .kpi{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .kpi span{background:#F6F1E7;border:1px solid #e9e0cc;padding:6px 10px;border-radius:999px;font-size:.85rem}
+  .list{max-height:260px;overflow:auto;border:1px solid #e9e0cc;border-radius:10px;background:#fff}
+  .row{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid #f0e9d8;font-size:.9rem}
+  .row:last-child{border:0}
+  .ok{color:#1a7a2e}.wait{color:#8a6b00}.err{color:#8b2e1e}
+  details{margin-top:14px}
+  summary{cursor:pointer;font-weight:700}
+  code{background:#111;color:#F6F1E7;padding:2px 6px;border-radius:6px;font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Psalm 42 — 20:00 MasterSync Auto Assembler</h1>
+  <div class="sub">Resumes from where it stopped • Downloads parts automatically • Renders as one seamless video in your browser — no server.</div>
+  <span class="badge">Previous monolith 364 MB FAILED -9 (OOM, no MOOV) — unrecoverable. Chunked build resumes per segment.</span>
+</header>
+
+<div class="wrap">
+  <div class="player-box">
+    <video id="player" controls playsinline poster=""></video>
+    <div class="bar"><i id="progress"></i></div>
+    <div class="controls">
+      <button class="primary" id="playBtn">▶ Play Sequential (auto-download)</button>
+      <button class="ghost" id="stitchBtn">⬇ Stitch to Single MP4 (ffmpeg.wasm)</button>
+      <button class="ghost" id="resumeBtn">⤴ Resume Last Session</button>
+      <button class="ghost" id="downloadManifestBtn">📄 Download Manifest</button>
+      <span id="status" style="align-self:center;margin-left:6px;color:#ccc;font-size:.9rem">Idle</span>
+    </div>
+  </div>
+
+  <div class="kpi">
+    <span id="kpiTotal">Total: 20:00 • 45 scenes</span>
+    <span id="kpiChunks">Chunks: 6 × ~2 min</span>
+    <span id="kpiReady">Ready: 0/6</span>
+    <span id="kpiMode">Mode: GitHub raw + Drive fallback</span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Why you couldn't continue the 364 MB file</h3>
+      <p style="margin:.4rem 0;line-height:1.5">FFmpeg was killed <code>SIGKILL -9</code> mid-encode. MP4 <code>moov</code> atom is written <em>at the end</em> — a killed file has no index and is unplayable. No tool can resume it. The <b>chunked method</b> fixes this: each segment is finished + flushed to disk. If the job dies at seg 18/45, restarting skips segs 0–18 and continues at 19.</p>
+      <div class="mono">/tmp/segments-chunked/seg00.mp4 → seg44.mp4 (each <6 MB, ultrafast crf23)<br>then 6 xfade chunks → final mux with full-voice-1200.m4a</div>
+    </div>
+    <div class="card">
+      <h3>How this page auto-renders</h3>
+      <ol style="margin:.4rem 0 0 18px;line-height:1.5">
+        <li>Loads <code>parts-manifest.json</code> (durations + URLs)</li>
+        <li>Fetches chunks as <code>blob</code> in order, caches in IndexedDB (so refresh = resume)</li>
+        <li>Plays sequentially: <code>ended → next src</code> (frame-accurate because xfade already baked inside chunks)</li>
+        <li>Optional: stitch all blobs with <code>ffmpeg.wasm concat demuxer</code> → single 20-min MP4 download</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Parts & Live Status</h3>
+    <div class="list" id="partsList">Loading manifest…</div>
+    <details open><summary>GitHub raw URLs (commit 00bba50)</summary>
+      <div class="mono" id="urls" style="margin-top:8px"></div>
+      <p style="font-size:.9rem">Add Drive fallback by pasting Drive file IDs into <code>parts-manifest.json → chunks[].driveId</code> then redeploy. Player tries GitHub first, then <code>https://drive.google.com/uc?id=DRIVE_ID&export=download</code>.</p>
+    </details>
+  </div>
+
+  <div class="card" style="margin-top:16px;background:#111;color:#F6F1E7;border-color:#222">
+    <h3 style="color:#F6F1E7">Kaggle: do we do this better there?</h3>
+    <p style="line-height:1.6;opacity:.9">Yes — <b>much</b>. This sandbox has 3.8 GB RAM, no GPU, 21 GB disk. Kaggle gives you <code>T4×2 (16 GB VRAM)</code>, <code>&gt;16 GB RAM</code>, <code>9 hours</code> per run, and persistent datasets. Wan2.2 14B, LongCat 13.6B, LeviTor need GPU.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
+      <div style="background:#1b1b1b;padding:10px;border-radius:10px">
+        <b>Here (current)</b><br>• FFmpeg pan/zoom only (simulated motion)<br>• 5 GB xfade OOM → chunked<br>• No Wan2.2/AnyI2V real motion
+      </div>
+      <div style="background:#1b1b1b;padding:10px;border-radius:10px">
+        <b>Kaggle (recommended)</b><br>• Real Wan2.2-I2V ambient + AnyI2V stacking + LeviTor camera<br>• GPU batch all 45 scenes in parallel<br>• Export single 20-min @ 24fps 1080p
+      </div>
+    </div>
+    <p style="margin-top:10px"><a href="../kaggle/psalm42-full-sync.ipynb" style="color:var(--gold)">→ Open Kaggle notebook (in this repo: kaggle/psalm42-full-sync.ipynb)</a> — one click “Copy & Edit”, add <code>HF_TOKEN</code>, Run All.</p>
+  </div>
+
+  <p style="font-size:.85rem;opacity:.6;margin-top:14px">Tip: Host this file on GitHub Pages: Settings → Pages → Source: branch <code>arena/d58bab72-youtube-videos</code> / folder <code>/out/player</code>. Then share the Pages URL — visitors auto-download + render.</p>
+</div>
+
+<script>
+const MANIFEST_URL = './parts-manifest.json';
+const DB_NAME = 'psalm42-chunks';
+let manifest, blobs = {}; // id -> blob url
+let currentIdx = 0;
+
+const $ = s=>document.querySelector(s);
+const statusEl = $('#status');
+const progressEl = $('#progress');
+const player = $('#player');
+const kpiReady = $('#kpiReady');
+
+function setStatus(t){ statusEl.textContent=t; }
+
+// IndexedDB tiny wrapper for resume
+function idbSet(key, blob){
+  return new Promise(res=>{
+    const req = indexedDB.open(DB_NAME,1);
+    req.onupgradeneeded=e=>e.target.result.createObjectStore('blobs');
+    req.onsuccess=e=>{
+      const db=e.target.result;
+      const tx=db.transaction('blobs','readwrite');
+      tx.objectStore('blobs').put(blob,key);
+      tx.oncomplete=()=>res(true);
+    };
+    req.onerror=()=>res(false);
+  });
+}
+function idbGet(key){
+  return new Promise(res=>{
+    const req=indexedDB.open(DB_NAME,1);
+    req.onsuccess=e=>{
+      const db=e.target.result;
+      if(!db.objectStoreNames.contains('blobs')) return res(null);
+      const tx=db.transaction('blobs','readonly');
+      const g=tx.objectStore('blobs').get(key);
+      g.onsuccess=()=>res(g.result||null);
+    };
+    req.onerror=()=>res(null);
+  });
+}
+
+async function loadManifest(){
+  const r = await fetch(MANIFEST_URL);
+  manifest = await r.json();
+  $('#kpiTotal').textContent = `Total: ${Math.floor(manifest.totalDuration/60)}:${String(manifest.totalDuration%60).padStart(2,'0')} • ${manifest.segments.length} scenes`;
+  $('#kpiChunks').textContent = `Chunks: ${manifest.chunks.length} parts`;
+  const list = $('#partsList');
+  list.innerHTML = manifest.chunks.map(c=>`
+    <div class="row" id="row-${c.id}">
+      <span><b>${c.file}</b> — ${c.segments} • ${c.duration}s • start ${c.start}s</span>
+      <span class="wait" id="badge-${c.id}">waiting</span>
+    </div>`).join('');
+  $('#urls').textContent = manifest.chunks.map(c=>`https://raw.githubusercontent.com/wambetebenjamin/youtube-videos/arena/d58bab72-youtube-videos/${c.github}`).join('\n');
+  // try resume count
+  let ready=0;
+  for(const c of manifest.chunks){ if(await idbGet(c.id)) ready++; }
+  kpiReady.textContent = `Ready: ${ready}/${manifest.chunks.length}`;
+  if(ready) setStatus(`Found ${ready} cached chunks — hit Resume.`);
+}
+
+async function fetchChunk(c){
+  const badge = document.getElementById(`badge-${c.id}`);
+  // try GitHub raw first
+  const ghUrl = `https://raw.githubusercontent.com/wambetebenjamin/youtube-videos/arena/d58bab72-youtube-videos/${c.github}`;
+  const driveUrl = c.driveId ? `https://drive.google.com/uc?id=${c.driveId}&export=download` : null;
+  for(const url of [ghUrl, driveUrl].filter(Boolean)){
+    try{
+      badge.textContent='downloading…'; badge.className='wait';
+      const r = await fetch(url);
+      if(!r.ok) throw new Error(r.status);
+      const blob = await r.blob();
+      await idbSet(c.id, blob);
+      const objUrl = URL.createObjectURL(blob);
+      blobs[c.id]=objUrl;
+      badge.textContent='ready ✓'; badge.className='ok';
+      return objUrl;
+    }catch(e){ console.warn('fetch failed',url,e); }
+  }
+  badge.textContent='failed'; badge.className='err';
+  return null;
+}
+
+async function ensureAll(){
+  let done=0;
+  for(const c of manifest.chunks){
+    let blob = await idbGet(c.id);
+    if(blob){
+      blobs[c.id]=URL.createObjectURL(blob);
+      document.getElementById(`badge-${c.id}`).textContent='cached ✓';
+      document.getElementById(`badge-${c.id}`).className='ok';
+    } else {
+      await fetchChunk(c);
+    }
+    done++;
+    progressEl.style.width = (done/manifest.chunks.length*100)+'%';
+    kpiReady.textContent = `Ready: ${done}/${manifest.chunks.length}`;
+  }
+  setStatus(`All ${manifest.chunks.length} parts ready — playing…`);
+}
+
+function playSequential(start=0){
+  currentIdx=start;
+  if(!blobs[manifest.chunks[currentIdx].id]) return setStatus('Not downloaded yet — hit Play Sequential first.');
+  player.src = blobs[manifest.chunks[currentIdx].id];
+  player.play();
+}
+player.addEventListener('ended', ()=>{
+  currentIdx++;
+  if(currentIdx < manifest.chunks.length){
+    player.src = blobs[manifest.chunks[currentIdx].id];
+    player.play();
+    setStatus(`Playing ${manifest.chunks[currentIdx].file} (${currentIdx+1}/${manifest.chunks.length})`);
+    progressEl.style.width = (currentIdx/manifest.chunks.length*100)+'%';
+  } else {
+    setStatus('Finished all parts — seamless MasterSync complete.');
+    progressEl.style.width='100%';
+  }
+});
+
+$('#playBtn').onclick = async ()=>{
+  if(!manifest) await loadManifest();
+  setStatus('Downloading chunks sequentially…');
+  await ensureAll();
+  playSequential(0);
+};
+$('#resumeBtn').onclick = async ()=>{
+  if(!manifest) await loadManifest();
+  // just load from IDB without re-fetch
+  let cnt=0;
+  for(const c of manifest.chunks){
+    const b=await idbGet(c.id);
+    if(b){ blobs[c.id]=URL.createObjectURL(b); cnt++; }
+  }
+  if(!cnt) return setStatus('Nothing cached yet.');
+  setStatus(`Resumed ${cnt} chunks from cache`);
+  progressEl.style.width=(cnt/manifest.chunks.length*100)+'%';
+  playSequential(0);
+};
+$('#downloadManifestBtn').onclick = ()=>{
+  const blob=new Blob([JSON.stringify(manifest,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='parts-manifest.json'; a.click();
+};
+
+// Stitch with ffmpeg.wasm (optional, lazy load)
+$('#stitchBtn').onclick = async ()=>{
+  setStatus('Loading ffmpeg.wasm…');
+  if(!window.FFmpeg){
+    const s=document.createElement('script');
+    s.src='https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/ffmpeg.min.js';
+    document.head.appendChild(s);
+    await new Promise(r=>s.onload=r);
+  }
+  const {createFFmpeg, fetchFile} = FFmpeg;
+  const ffmpeg = createFFmpeg({log:true});
+  await ffmpeg.load();
+  setStatus('Fetching all parts for stitch…');
+  if(!manifest) await loadManifest();
+  await ensureAll();
+  // write each chunk to MEMFS
+  for(let i=0;i<manifest.chunks.length;i++){
+    const c=manifest.chunks[i];
+    const b=await idbGet(c.id);
+    ffmpeg.FS('writeFile', c.file, await fetchFile(b));
+  }
+  const list = manifest.chunks.map(c=>`file '${c.file}'`).join('\n');
+  ffmpeg.FS('writeFile','list.txt', list);
+  setStatus('Stitching via ffmpeg concat demuxer… (copy, no re-encode)');
+  await ffmpeg.run('-f','concat','-safe','0','-i','list.txt','-c','copy','out.mp4');
+  const data=ffmpeg.FS('readFile','out.mp4');
+  const url=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));
+  const a=document.createElement('a'); a.href=url; a.download='PSALM42-20min-MasterSync-STITCHED.mp4'; a.click();
+  setStatus('Stitched download started.');
+};
+
+loadManifest();
+</script>
+</body>
+</html>
