@@ -27,3 +27,7 @@ skills-lock.json
 .cache/
 google_drive/
 public/edit/
+
+# External reference repositories (local clones, not committed)
+reference-repos/*
+!reference-repos/README.md
