@@ -1,6 +1,7 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import type { AccentColor, CaptionCue } from "../data/editPlan";
+import { DISPLAY_FONT, PREMIUM_EASE } from "../theme";
 
 const ACCENTS: Record<Exclude<AccentColor, null>, string> = {
   yellow: "#FFD84D",
@@ -29,9 +30,13 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
 
   const opacity = interpolate(
     time,
-    [cue.start, cue.start + 0.12, cue.end - 0.12, cue.end],
+    [cue.start, cue.start + 0.14, cue.end - 0.14, cue.end],
     [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    {
+      easing: PREMIUM_EASE,
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
   );
 
   const activeIndex = cue.words.findIndex(
@@ -44,7 +49,7 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
         position: "absolute",
         left: 60,
         right: 60,
-        bottom: 430,
+        bottom: 410,
         display: "flex",
         justifyContent: "center",
         pointerEvents: "none",
@@ -57,11 +62,11 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
           flexWrap: "wrap",
           justifyContent: "center",
           alignItems: "center",
-          gap: "10px 14px",
-          maxWidth: 960,
-          fontFamily: "Montserrat, Arial, sans-serif",
-          fontWeight: 900,
-          letterSpacing: "-0.02em",
+          gap: "4px 14px",
+          maxWidth: 980,
+          fontFamily: DISPLAY_FONT,
+          fontWeight: 400,
+          letterSpacing: "-0.045em",
         }}
       >
         {cue.words.map((word, index) => {
@@ -71,29 +76,34 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
             ? spring({
                 frame: Math.max(0, Math.floor((time - word.start) * fps)),
                 fps,
-                config: { damping: 15, stiffness: 260, mass: 0.6 },
+                config: { damping: 16, stiffness: 270, mass: 0.62 },
               })
             : 0;
-          const scale = 1 + pop * 0.09;
+          const scale = 1 + pop * 0.1;
+          const lift = -5 * pop;
           const accent = word.accent ? ACCENTS[word.accent] : null;
           const color = isActive
             ? accent ?? "#FFFFFF"
             : isPast
               ? "#FFFFFF"
-              : "rgba(255,255,255,0.72)";
+              : "rgba(255,255,255,0.7)";
+          const glow = accent ?? "#FFFFFF";
 
           return (
             <span
               key={`${word.text}-${index}`}
               style={{
                 display: "inline-block",
-                transform: `scale(${scale})`,
-                padding: "0 4px 4px 4px",
-                fontSize: 68,
-                lineHeight: 1.05,
+                transform: `translateY(${lift}px) scale(${scale})`,
+                padding: "0 6px 5px 6px",
+                fontSize: 74,
+                lineHeight: 1.02,
                 textTransform: "uppercase",
                 color,
-                textShadow: "0 5px 18px rgba(0, 0, 0, 0.94), 0 0 3px rgba(0, 0, 0, 0.98)",
+                WebkitTextStroke: "1px rgba(0,0,0,0.88)",
+                textShadow: isActive
+                  ? `0 0 24px ${glow}66, 0 6px 20px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.98)`
+                  : "0 6px 20px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.98)",
               }}
             >
               {word.text}

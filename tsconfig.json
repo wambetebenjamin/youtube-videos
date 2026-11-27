@@ -12,5 +12,14 @@
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true
   },
-  "exclude": ["remotion.config.ts"]
+  "include": ["src"],
+  "exclude": [
+    "remotion.config.ts",
+    "reference-repos",
+    "node_modules",
+    ".cache",
+    "out",
+    "public/edit",
+    "google_drive"
+  ]
 }

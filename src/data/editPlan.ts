@@ -58,8 +58,8 @@ export const editPlan: EditPlan = {
   "width": 1080,
   "height": 1920,
   "durationSeconds": 68.024,
-  "videoSrc": "edit/cut.mp4",
-  "audioSrc": "edit/audio.wav",
+  "videoSrc": "edit/cut-premium.mp4",
+  "audioSrc": "edit/audio-premium.wav",
   "captions": [
     {
       "start": 0.0,

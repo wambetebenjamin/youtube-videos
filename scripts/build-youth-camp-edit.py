@@ -10,8 +10,10 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import subprocess
+import sys
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any
@@ -24,10 +26,12 @@ PUBLIC = ROOT / "public" / "edit"
 DRIVE_MUSIC = ROOT / "google_drive" / "amapiano beats.mp3"
 OUT_WAV = PUBLIC / "audio.wav"
 OUT_CUT = PUBLIC / "cut.mp4"
+OUT_PREMIUM_WAV = PUBLIC / "audio-premium.wav"
+OUT_PREMIUM_CUT = PUBLIC / "cut-premium.mp4"
 
 FPS = 30
-VIDEO_SRC = "edit/cut.mp4"
-AUDIO_SRC = "edit/audio.wav"
+VIDEO_SRC = "edit/cut-premium.mp4"
+AUDIO_SRC = "edit/audio-premium.wav"
 CTA_HEADLINE = "SEND YOUR TEEN TO CAMP"
 CTA_DATES = "30th November to 5th December 2026"
 
@@ -568,6 +572,16 @@ def main() -> None:
     write_edit_plan(clips, captions, callouts, punch_ins, reframe_points, total_duration)
     build_video(clips, total_duration)
     build_audio(clips, total_duration)
+    upgrade_env = os.environ.copy()
+    upgrade_env["PYTHONPATH"] = (
+        str(ROOT / ".cache" / "pydeps") + os.pathsep + upgrade_env.get("PYTHONPATH", "")
+    )
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "upgrade-youth-camp-premium.py")],
+        cwd=ROOT,
+        check=True,
+        env=upgrade_env,
+    )
 
     report = {
         "sourceMd5": {key: info["md5"] for key, info in SOURCES.items()},
@@ -581,7 +595,12 @@ def main() -> None:
         "captionCueCount": len(captions),
         "calloutCount": len(callouts),
         "punchInCount": len(punch_ins),
-        "outputs": {"video": str(OUT_CUT.relative_to(ROOT)), "audio": str(OUT_WAV.relative_to(ROOT))},
+        "outputs": {
+            "video": str(OUT_CUT.relative_to(ROOT)),
+            "audio": str(OUT_WAV.relative_to(ROOT)),
+            "premiumVideo": str(OUT_PREMIUM_CUT.relative_to(ROOT)),
+            "premiumAudio": str(OUT_PREMIUM_WAV.relative_to(ROOT)),
+        },
     }
     (ANALYSIS / "edit-report.json").write_text(json.dumps(report, indent=2))
     print(json.dumps(report, indent=2))

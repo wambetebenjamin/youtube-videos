@@ -1,5 +1,6 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { BODY_FONT, DISPLAY_FONT, GOLD, PREMIUM_EASE } from "../theme";
 
 export type CtaLowerThirdProps = {
   start: number;
@@ -26,10 +27,30 @@ export const CtaLowerThird: React.FC<CtaLowerThirdProps> = ({
   const enter = spring({
     frame: localFrame,
     fps,
-    config: { damping: 15, stiffness: 190, mass: 0.75 },
+    config: { damping: 16, stiffness: 190, mass: 0.8 },
   });
-  const slide = interpolate(enter, [0, 1], [42, 0]);
-  const shadow = "0 5px 18px rgba(0, 0, 0, 0.92), 0 0 3px rgba(0, 0, 0, 0.95)";
+  const slide = interpolate(enter, [0, 1], [48, 0], {
+    easing: PREMIUM_EASE,
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const scale = interpolate(enter, [0, 1], [0.96, 1], {
+    easing: PREMIUM_EASE,
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const datesOpacity = interpolate(localFrame, [6, 20], [0, 1], {
+    easing: PREMIUM_EASE,
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const datesY = interpolate(datesOpacity, [0, 1], [16, 0], {
+    easing: PREMIUM_EASE,
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const shadow =
+    "0 0 28px rgba(255,216,77,0.28), 0 6px 22px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.98)";
 
   return (
     <div
@@ -41,17 +62,17 @@ export const CtaLowerThird: React.FC<CtaLowerThirdProps> = ({
         textAlign: "center",
         pointerEvents: "none",
         opacity: enter,
-        transform: `translateY(${slide}px)`,
+        transform: `translateY(${slide}px) scale(${scale})`,
       }}
     >
       <div
         style={{
           color: "#FFFFFF",
-          fontFamily: "Montserrat, Arial, sans-serif",
-          fontWeight: 900,
-          fontSize: 58,
+          fontFamily: DISPLAY_FONT,
+          fontWeight: 400,
+          fontSize: 54,
           lineHeight: 1.02,
-          letterSpacing: "-0.035em",
+          letterSpacing: "-0.04em",
           textTransform: "uppercase",
           whiteSpace: "nowrap",
           textShadow: shadow,
@@ -61,14 +82,16 @@ export const CtaLowerThird: React.FC<CtaLowerThirdProps> = ({
       </div>
       <div
         style={{
-          marginTop: 16,
-          color: "#FFD84D",
-          fontFamily: "Montserrat, Arial, sans-serif",
+          marginTop: 14,
+          color: GOLD,
+          fontFamily: BODY_FONT,
           fontWeight: 800,
-          fontSize: 31,
-          letterSpacing: "0.01em",
+          fontSize: 30,
+          letterSpacing: "0.02em",
           whiteSpace: "nowrap",
           textShadow: shadow,
+          opacity: datesOpacity,
+          transform: `translateY(${datesY}px)`,
         }}
       >
         {dates}

@@ -8,10 +8,13 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { CtaLowerThird } from "../components/CtaLowerThird";
 import { ContextCallouts } from "../components/ContextCallouts";
+import { CtaLowerThird } from "../components/CtaLowerThird";
+import { CutTransitions } from "../components/CutTransitions";
+import { FilmTreatment } from "../components/FilmTreatment";
 import { WordCaptions } from "../components/WordCaptions";
 import { editPlan } from "../data/editPlan";
+import { DARK, PREMIUM_EASE } from "../theme";
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -41,8 +44,19 @@ export const YouthCampReel: React.FC = () => {
   }
   zoom = clamp(zoom, 1.0, 1.12);
 
+  const endFade = interpolate(
+    time,
+    [editPlan.durationSeconds - 1.0, editPlan.durationSeconds],
+    [0, 0.42],
+    {
+      easing: PREMIUM_EASE,
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
+
   return (
-    <AbsoluteFill style={{ backgroundColor: "#050816", overflow: "hidden" }}>
+    <AbsoluteFill style={{ backgroundColor: DARK, overflow: "hidden" }}>
       <Audio src={staticFile(editPlan.audioSrc)} />
 
       <OffthreadVideo
@@ -55,10 +69,20 @@ export const YouthCampReel: React.FC = () => {
           objectPosition: `${pan}% 50%`,
           transform: `scale(${zoom})`,
           transformOrigin: "center center",
+          filter: "contrast(1.02) saturate(1.03)",
         }}
       />
 
-      <AbsoluteFill style={{ backgroundColor: "#050816", opacity: 0.12 }} />
+      <AbsoluteFill style={{ backgroundColor: DARK, opacity: 0.08 }} />
+      <CutTransitions />
+      <FilmTreatment />
+      <AbsoluteFill
+        style={{
+          backgroundColor: "#000000",
+          opacity: endFade,
+          pointerEvents: "none",
+        }}
+      />
 
       <ContextCallouts callouts={editPlan.callouts} />
 

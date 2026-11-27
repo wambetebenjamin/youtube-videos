@@ -1,8 +1,7 @@
 @import "tailwindcss";
-@import "@fontsource/montserrat/700.css";
-@import "@fontsource/montserrat/800.css";
-@import "@fontsource/montserrat/900.css";
+@import "@fontsource-variable/montserrat/wght.css";
+@import "@fontsource/archivo-black/400.css";
 
 :root {
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: "Montserrat Variable", "Montserrat", Arial, sans-serif;
 }
