@@ -1,12 +1,12 @@
 # External video-automation reference repositories
 
-Last updated 2026-11-27 14:33 UTC.
+Last updated 2026-11-27 14:36 UTC.
 
 There are 18 local reference clones under `reference-repos/<owner>/<repo>/`. All are shallow,
-single-branch clones of the latest default branch. To keep the workspace light:
+single-branch clones of the latest default branch. To keep the workspace inside the snapshot limits:
 
 - `MendesCorporation/ai-promo-video` is a blob-filtered partial clone with a sparse checkout that omits large example MP4 renders.
-- Every second-batch repository is a blob-filtered partial clone using the patterns saved in `reference-repos/SPARSE-PATTERNS.txt`. Those patterns omit large media, generated catalogs, preview sites, test corpora, translations, packaged binaries, fonts, and similar bulky directories while retaining source, core docs, manifests, and top-level files.
+- Every second-batch repository is a compact blob-filtered partial clone using the patterns saved in `reference-repos/SPARSE-PATTERNS.txt`. Those patterns omit large media, generated catalogs, preview sites, test corpora, translations, packaged binaries, fonts, and the largest bulk source directories. Top-level files, manifests, core docs, and selected source are retained.
 - Git LFS smudging was skipped. No submodules were fetched.
 - These directories are intentionally excluded from this repository by `.gitignore`; only this inventory README and the sparse-pattern file are tracked.
 
@@ -27,17 +27,17 @@ Name-only entries were resolved as follows: **Opus Motion Library** → `Govindu
 
 | Repository | Status | Local path | Default branch | Commit | GitHub size | Local size |
 |---|---|---|---|---|---:|---:|
-| [`0xsline/OpenChatCut`](https://github.com/0xsline/OpenChatCut) | cloned | `reference-repos/0xsline/OpenChatCut/` | `main` | `f96502a` | 122649 KB | 21M |
-| [`jub0t/Concat`](https://github.com/jub0t/Concat) | cloned | `reference-repos/jub0t/Concat/` | `main` | `22dcbdc` | 100102 KB | 20M |
-| [`frankShan001/CutVoke`](https://github.com/frankShan001/CutVoke) | cloned | `reference-repos/frankShan001/CutVoke/` | `main` | `289b610` | 226585 KB | 10M |
-| [`CutWire-Studios/Drift`](https://github.com/CutWire-Studios/Drift) | cloned | `reference-repos/CutWire-Studios/Drift/` | `main` | `30e7602` | 122734 KB | 19M |
-| [`GovinduSasanka/opus-motion-library`](https://github.com/GovinduSasanka/opus-motion-library) | cloned | `reference-repos/GovinduSasanka/opus-motion-library/` | `main` | `7bde15a` | 96798 KB | 20M |
-| [`ali-abassi/remotion-templates`](https://github.com/ali-abassi/remotion-templates) | cloned | `reference-repos/ali-abassi/remotion-templates/` | `main` | `6430d42` | 352728 KB | 5.9M |
+| [`0xsline/OpenChatCut`](https://github.com/0xsline/OpenChatCut) | cloned | `reference-repos/0xsline/OpenChatCut/` | `main` | `f96502a` | 122649 KB | 20M |
+| [`jub0t/Concat`](https://github.com/jub0t/Concat) | cloned | `reference-repos/jub0t/Concat/` | `main` | `22dcbdc` | 100102 KB | 1.8M |
+| [`frankShan001/CutVoke`](https://github.com/frankShan001/CutVoke) | cloned | `reference-repos/frankShan001/CutVoke/` | `main` | `289b610` | 226585 KB | 5.8M |
+| [`CutWire-Studios/Drift`](https://github.com/CutWire-Studios/Drift) | cloned | `reference-repos/CutWire-Studios/Drift/` | `main` | `30e7602` | 122734 KB | 1.7M |
+| [`GovinduSasanka/opus-motion-library`](https://github.com/GovinduSasanka/opus-motion-library) | cloned | `reference-repos/GovinduSasanka/opus-motion-library/` | `main` | `7bde15a` | 96798 KB | 2.7M |
+| [`ali-abassi/remotion-templates`](https://github.com/ali-abassi/remotion-templates) | cloned | `reference-repos/ali-abassi/remotion-templates/` | `main` | `6430d42` | 352728 KB | 749K |
 | [`haidrrrry/claude-remotion-skill`](https://github.com/haidrrrry/claude-remotion-skill) | cloned | `reference-repos/haidrrrry/claude-remotion-skill/` | `main` | `1dcbe5e` | 14826 KB | 209K |
 | [`itsPremkumar/Automated-Video-Generator`](https://github.com/itsPremkumar/Automated-Video-Generator) | cloned | `reference-repos/itsPremkumar/Automated-Video-Generator/` | `main` | `68db464` | 79592 KB | 7.9M |
 | [`iart-ai/lower-thirds-skills`](https://github.com/iart-ai/lower-thirds-skills) | cloned | `reference-repos/iart-ai/lower-thirds-skills/` | `main` | `58d3623` | 1072 KB | 201K |
 | [`noeal-dac/Animated-Lower-Thirds`](https://github.com/noeal-dac/Animated-Lower-Thirds) | cloned | `reference-repos/noeal-dac/Animated-Lower-Thirds/` | `master` | `8bb3ff9` | 1742 KB | 1.4M |
-| [`nicolaigaina/ai-video-captions`](https://github.com/nicolaigaina/ai-video-captions) | cloned | `reference-repos/nicolaigaina/ai-video-captions/` | `main` | `bd87ac7` | 1788 KB | 1.1M |
+| [`nicolaigaina/ai-video-captions`](https://github.com/nicolaigaina/ai-video-captions) | cloned | `reference-repos/nicolaigaina/ai-video-captions/` | `main` | `bd87ac7` | 1788 KB | 1009K |
 | [`vshukla7/remotion-captions-themes`](https://github.com/vshukla7/remotion-captions-themes) | cloned | `reference-repos/vshukla7/remotion-captions-themes/` | `main` | `a8de474` | 5151 KB | 477K |
 
 ## Restore omitted paths
