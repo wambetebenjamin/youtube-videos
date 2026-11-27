@@ -1,0 +1,12 @@
+{
+  "nodes": {
+    "1": {"type": "LoadImage"},
+    "2": {"type": "AnyI2V", "denoise": 0.70, "steps": 28, "motion": "MEDIUM"},
+    "3": {"type": "MotionControlMap", "description": "boxes appear from top stacked every 2s; knees buckle with weight"},
+    "4": {"type": "LongCatExtension"},
+    "5": {"type": "VAEDecode"},
+    "6": {"type": "VideoCombine", "fps": 24}
+  },
+  "routing": "TYPE B - Character Emotion",
+  "prompt_template": "Person standing, four boxes appearing stacking sequentially on shoulders, posture deteriorating, knees bending, hand-drawn doodle style, parchment background stable, no camera movement"
+}

@@ -1,0 +1,15 @@
+{
+  "nodes": {
+    "1": {"type": "LoadImage"},
+    "2": {"type": "LeviTor", "denoise": 0.60, "steps": 32, "smoothing": "HIGH"},
+    "3": {"type": "Trajectory", "format": "Start [X,Y,Z] -> End [X,Y,Z]"},
+    "4": {"type": "VAEDecode"},
+    "5": {"type": "VideoCombine", "fps": 24}
+  },
+  "routing": "TYPE C - Camera Movement",
+  "examples": {
+    "candle-pullback": {"start": [0,0,0.1], "end": [0,0.3,2.0], "tilt": "15deg upward", "duration": "14s"},
+    "well-lookdown": {"start": [0,2.0,0], "end": [0,1.0,0], "motion": "falling gently", "duration": "14s"},
+    "bench-pushin": {"start": [0,0,2.5], "end": [0,0.1,0.8], "tilt": "8deg down", "duration": "35s"}
+  }
+}

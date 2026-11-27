@@ -1,0 +1,12 @@
+{
+  "nodes": {
+    "1": {"type": "LoadImage", "input": "source_images/scene_*.png"},
+    "2": {"type": "CLIPTextEncode", "prompt": "subtle natural ambient motion only, candle flame flickering gently, warm light pulsing slightly, dust drifting slowly, character breathing visible, no camera movement, parchment texture stable, photorealistic motion, 24fps"},
+    "3": {"type": "Wan2.2-I2V-A14B", "resolution": "720P", "denoise": 0.55, "steps": 30, "motion": "LOW", "negative": "blurry, distorted, watermark, text changing, faces morphing"},
+    "4": {"type": "LongCatExtension", "extend": "10s", "overlap": 8, "mode": "continuation"},
+    "5": {"type": "VAEDecode"},
+    "6": {"type": "VideoCombine", "fps": 24, "format": "MP4"}
+  },
+  "routing": "TYPE A - Ambient Atmosphere",
+  "scenes": ["candle-opening 8s","3am-bedroom 16s","rain-praise 45s","ruins-jeremiah 35s"]
+}
