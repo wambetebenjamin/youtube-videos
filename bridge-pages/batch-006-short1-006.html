@@ -1,0 +1,51 @@
+<!doctype html>
+<html><body><div id="done" data-complete="false">loading</div><script>
+window.JOBS = {"label":"short1-006","source":"1wwjLigJhO5jD41AqFpvwIwGt4or39DjR","parts":[{"i":72,"start":377487360,"end":382730239,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0072.bin&signature=v1_pN5nHPASohabA3P8uCVTvjPZ8e49rBLLZbrD22GmlTU&username=user"},{"i":73,"start":382730240,"end":387973119,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0073.bin&signature=v1_eGwlFMJ0B90jhuniObxGgF%2FKilI4%2BrXV1G0XUBV6Jyg&username=user"},{"i":74,"start":387973120,"end":393215999,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0074.bin&signature=v1_dbsNRPNp4sBQmRppiYmZb8K9QEl2HeyKECih87ASgf4&username=user"},{"i":75,"start":393216000,"end":398458879,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0075.bin&signature=v1_IVnp8PEv3wqPfPGR9QD606jwglCz2L2cyi7bmDM5sL4&username=user"},{"i":76,"start":398458880,"end":403701759,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0076.bin&signature=v1_s29ORd6W6CGtAo%2BDK5FsaYjUX%2FLrji7nF8C1bIDZsgc&username=user"},{"i":77,"start":403701760,"end":408944639,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0077.bin&signature=v1_UQe0B0C8w2mfA8M2D0BuXbMkiPTRn7Zh1m%2BdvCGdyTI&username=user"},{"i":78,"start":408944640,"end":414187519,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0078.bin&signature=v1_Ye3x0QEjogTJisKlxvjbVm%2BlSap%2FKSKUQRO6rrDj5CM&username=user"},{"i":79,"start":414187520,"end":419430399,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0079.bin&signature=v1_Im%2FzfXI1h43rVN%2F5erJWinJ63Qn32tQumD6zy4eyhbQ&username=user"},{"i":80,"start":419430400,"end":424673279,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0080.bin&signature=v1_L%2FlxuTVUEoeWE5p%2FBQutj2TnxCVaUbQ3nq3zJi7qHbQ&username=user"},{"i":81,"start":424673280,"end":429916159,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0081.bin&signature=v1_OOpb%2FjL%2FXnVygrMNtAqOz09Qr7iLQjfLwwxuFpZJfbk&username=user"},{"i":82,"start":429916160,"end":435159039,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0082.bin&signature=v1_gOOdsbt5JKtFQML3XJc8Uo5%2BLWKZ%2BS1rf6m1P0QcUTY&username=user"},{"i":83,"start":435159040,"end":440401919,"uploadUrl":"https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1%2Fpart-0083.bin&signature=v1_vitT0PN0SfuvHZd9AvuMFzo9mOVDqi1lSFXfGopOCKk&username=user"}]};
+(async () => {
+  const done = document.getElementById('done');
+  const jobs = window.JOBS;
+  const source = jobs.source;
+  const target = 'https://drive.usercontent.google.com/download?id=' + source + '&export=download&confirm=t';
+  const proxy = 'https://proxy.cors.dev/?url=' + encodeURIComponent(target);
+  const results = [];
+  const errors = [];
+  let cursor = 0;
+  const concurrency = Math.min(6, jobs.parts.length);
+  async function worker() {
+    while (cursor < jobs.parts.length) {
+      const j = jobs.parts[cursor++];
+      let lastErr;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const res = await fetch(proxy, {
+            method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-store',
+            headers: { Range: 'bytes=' + j.start + '-' + j.end }
+          });
+          if (res.status !== 206) throw new Error('range ' + res.status);
+          const buf = await res.arrayBuffer();
+          const bytes = new Uint8Array(buf);
+          if (bytes.length !== j.end - j.start + 1) throw new Error('short ' + bytes.length);
+          const form = new FormData();
+          form.append('file', new Blob([bytes], { type: 'application/octet-stream' }), 'part.bin');
+          const up = await fetch(j.uploadUrl, {
+            method: 'POST', mode: 'cors', credentials: 'omit', body: form
+          });
+          if (!up.ok) throw new Error('upload ' + up.status + ' ' + (await up.text()).slice(0,100));
+          results.push({ i: j.i, size: bytes.length });
+          lastErr = null;
+          break;
+        } catch (err) { lastErr = err; }
+      }
+      if (lastErr) errors.push({ i: j.i, error: String(lastErr) });
+    }
+  }
+  try {
+    await Promise.all(Array.from({ length: concurrency }, worker));
+    results.sort((a,b) => a.i - b.i);
+    done.textContent = JSON.stringify({ ok: errors.length === 0, label: jobs.label, count: results.length, expected: jobs.parts.length, errors: errors.slice(0,10) });
+  } catch (err) {
+    done.textContent = JSON.stringify({ ok: false, fatal: String(err), count: results.length, errors: errors.slice(0,10) });
+  }
+  done.setAttribute('data-complete','true');
+})();
+</script></body></html>
