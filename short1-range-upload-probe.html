@@ -1,0 +1,18 @@
+<!doctype html>
+<html><body><div id="done">loading</div><script>
+(async () => {
+  const target = 'https://drive.usercontent.google.com/download?id=1wwjLigJhO5jD41AqFpvwIwGt4or39DjR&export=download&confirm=t';
+  const proxy = 'https://proxy.cors.dev/?url=' + encodeURIComponent(target);
+  const uploadUrl = 'https://49983-ic4w1u53qqsbk88uj3sd7.e2b.app/files?path=%2Fhome%2Fuser%2Fyoutube-videos%2F.cache%2Fraw-parts%2Fshort1-test.bin&signature=v1_rs6Tt4QrItP1cp1MRaXeYdb51Hx9t9TISAogp9aPUjQ&username=user';
+  try {
+    const res = await fetch(proxy, {method:'GET', mode:'cors', credentials:'omit', cache:'no-store', headers:{Range:'bytes=0-1023'}});
+    const buf = await res.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    const form = new FormData();
+    form.append('file', new Blob([bytes], {type:'application/octet-stream'}), 'short1-test.bin');
+    const up = await fetch(uploadUrl, {method:'POST', mode:'cors', credentials:'omit', body:form});
+    const hex = Array.from(bytes.slice(0,12)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    document.getElementById('done').textContent = 'range='+res.status+':len='+bytes.length+':cr='+(res.headers.get('content-range')||'')+':hex='+hex+':upload='+up.status+':body='+(await up.text()).slice(0,150);
+  } catch(e) { document.getElementById('done').textContent='ERR:'+String(e); }
+})();
+</script></body></html>
