@@ -1,17 +1,5 @@
 export type AccentColor = "yellow" | "orange" | "cyan" | null;
 
-export type DoodleName =
-  | "arrow"
-  | "sparkle"
-  | "star"
-  | "crown"
-  | "question"
-  | "screen"
-  | "lightbulb"
-  | "books"
-  | "trophy"
-  | "cross";
-
 export type CaptionWord = {
   text: string;
   start: number;
@@ -30,8 +18,6 @@ export type CalloutEvent = {
   end: number;
   label: string;
   color: string;
-  ink: string;
-  icons: DoodleName[];
   compact: boolean;
 };
 
@@ -1528,11 +1514,6 @@ export const editPlan: EditPlan = {
       "end": 6.0,
       "label": "WHY YOUTH CAMP?",
       "color": "#3FE0FF",
-      "ink": "#08111F",
-      "icons": [
-        "question",
-        "screen"
-      ],
       "compact": false
     },
     {
@@ -1540,12 +1521,6 @@ export const editPlan: EditPlan = {
       "end": 18.88,
       "label": "PURSUE  OVERTAKE  RECOVER ALL",
       "color": "#FF8A3D",
-      "ink": "#08111F",
-      "icons": [
-        "books",
-        "star",
-        "trophy"
-      ],
       "compact": true
     },
     {
@@ -1553,11 +1528,6 @@ export const editPlan: EditPlan = {
       "end": 32.424,
       "label": "ONE OR TWO SENTENCES CAN STAY",
       "color": "#FFD84D",
-      "ink": "#08111F",
-      "icons": [
-        "lightbulb",
-        "star"
-      ],
       "compact": false
     },
     {
@@ -1565,12 +1535,6 @@ export const editPlan: EditPlan = {
       "end": 44.212,
       "label": "SOCIAL CAPITAL  SPIRITUAL COVERING",
       "color": "#3FE0FF",
-      "ink": "#08111F",
-      "icons": [
-        "screen",
-        "crown",
-        "cross"
-      ],
       "compact": false
     },
     {
@@ -1578,12 +1542,6 @@ export const editPlan: EditPlan = {
       "end": 53.964,
       "label": "PURSUE  OVERTAKE  RECOVER ALL",
       "color": "#FFD84D",
-      "ink": "#08111F",
-      "icons": [
-        "books",
-        "star",
-        "trophy"
-      ],
       "compact": true
     },
     {
@@ -1591,11 +1549,6 @@ export const editPlan: EditPlan = {
       "end": 60.284,
       "label": "IDENTITY ROOTED IN CHRIST",
       "color": "#FFB35C",
-      "ink": "#231205",
-      "icons": [
-        "cross",
-        "star"
-      ],
       "compact": true
     },
     {
@@ -1603,12 +1556,6 @@ export const editPlan: EditPlan = {
       "end": 66.664,
       "label": "COURAGE  COMMUNITY  NEW FRIENDS",
       "color": "#3FE0FF",
-      "ink": "#08111F",
-      "icons": [
-        "lightbulb",
-        "screen",
-        "star"
-      ],
       "compact": false
     }
   ],

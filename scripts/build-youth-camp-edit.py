@@ -56,8 +56,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "WHY YOUTH CAMP?",
             "color": "#3FE0FF",
-            "ink": "#08111F",
-            "icons": ["question", "screen"],
             "compact": False,
             "offset": 1.0,
             "duration": 5.0,
@@ -70,8 +68,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "PURSUE  OVERTAKE  RECOVER ALL",
             "color": "#FF8A3D",
-            "ink": "#08111F",
-            "icons": ["books", "star", "trophy"],
             "compact": True,
             "offset": 1.0,
             "duration": 5.5,
@@ -84,8 +80,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "ONE OR TWO SENTENCES CAN STAY",
             "color": "#FFD84D",
-            "ink": "#08111F",
-            "icons": ["lightbulb", "star"],
             "compact": False,
             "offset": 1.0,
             "duration": 5.5,
@@ -98,8 +92,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "SOCIAL CAPITAL  SPIRITUAL COVERING",
             "color": "#3FE0FF",
-            "ink": "#08111F",
-            "icons": ["screen", "crown", "cross"],
             "compact": False,
             "offset": 1.0,
             "duration": 6.0,
@@ -112,8 +104,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "PURSUE  OVERTAKE  RECOVER ALL",
             "color": "#FFD84D",
-            "ink": "#08111F",
-            "icons": ["books", "star", "trophy"],
             "compact": True,
             "offset": 0.6,
             "duration": 4.2,
@@ -126,8 +116,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "IDENTITY ROOTED IN CHRIST",
             "color": "#FFB35C",
-            "ink": "#231205",
-            "icons": ["cross", "star"],
             "compact": True,
             "offset": 0.8,
             "duration": 4.8,
@@ -140,8 +128,6 @@ CLIP_SPECS: list[dict[str, Any]] = [
         "callout": {
             "label": "COURAGE  COMMUNITY  NEW FRIENDS",
             "color": "#3FE0FF",
-            "ink": "#08111F",
-            "icons": ["lightbulb", "screen", "star"],
             "compact": False,
             "offset": 0.4,
             "duration": 4.5,
@@ -174,10 +160,6 @@ KEYWORD_ACCENTS = {
     "samuel": "yellow",
 }
 
-DOODLE_NAMES = [
-    "arrow", "sparkle", "star", "crown", "question", "screen",
-    "lightbulb", "books", "trophy", "cross",
-]
 
 
 @dataclass
@@ -379,8 +361,6 @@ def build_callouts(clips: list[Clip]) -> list[dict[str, Any]]:
                 "end": round(max(start + 0.5, end), 3),
                 "label": spec["label"],
                 "color": spec["color"],
-                "ink": spec["ink"],
-                "icons": spec["icons"],
                 "compact": spec["compact"],
             }
         )
@@ -423,18 +403,6 @@ def write_edit_plan(
     }
     types = """export type AccentColor = \"yellow\" | \"orange\" | \"cyan\" | null;
 
-export type DoodleName =
-  | \"arrow\"
-  | \"sparkle\"
-  | \"star\"
-  | \"crown\"
-  | \"question\"
-  | \"screen\"
-  | \"lightbulb\"
-  | \"books\"
-  | \"trophy\"
-  | \"cross\";
-
 export type CaptionWord = {
   text: string;
   start: number;
@@ -453,8 +421,6 @@ export type CalloutEvent = {
   end: number;
   label: string;
   color: string;
-  ink: string;
-  icons: DoodleName[];
   compact: boolean;
 };
 

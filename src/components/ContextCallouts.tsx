@@ -1,32 +1,6 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import type { CalloutEvent, DoodleName } from "../data/editPlan";
-import {
-  ArrowDoodle,
-  BooksDoodle,
-  CrossDoodle,
-  CrownDoodle,
-  LightbulbDoodle,
-  QuestionDoodle,
-  ScreenDoodle,
-  SparkleDoodle,
-  StarDoodle,
-  TrophyDoodle,
-  type DoodleProps,
-} from "./FlatDoodles";
-
-const DOODLES: Record<DoodleName, React.FC<DoodleProps>> = {
-  arrow: ArrowDoodle,
-  sparkle: SparkleDoodle,
-  star: StarDoodle,
-  crown: CrownDoodle,
-  question: QuestionDoodle,
-  screen: ScreenDoodle,
-  lightbulb: LightbulbDoodle,
-  books: BooksDoodle,
-  trophy: TrophyDoodle,
-  cross: CrossDoodle,
-};
+import type { CalloutEvent } from "../data/editPlan";
 
 export type ContextCalloutsProps = {
   callouts: CalloutEvent[];
@@ -53,14 +27,13 @@ export const ContextCallouts: React.FC<ContextCalloutsProps> = ({ callouts }) =>
     [0, 1, 1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
-  const translateY = interpolate(enter, [0, 1], [-28, 0]);
-  const iconSize = active.compact ? 54 : 48;
+  const translateY = interpolate(enter, [0, 1], [-24, 0]);
 
   return (
     <div
       style={{
         position: "absolute",
-        top: 250,
+        top: 220,
         left: 54,
         right: 54,
         display: "flex",
@@ -72,37 +45,19 @@ export const ContextCallouts: React.FC<ContextCalloutsProps> = ({ callouts }) =>
     >
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 10,
-          maxWidth: 970,
-          padding: active.compact ? "18px 34px" : "20px 30px",
-          borderRadius: 26,
-          backgroundColor: active.color,
-          border: "3px solid rgba(8,17,31,0.18)",
+          maxWidth: 980,
+          color: active.color,
+          fontFamily: "Montserrat, Arial, sans-serif",
+          fontWeight: 900,
+          fontSize: active.compact ? 58 : 40,
+          lineHeight: 1.08,
+          letterSpacing: active.compact ? "-0.03em" : "0.01em",
+          textAlign: "center",
+          textTransform: "uppercase",
+          textShadow: "0 5px 18px rgba(0, 0, 0, 0.92), 0 0 3px rgba(0, 0, 0, 0.95)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          {active.icons.map((name, index) => {
-            const Icon = DOODLES[name];
-            return <Icon key={`${name}-${index}`} color={active.ink} size={iconSize} />;
-          })}
-        </div>
-        <div
-          style={{
-            color: active.ink,
-            fontFamily: "Montserrat, Arial, sans-serif",
-            fontWeight: 900,
-            fontSize: active.compact ? 62 : 38,
-            lineHeight: 1.05,
-            letterSpacing: active.compact ? "-0.03em" : "0.01em",
-            textAlign: "center",
-            textTransform: "uppercase",
-          }}
-        >
-          {active.label}
-        </div>
+        {active.label}
       </div>
     </div>
   );

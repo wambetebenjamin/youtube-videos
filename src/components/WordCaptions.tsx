@@ -59,10 +59,6 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
           alignItems: "center",
           gap: "10px 14px",
           maxWidth: 960,
-          padding: "26px 30px",
-          borderRadius: 28,
-          backgroundColor: "rgba(5, 8, 22, 0.88)",
-          border: "2px solid rgba(255,255,255,0.14)",
           fontFamily: "Montserrat, Arial, sans-serif",
           fontWeight: 900,
           letterSpacing: "-0.02em",
@@ -80,6 +76,11 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
             : 0;
           const scale = 1 + pop * 0.09;
           const accent = word.accent ? ACCENTS[word.accent] : null;
+          const color = isActive
+            ? accent ?? "#FFFFFF"
+            : isPast
+              ? "#FFFFFF"
+              : "rgba(255,255,255,0.72)";
 
           return (
             <span
@@ -87,19 +88,12 @@ export const WordCaptions: React.FC<WordCaptionsProps> = ({ cues, until }) => {
               style={{
                 display: "inline-block",
                 transform: `scale(${scale})`,
-                padding: "4px 12px 7px 12px",
-                borderRadius: 12,
+                padding: "0 4px 4px 4px",
                 fontSize: 68,
                 lineHeight: 1.05,
                 textTransform: "uppercase",
-                backgroundColor: isActive && accent ? accent : "transparent",
-                color:
-                  isActive && accent
-                    ? "#08111F"
-                    : isPast
-                      ? "#FFFFFF"
-                      : "rgba(255,255,255,0.62)",
-                WebkitTextStroke: isActive && accent ? "0px" : "1px rgba(4,7,18,0.9)",
+                color,
+                textShadow: "0 5px 18px rgba(0, 0, 0, 0.94), 0 0 3px rgba(0, 0, 0, 0.98)",
               }}
             >
               {word.text}
